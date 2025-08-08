@@ -1,0 +1,14 @@
+const express = require("express");
+const router = express.Router();
+const addQuestion = require("../controllers/addQuestion");
+const getCategories = require("../controllers/getCategories");
+const getQuestions = require("../controllers/getQuestions");
+const saveProgress = require("../controllers/saveProgress");
+const getProgress = require("../controllers/getProgress");
+const authMiddleware = require("../middlewares/authMiddleware");
+router.post("/add-question", addQuestion);
+router.get("/categories", getCategories);
+router.get("/questions/:category", getQuestions);
+router.post("/save-progress", authMiddleware, saveProgress);
+router.get("/progress", authMiddleware, getProgress);
+module.exports = router;

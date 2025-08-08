@@ -1,0 +1,449 @@
+/*Navbar*/
+/* Navbar.css */
+
+.navbar-container {
+    width: 100%;
+    background-color: #007bff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .navbar-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin: 0;
+  }
+  
+  .navbar-item {
+    margin: 0 15px;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-link:hover {
+    color: #ffcc00;
+  }
+  
+  .navbar-link.active {
+    color: #ffcc00;
+  }
+  /* Register.css */
+.register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6e8efb;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #a777e3;
+  }
+  
+  p {
+    margin-top: 20px;
+  }
+  
+  a {
+    color: #ffecd2;
+    text-decoration: underline;
+  }
+  
+  a:hover {
+    color: #ffec99;
+  }
+  /* Login.css */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff8a65;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #f96d00;
+  }
+  
+  p {
+    margin-top: 20px;
+  }
+  
+  a {
+    color: #ffecd2;
+    text-decoration: underline;
+  }
+  
+  a:hover {
+    color: #ffec99;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
+/* AddQuestion.css */
+
+.add-question-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-field:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    color: #fff;
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background: #0056b3;
+  }
+  /*Dashboard*/
+  /* Dashboard.css */
+
+.dashboard {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 3em;
+    color: #333;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  
+  .category-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .category-card {
+    width: 200px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .category-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .category-name {
+    text-align: center;
+    font-size: 1.5em;
+    color: #007bff;
+    margin: 15px 0;
+    transition: color 0.3s ease;
+  }
+  
+  .category-card:hover .category-name {
+    color: #0056b3;
+  }
+  /*Home*
+  /* Home.css */
+
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #e9ecef;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .home-title {
+    text-align: center;
+    font-size: 3em;
+    color: #007bff;
+    margin: 30px 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+  }
+  /* Quiz.css */
+
+.quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+    min-height: 100vh;
+  }
+  
+  .question-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+  }
+  
+  .question-text {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .option-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .option-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .result-section {
+    text-align: center;
+  }
+  
+  .result-section h1 {
+    font-size: 2em;
+    color: #333;
+  }
+  
+  .restart-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .restart-button:hover {
+    background-color: #218838;
+  }
+  /* UserDashboard.css */
+.user-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d9a7c7, #fffcdc);
+  color: #333;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #4a4a4a;
+}
+
+table {
+  width: 100%;
+  max-width: 800px;
+  border-collapse: collapse;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #ff8a65;
+  color: white;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  font-size: 1.1rem;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
