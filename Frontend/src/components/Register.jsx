@@ -26,7 +26,8 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="w-full flex">
+      <div className="w-1/3 flex justify-center items-center flex-col">
       <h1>Register</h1>
       <form onSubmit={handleSubmit} className="register-form">
         <input
@@ -57,6 +58,11 @@ const Register = () => {
       <p>
         Already have an account? <a href="/login">Login here</a>
       </p>
+      </div>
+      <div className="hidden lg:block min-h-screen lg:w-2/3">
+        <img src="../../public/exam.jpg" alt="Description"/>
+         
+      </div>
     </div>
   );
 };
