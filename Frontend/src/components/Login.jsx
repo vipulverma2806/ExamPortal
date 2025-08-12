@@ -30,8 +30,9 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h1>Login</h1>
+    <div className="w-full justify-center items-center min-h-screen flex">
+      <div className="lg:w-1/3 w-full flex justify-center items-center flex-col">
+        <h1>Login</h1>
       <form onSubmit={handleSubmit} className="login-form">
         <input
           type="email"
@@ -56,6 +57,14 @@ const Login = () => {
         Don't have an account? <a href="/register">Register here</a>
       </p>{" "}
       {/* Register link */}
+      </div>
+      <div className="hidden lg:block lg:w-2/3">
+        <img
+          src="../../public/exam.jpg"
+          className="min-h-screen object-cover"
+          alt="Description"
+        />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
+require("dotenv").config()
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {

@@ -14,7 +14,7 @@ const Dashboard = () => {
     }
 
     const fetchCategories = async () => {
-      const res = await axios.get('http://localhost:5000/categories', {
+      const res = await axios.get('http://localhost:5000/api/categories', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

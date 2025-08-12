@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 const Register = () => {
   const [name, setname] = useState("");
-  const [email,setEmail] = useState("")
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -26,42 +26,50 @@ const Register = () => {
   };
 
   return (
-    <div className="w-full flex">
-      <div className="w-1/3 flex justify-center items-center flex-col">
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit} className="register-form">
-        <input
-          type="text"
-          placeholder="name"
-          value={name}
-          onChange={(e) => setname(e.target.value)}
-          className="input-field"
+    <div className="w-full justify-center items-center min-h-screen flex">
+      
+        
+        <form onSubmit={handleSubmit} className="lg:w-1/3 w-full flex justify-center items-center flex-col">
+          <h1>Register</h1>
+          <input
+            type="text"
+            placeholder="name"
+            value={name}
+            onChange={(e) => setname(e.target.value)}
+            className=""
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className=""
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className=""
+          />
+          <button type="submit" className="">
+            Register
+          </button>
+           <p className="text-left w-full">
+          Already have an account?{" "}
+          <Link to path="/login" className="text-blue-600 hover:cursor-pointer">
+            Login here
+          </Link>
+        </p>
+        </form>
+       
+    
+      <div className="hidden lg:block lg:w-2/3">
+        <img
+          src="../../public/exam.jpg"
+          className="min-h-screen object-cover"
+          alt="Description"
         />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="input-field"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="input-field"
-        />
-        <button type="submit" className="submit-button">
-          Register
-        </button>
-      </form>
-      <p>
-        Already have an account? <a href="/login">Login here</a>
-      </p>
-      </div>
-      <div className="hidden lg:block min-h-screen lg:w-2/3">
-        <img src="../../public/exam.jpg" alt="Description"/>
-         
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ const AddQuestion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/add-question', {
+    await axios.post('http://localhost:5000/api/add-question', {
       question,
       options,
       answer,
