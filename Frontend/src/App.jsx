@@ -12,10 +12,10 @@ import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <Navigate to="/register" /> // Redirect to register page
-    },
+    // {
+    //   path: '/register',
+    //   element: <Navigate to="/register" /> // Redirect to register page
+    // },
     {
       path: '/quiz/:category',
       element: <><Navbar /><Quiz /></>
@@ -33,7 +33,7 @@ function App() {
       element: <><Register /></>
     },
     {
-      path: '/login',
+      path: '/',
       element: <><Login /></>
     },
     {
