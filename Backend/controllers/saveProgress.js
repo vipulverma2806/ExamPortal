@@ -1,5 +1,6 @@
 const Progress = require("../models/progress")
 const saveProgress = async (req, res) => {
+  
   const { category, correctAnswers, wrongAnswers } = req.body;
   const progress = new Progress({
     userId: req.userId,

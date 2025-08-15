@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Quiz = () => {
+  axios.defaults.withCredentials = true;
   const { category } = useParams();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -44,7 +45,6 @@ const Quiz = () => {
   };
 
   const saveProgress = async () => {
-    const token = localStorage.getItem("token");
     await axios.post(
       "http://localhost:5000/save-progress",
       {
@@ -52,11 +52,6 @@ const Quiz = () => {
         correctAnswers,
         wrongAnswers,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
     );
   };
 
@@ -73,11 +68,11 @@ const Quiz = () => {
   };
 
   return (
-    <div className="flex w-full h-[549px]">
-      <div className="w-3/4 border-r-2 flex justify-center items-center h-full">
+    <div className="flex  w-full bg-gray-800 h-[549px] border-t-2 border-white">
+      <div className="w-3/4 border-r-2 border-white flex justify-center items-center h-full">
         {showResult ? (
           <div className="result-section">
-            <h1>Your Score: {score}</h1>
+            <h1 >Your Score: {score}</h1>
             <button className="restart-button" onClick={restartQuiz}>
               Restart Quiz
             </button>
@@ -87,7 +82,7 @@ const Quiz = () => {
             <div className="w-full px-30 mb-30">
               {questions.length > 0 && (
                 <>
-                  <h1 className="text-2xl">
+                  <h1 className="text-3xl text-gray-200 font-semibold mb-3">
                     <span>Q.{currentQuestion + 1} </span>{" "}
                     {questions[currentQuestion].question}
                   </h1>
@@ -95,7 +90,7 @@ const Quiz = () => {
                     {questions[currentQuestion].options.map((option, index) => (
                       <button
                         key={index}
-                        className=" bg-gray-500 m-1 w-full rounded-xl p-4 hover:bg-gray-800"
+                        className=" bg-gray-500 text-xl m-1 w-full rounded-xl p-4 hover:bg-blue-600"
                         onClick={() => handleAnswerOptionClick(option)}
                       >
                         {option}
@@ -111,14 +106,14 @@ const Quiz = () => {
                 onClick={() =>
                   setCurrentQuestion((prev) => Math.max(prev - 1, 0))
                 }
-                className="bg-blue-700 text-white w-30 disabled:bg-gray-700 px-3 py-2 rounded-xl"
+                className="bg-blue-700 text-white w-30 disabled:bg-gray-700 px-3 py-2 rounded-xl cursor-pointer disabled:cursor-auto"
               >
                 Previous
               </button>
               <button
                 disabled = {currentQuestion === questions.length-1}
                 onClick={() => setCurrentQuestion((prev) => Math.min(prev + 1, questions.length-1))}
-                className="bg-blue-700 disabled:bg-gray-700 text-white px-3 py-2 w-30 rounded-xl"
+                className="bg-blue-700 disabled:bg-gray-700 text-white px-3 py-2 w-30 rounded-xl cursor-pointer disabled:cursor-auto"
               >
                 Next
               </button>
@@ -127,9 +122,9 @@ const Quiz = () => {
         )}
       </div>
       <div className="w-1/4  flex flex-col">
-        <div className="h-1/10">Welcome User</div>
-        <div className="h-4/5 border-y-2 ">
-          <h2 className="m-2">Choose a Question</h2>
+        <div className="h-1/10 text-gray-300 font-semibold">Welcome User</div>
+        <div className="h-4/5 border-y-2 border-white">
+          <h2 className="m-2 text-gray-300 font-semibold">Choose a Question</h2>
           <div className="grid grid-cols-5 ">
             {questions.map((q, i) => (
               <div className="flex justify-center items-center">
@@ -144,8 +139,8 @@ const Quiz = () => {
           </div>
         </div>
         <div className="">
-            <p className="text-2xl m-0">Your Score: {score}</p>
-            <button className="" onClick={restartQuiz}>
+            <p className="text-2xl text-gray-300 font-semibold m-0">Your Score: {score}</p>
+            <button className="text-gray-300 font-semibold" onClick={restartQuiz}>
               Restart Quiz
             </button>
           </div>
