@@ -13,6 +13,24 @@ const Dashboard = () => {
       return;
     }
 
+
+    const fetchName = async () => {
+      const token = localStorage.getItem('token');
+      try {
+        const res = await axios.get('http://localhost:5000/getName', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res.data); // Debug: Log the response data
+        setProgress(res.data);
+      } catch (error) {
+        console.error('Error fetching progress:', error);
+      }
+    };
+
+    
+
     const fetchCategories = async () => {
       const res = await axios.get('http://localhost:5000/api/categories', {
         headers: {
@@ -23,6 +41,7 @@ const Dashboard = () => {
     };
 
     fetchCategories();
+    fetchName();
   }, [token, navigate]);
 
   const handleCategoryClick = (category) => {
