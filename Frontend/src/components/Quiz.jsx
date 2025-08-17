@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate,Link } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 const Quiz = () => {
   axios.defaults.withCredentials = true;
@@ -11,6 +12,7 @@ const Quiz = () => {
   const [showResult, setShowResult] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [name, setName] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,40 +26,59 @@ const Quiz = () => {
         console.log(err);
       }
     };
+
+    const fetchName = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/getName");
+        console.log(res.data);
+        setName(res.data);
+      } catch (error) {
+        console.error("Error fetching name:", error);
+      }
+    };
+
+    fetchName();
     fetchQuestions();
   }, [category]);
 
   const handleAnswerOptionClick = (option) => {
+    let correctAns = correctAnswers;
+    let wrongAns = wrongAnswers;
+
     if (option === questions[currentQuestion].answer) {
-      setScore(score + 1);
-      setCorrectAnswers(correctAnswers + 1);
+      setScore((prev)=>prev + 1);
+      correctAns += 1;
+      setCorrectAnswers((prev)=>prev + 1);
     } else {
-      setWrongAnswers(wrongAnswers + 1);
+      setWrongAnswers((prev)=>prev + 1);
+      wrongAns += 1;
     }
 
-    const nextQuestion = currentQuestion + 1;
+    const nextQuestion = currentQuestion + 1; 
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
     } else {
       setShowResult(true);
-      saveProgress();
+      saveProgress(correctAns);
     }
   };
 
-  const saveProgress = async () => {
-    await axios.post(
-      "http://localhost:5000/save-progress",
-      {
-        category,
-        correctAnswers,
-        wrongAnswers,
-      },
-    );
+  const saveProgress = async (correctAns) => {
+    await axios.post("http://localhost:5000/api/save-progress", {
+      category,
+      correctAnswers : correctAns,
+      wrongAnswers,
+    })
+   
+    
+  
   };
 
   const restartQuiz = () => {
     setCurrentQuestion(0);
     setScore(0);
+    setWrongAnswers(0);
+    setCorrectAnswers(0);
     setShowResult(false);
     // navigate("/");
   };
@@ -68,14 +89,20 @@ const Quiz = () => {
   };
 
   return (
+    <><Navbar />
     <div className="flex  w-full bg-gray-800 h-[549px] border-t-2 border-white">
       <div className="w-3/4 border-r-2 border-white flex justify-center items-center h-full">
         {showResult ? (
-          <div className="result-section">
-            <h1 >Your Score: {score}</h1>
-            <button className="restart-button" onClick={restartQuiz}>
+          <div className="bg-gray-700 p-10  rounded-3xl">
+            <h1 className="text-3xl text-center font-semibold text-gray-200">Your Score: {score}</h1>
+            <button className="text-gray-300 bg-blue-700 p-2 rounded-xl w-full mt-3 text-center font-semibold hover:bg-blue-800" onClick={restartQuiz}>
               Restart Quiz
             </button>
+            <Link to="/user-dashboard">
+            <button className="text-gray-300 bg-green-700 p-2 rounded-xl w-full mt-3 text-center font-semibold hover:bg-green-800">
+              User Dashboard
+            </button>
+          </Link>
           </div>
         ) : (
           <div className="h-[549px] w-full flex justify-center flex-col items-center">
@@ -111,8 +138,12 @@ const Quiz = () => {
                 Previous
               </button>
               <button
-                disabled = {currentQuestion === questions.length-1}
-                onClick={() => setCurrentQuestion((prev) => Math.min(prev + 1, questions.length-1))}
+                disabled={currentQuestion === questions.length - 1}
+                onClick={() =>
+                  setCurrentQuestion((prev) =>
+                    Math.min(prev + 1, questions.length - 1)
+                  )
+                }
                 className="bg-blue-700 disabled:bg-gray-700 text-white px-3 py-2 w-30 rounded-xl cursor-pointer disabled:cursor-auto"
               >
                 Next
@@ -122,14 +153,19 @@ const Quiz = () => {
         )}
       </div>
       <div className="w-1/4  flex flex-col">
-        <div className="h-1/10 text-gray-300 font-semibold">Welcome User</div>
+        <div className="h-1/10 text-gray-300  flex pl-3 items-center font-bold text-2xl">
+          Welcome {name}
+        </div>
+        <div className="h-1/10 text-gray-300 border-t-2 flex pl-3 items-center font-bold text-xl">
+          Category: {category}
+        </div>
         <div className="h-4/5 border-y-2 border-white">
-          <h2 className="m-2 text-gray-300 font-semibold">Choose a Question</h2>
-          <div className="grid grid-cols-5 ">
+          <h2 className="m-2 text-gray-300 text-xl pl-2 font-semibold">Go to Question</h2>
+          <div className="grid gap-y-3 gap-x-3 mx-3 grid-cols-4">
             {questions.map((q, i) => (
               <div className="flex justify-center items-center">
                 <button
-                  className="h-12 w-12 bg-gray-500 rounded-xl hover:bg-gray-900 text-white items-center justify-center flex"
+                  className="h-16 w-16 bg-gray-500 rounded-xl hover:bg-gray-900 text-white items-center justify-center flex"
                   onClick={() => handlePick(i)}
                 >
                   {i + 1}
@@ -138,14 +174,17 @@ const Quiz = () => {
             ))}
           </div>
         </div>
-        <div className="">
-            <p className="text-2xl text-gray-300 font-semibold m-0">Your Score: {score}</p>
-            <button className="text-gray-300 font-semibold" onClick={restartQuiz}>
-              Restart Quiz
-            </button>
-          </div>
+        <div className="flex justify-around items-center  p-3">
+          <p className="text-gray-300  p-2 rounded-xl w-28 text-left font-semibold">
+            Your Score: {score}
+          </p>
+          <button className="text-gray-300 bg-blue-700 p-2 rounded-xl w-28 text-left font-semibold" onClick={restartQuiz}>
+            Restart Quiz
+          </button>
+        </div>
       </div>
     </div>
+    </>
   );
 };
 

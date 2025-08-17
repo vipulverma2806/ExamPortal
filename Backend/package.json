@@ -1,5 +1,5 @@
 {
-  "name": "mern-quiz-app-main",
+  "name": "backend",
   "version": "1.0.0",
   "main": "secret.js",
   "scripts": {

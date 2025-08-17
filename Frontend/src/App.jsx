@@ -23,55 +23,27 @@ function App() {
     // },
     {
       path: "/quiz/:category",
-      element: (
-        <>
-          <Navbar />
-          <Quiz />
-        </>
-      ),
+      element: <PrivateRoute element={Quiz} />,
     },
     {
       path: "/add-question",
-      element: (
-        <>
-          <Navbar />
-          <AddQuestion />
-        </>
-      ),
+      element: <AddQuestion />,
     },
     {
       path: "/dashboard",
-      element: (
-        <>
-          <Navbar />
-          <PrivateRoute element={Dashboard} />
-        </>
-      ),
+      element: <PrivateRoute element={Dashboard} />,
     },
     {
       path: "/register",
-      element: (
-        <>
-          <Register />
-        </>
-      ),
+      element: <Register />,
     },
     {
       path: "/",
-      element: (
-        <>
-          <Login />
-        </>
-      ),
+      element: <Login />,
     },
     {
       path: "/user-dashboard",
-      element: (
-        <>
-          <Navbar />
-          <PrivateRoute element={UserDashboard} />
-        </>
-      ),
+      element: <PrivateRoute element={UserDashboard} />,
     },
   ]);
 
