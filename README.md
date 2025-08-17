@@ -15,7 +15,7 @@
 * **Dashboard** after submission:
 
   * Shows **correct answers, wrong answers**, and **accuracy percentage** topic-wise.
-* Clean, responsive UI for smooth quiz experience.
+
 
 ---
 
