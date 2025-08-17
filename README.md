@@ -49,6 +49,10 @@
 
 ![Login](./Frontend/public/screenshots/Login.png)
 
+### Categories
+
+![Categories](./Frontend/public/screenshots/Categories.png)
+
 ### Quiz Page 
 
 ![Quiz](./Frontend/public/screenshots/Quiz.png)
@@ -61,9 +65,7 @@
 
 ![Add Questions](./Frontend/public/screenshots/AddQues.png)
 
-### Categories
 
-![Categories](./Frontend/public/screenshots/Categories.png)
 
 
 
