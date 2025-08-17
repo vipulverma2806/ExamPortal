@@ -19,7 +19,7 @@
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -27,7 +27,6 @@
 * **React Router DOM**
 * **Tailwind CSS**
 * **Axios**
-* **react-icons**
 * **react-toastify**
 
 ### Backend
@@ -35,32 +34,37 @@
 * **Node.js**
 * **Express.js**
 * **MongoDB** + **Mongoose**
-* **dotenv**
-* **cors**
-* **nodemon**
-* **bcryptjs** (for password hashing)
-* **cookie-parser**
-* **jsonwebtoken** (for authentication)
+* **bcryptjs** 
+* **jsonwebtoken** 
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
 
 ### Student Registration
 
-![Register](./Frontend/public/screenshots/register.png)
+![Register](./Frontend/public/screenshots/Register.png)
 
 ### Login Page
 
-![Login](./Frontend/public/screenshots/login.png)
+![Login](./Frontend/public/screenshots/Login.png)
 
-### Quiz Page (Question Navigation)
+### Quiz Page 
 
-![Quiz](./Frontend/public/screenshots/quiz.png)
+![Quiz](./Frontend/public/screenshots/Quiz.png)
 
-### Dashboard (Results & Accuracy)
+### Dashboard 
 
-![Dashboard](./Frontend/public/screenshots/dashboard.png)
+![Dashboard](./Frontend/public/screenshots/Dashboard.png)
+
+### Add Questions
+
+![Add Questions](./Frontend/public/screenshots/Dashboard.png)
+
+### Categories
+
+![Categories](./Frontend/public/screenshots/Dashboard.png)
+
 
 
 
