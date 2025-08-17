@@ -59,11 +59,11 @@
 
 ### Add Questions
 
-![Add Questions](./Frontend/public/screenshots/Dashboard.png)
+![Add Questions](./Frontend/public/screenshots/AddQues.png)
 
 ### Categories
 
-![Categories](./Frontend/public/screenshots/Dashboard.png)
+![Categories](./Frontend/public/screenshots/Categories.png)
 
 
 
