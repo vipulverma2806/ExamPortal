@@ -25,9 +25,9 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="">
+    <div className="fixed w-full">
       <nav className="">
-        <ul className="flex p-4 justify-between bg-gray-900">
+        <ul className="flex pt-5 p-4 justify-between bg-gray-950">
           <h1 className="text-gray-300 font-bold text-3xl">
             Welcome to ExamPortal
           </h1>

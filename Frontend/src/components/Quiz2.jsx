@@ -3,14 +3,14 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 
-const Quiz = () => {
+const Quiz2 = () => {
   axios.defaults.withCredentials = true;
   const { category } = useParams();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   // const [, setScore] = useState(0);
-  const [lastQ, setLastQ] = useState(false);
-  // const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [timeLeft, setTimeLeft] = useState(3 * 60 * 60);
   const [userInfo, setUserInfo] = useState({});
@@ -100,8 +100,8 @@ const Quiz = () => {
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
     } else {
-      setLastQ(true);
-      saveProgress();
+      setShowResult(true);
+      saveProgress(correctAns);
     }
   };
   useEffect(() => {
@@ -109,23 +109,18 @@ const Quiz = () => {
       return saveProgress();
     }
   }, [timeLeft]);
-
-  
-
-  const saveProgress = async () => {
+  const saveProgress = async (correctAns) => {
     console.log("saved progress");
-    console.log(timeSpents);
-    console.log(selectedOptions);
-    try {
-      await axios.post("http://localhost:5000/api/save-progress", {
-        userId: userInfo,
-        category,
-        timeSpents,
-        selectedOptions,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   await axios.post("http://localhost:5000/api/save-progress", {
+    //     userId: userInfo,
+    //     category,
+    //     timeSpents,
+    //     selectedOptions,
+    //   });
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   // const restartQuiz = () => {
@@ -155,22 +150,46 @@ const Quiz = () => {
     <>
       <Navbar />
 
-      <div className="flex  w-full bg-gray-900 h-screen border-t-2 border-white">
-        <div className="lg:w-3/4 w-full border-r-2 pt-30 p-15  border-gray-700 flex justify-center items-center h-full">
-          <div className=" w-full bg-gray-800  flex justify-center flex-col items-center py-10 border rounded-3xl">
-            <div className="w-full h-full  px-30 ">
+      <div className="flex w-full bg-gray-900 min-h-screen border-t border-gray-700">
+        {/* LEFT: MAIN QUIZ AREA */}
+        <div className="lg:w-3/4 w-full border-r border-gray-700 flex justify-center items-center p-6">
+          {showResult ? (
+            <div className="bg-gray-800 p-10 rounded-2xl shadow-lg w-full max-w-lg text-center">
+              <h1 className="text-2xl font-semibold text-gray-200 mb-4">
+                Quiz Completed
+              </h1>
+
+              <button
+                className="w-full py-3 mt-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-gray-100 font-semibold"
+                onClick={saveProgress}
+              >
+                Submit Exam
+              </button>
+
+              <Link to="/user-dashboard">
+                <button className="w-full py-3 mt-3 rounded-xl bg-green-600 hover:bg-green-700 text-gray-100 font-semibold">
+                  User Dashboard
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <div className="w-full max-w-3xl bg-gray-800 p-6 rounded-xl shadow-xl">
               {questions.length > 0 && (
                 <>
-                  <h1 className="text-3xl text-gray-200 font-semibold mb-3">
-                    <span>Q.{currentQuestion + 1} </span>{" "}
+                  <h1 className="text-2xl text-gray-100 font-semibold mb-6">
+                    <span className="text-blue-400">
+                      Q.{currentQuestion + 1}
+                    </span>{" "}
                     {questions[currentQuestion].question}
                   </h1>
-                  <div className="flex text-white w-full gap-y-2 flex-col">
+
+                  {/* OPTIONS */}
+                  <div className="flex flex-col gap-3">
                     {questions[currentQuestion].options.map((option, index) => (
                       <button
                         key={index}
-                        className=" bg-gray-700 text-left text-xl m-1 w-full rounded-xl px-6 py-2 hover:bg-blue-600"
                         onClick={() => handleAnswerOptionClick(option)}
+                        className="px-5 py-3 bg-gray-700 hover:bg-blue-600 transition rounded-xl text-gray-200 text-left"
                       >
                         {option}
                       </button>
@@ -178,23 +197,32 @@ const Quiz = () => {
                   </div>
                 </>
               )}
-              <div className="flex w-full mt-10 justify-between px-5">
+
+              {/* NAVIGATION */}
+              <div className="flex justify-between mt-8">
                 <button
                   disabled={currentQuestion === 0}
                   onClick={() => {
                     recordTime();
                     setCurrentQuestion((prev) => Math.max(prev - 1, 0));
                   }}
-                  className="bg-blue-700 text-white w-30 disabled:bg-gray-700 px-3 py-2 rounded-xl cursor-pointer disabled:cursor-not-allowed"
+                  className={`px-5 py-2 rounded-xl font-medium 
+                ${
+                  currentQuestion === 0
+                    ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                    : "bg-blue-700 hover:bg-blue-800 text-gray-100"
+                }`}
                 >
                   Previous
                 </button>
+
                 <button
-                  className="text-gray-100 cursor-pointer bg-teal-700 px-3 rounded-xl w-30 text-left font-semibold"
+                  className="px-5 py-2 rounded-xl font-semibold bg-teal-700 hover:bg-teal-800 text-gray-100"
                   onClick={saveProgress}
                 >
                   Submit Exam
                 </button>
+
                 <button
                   disabled={currentQuestion === questions.length - 1}
                   onClick={() => {
@@ -203,46 +231,54 @@ const Quiz = () => {
                       Math.min(prev + 1, questions.length - 1)
                     );
                   }}
-                  className={`bg-blue-700 disabled:bg-gray-700 text-white px-3 py-2 w-30 rounded-xl cursor-pointer  disabled:cursor-not-allowed`}
+                  className={`px-5 py-2 rounded-xl font-medium 
+                ${
+                  currentQuestion === questions.length - 1
+                    ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                    : "bg-blue-700 hover:bg-blue-800 text-gray-100"
+                }`}
                 >
                   Next
                 </button>
               </div>
             </div>
-          </div>
+          )}
         </div>
-        <div className="lg:w-1/4 hidden pt-18   bg-gray-800 lg:flex lg:flex-col">
-          <div className="h-1/10 text-gray-300  flex pl-3 items-center font-bold text-2xl">
-            <span className="mr-2">Welcome</span>
-            <span className="text-yellow-500">{userInfo.name}</span>
+
+        {/* RIGHT SIDEBAR */}
+        <div className="lg:w-1/4 hidden lg:flex flex-col bg-gray-800 border-l border-gray-700">
+          <div className="p-5 text-gray-200 text-2xl font-semibold border-b border-gray-700">
+            Welcome, {userInfo.name}
           </div>
-          <div className="h-1/10 text-gray-300 border-gray-500 border-t-2 flex pl-3 items-center font-bold text-xl">
-            <span className="mr-3">Category :</span>{" "}
-            <span className=" text-blue-600">{category}</span>
+
+          <div className="p-4 text-gray-300 text-xl border-b border-gray-700">
+            Category: <span className="text-blue-400">{category}</span>
           </div>
-          <div className="h-1/10  flex pl-3 border-gray-500 border-t-2 items-center font-bold text-xl text-gray-300  p-2 text-left ">
-            <span className="mr-2">Time Left :</span>{" "}
-            <span className="text-red-500">{showTimer(timeLeft)}</span>
+
+          <div className="p-4 text-gray-100 text-xl border-b border-gray-700">
+            ⏳ Time Left:{" "}
+            <span className="text-red-400">{showTimer(timeLeft)}</span>
           </div>
-          <div className="h-4/5 border-y-2 border-gray-500">
-            <h2 className="m-2 text-gray-300 text-xl pl-2 font-semibold">
+
+          <div className="flex flex-col p-4 h-full overflow-y-auto">
+            <h2 className="text-gray-300 text-lg font-semibold mb-3">
               Go to Question
             </h2>
-            <div className="grid gap-y-3 gap-x-3 mx-3 grid-cols-4">
+
+            <div className="grid grid-cols-4 gap-4">
               {questions.map((q, i) => (
-                <div className="flex justify-center mt-3 items-center">
-                  <button
-                    className={` ${
-                      currentQuestion === i ? "bg-blue-600" : "bg-gray-600"
-                    }
-                    h-15 w-15  rounded-xl hover:bg-blue-400 text-white items-center shadow-xs shadow-amber-400 justify-center flex
-                    
-                    `}
-                    onClick={() => handlePick(i)}
-                  >
-                    {i + 1}
-                  </button>
-                </div>
+                <button
+                  key={i}
+                  onClick={() => handlePick(i)}
+                  className={`h-14 w-14 rounded-xl flex items-center justify-center text-gray-200 font-semibold 
+                ${
+                  currentQuestion === i
+                    ? "bg-blue-600"
+                    : "bg-gray-700 hover:bg-gray-900"
+                }`}
+                >
+                  {i + 1}
+                </button>
               ))}
             </div>
           </div>
@@ -252,4 +288,4 @@ const Quiz = () => {
   );
 };
 
-export default Quiz;
+export default Quiz2;

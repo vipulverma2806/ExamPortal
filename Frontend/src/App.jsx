@@ -6,7 +6,9 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import Quiz2 from "./components/Quiz2";
 import Quiz from "./components/Quiz";
+
 import AddQuestion from "./components/AddQuestion";
 import Dashboard from "./components/Dashboard";
 import Register from "./components/Register";
@@ -14,6 +16,7 @@ import Login from "./components/Login";
 import UserDashboard from "./components/UserDashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
+import Dashboard2 from "./components/Dashboard2";
 
 function App() {
   const router = createBrowserRouter([
@@ -25,6 +28,10 @@ function App() {
       path: "/quiz/:category",
       element: <PrivateRoute element={Quiz} />,
     },
+    // {
+    //   path: "/quiz/:category",
+    //   element: <PrivateRoute element={Quiz} />,
+    // },
     {
       path: "/add-question",
       element: <AddQuestion />,
@@ -33,6 +40,10 @@ function App() {
       path: "/dashboard",
       element: <PrivateRoute element={Dashboard} />,
     },
+    // {
+    //   path: "/dashboard",
+    //   element: <PrivateRoute element={Dashboard} />,
+    // },
     {
       path: "/register",
       element: <Register />,
