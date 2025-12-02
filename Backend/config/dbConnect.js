@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const dbConnect = () => {
   mongoose
     .connect(process.env.MONGO_URL)
@@ -6,4 +6,5 @@ const dbConnect = () => {
     .catch((err) => console.log(err));
 };
 
-module.exports = dbConnect;
+
+export default dbConnect;

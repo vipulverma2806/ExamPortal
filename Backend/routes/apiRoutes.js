@@ -1,16 +1,19 @@
-const express = require("express");
-const router = express.Router();
-const addQuestion = require("../controllers/addQuestion");
-const getCategories = require("../controllers/getCategories");
-const getQuestions = require("../controllers/getQuestions");
-const saveProgress = require("../controllers/saveProgress");
-const getProgress = require("../controllers/getProgress");
-const authMiddleware = require("../middlewares/authMiddleware");
-const getName = require("../controllers/getName");
+import express from "express";
+
+import { Router } from "express";
+import addQuestion from "../controllers/addQuestion.js";
+import getCategories from "../controllers/getCategories.js";
+import getQuestions from "../controllers/getQuestions.js";
+import saveProgress from "../controllers/saveProgress.js";
+import getProgress from "../controllers/getProgress.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import getName from "../controllers/getName.js";
+
+const router = Router();
 router.post("/add-question", addQuestion);
 router.get("/categories", getCategories);
 router.get("/questions/:category", getQuestions);
 router.post("/save-progress", authMiddleware, saveProgress);
 router.get("/progress", authMiddleware, getProgress);
 router.get("/getName", authMiddleware, getName);
-module.exports = router;
+export default router;

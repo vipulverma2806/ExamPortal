@@ -8,7 +8,7 @@ import {
 import Navbar from "./components/Navbar";
 import Quiz2 from "./components/Quiz2";
 import Quiz from "./components/Quiz";
-
+import StudentDashboard from "./Pages/StudentDashboard";
 import AddQuestion from "./components/AddQuestion";
 import Dashboard from "./components/Dashboard";
 import Register from "./components/Register";
@@ -40,6 +40,10 @@ function App() {
       path: "/dashboard",
       element: <PrivateRoute element={Dashboard} />,
     },
+    {
+      path: "/studentDashboard",
+      element: <PrivateRoute element={StudentDashboard} />,
+    },
     // {
     //   path: "/dashboard",
     //   element: <PrivateRoute element={Dashboard} />,
@@ -62,7 +66,7 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <RouterProvider router={router} />
       <ToastContainer
-        position="bottom-center"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}

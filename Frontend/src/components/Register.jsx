@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import {toast} from "react-toastify"
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -16,7 +17,7 @@ const Register = () => {
         email,
         password,
       });
-      alert("Register Successfully");
+      toast.success("Registered Successfully")
       setName("");
       setPassword("");
       navigate("/");

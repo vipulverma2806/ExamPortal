@@ -1,5 +1,5 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken"
 
 const authMiddleware = (req, res, next) => {
   const token = req.cookies.token;
@@ -9,6 +9,7 @@ const authMiddleware = (req, res, next) => {
         return res.status(401).send("Unauthorized");
       } else {
         req.userId = decoded.userId;
+        req.userName = decoded.name;
         
         next();
       }
@@ -18,4 +19,4 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+export default authMiddleware;

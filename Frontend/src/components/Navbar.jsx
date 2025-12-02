@@ -28,10 +28,10 @@ const Navbar = () => {
     <div className="fixed w-full">
       <nav className="">
         <ul className="flex pt-5 p-4 justify-between bg-gray-950">
-          <h1 className="text-gray-300 font-bold text-3xl">
+          <h1 className="text-gray-300  flex justify-center items-center font-bold text-3xl">
             Welcome to ExamPortal
           </h1>
-          <div className="flex ">
+          <div className="flex justify-between items-center">
           <Link to={`${otherPaths[0].path}`}>
             <button className="text-xl bg-green-600 rounded-md w-50 mr-3 text-gray-100 font-semibold pb-1 hover:bg-green-800 hover:cursor-pointer">
               {`${otherPaths[0].label}`}
@@ -44,6 +44,8 @@ const Navbar = () => {
             >
               Logout
             </button>
+            {}
+            <button className="text-white rounded-full ml-3 h-10 w-10 bg-gray-600">A</button>
           </li>
           </div>
         </ul>

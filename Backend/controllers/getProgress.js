@@ -1,7 +1,7 @@
-const Progress = require("../models/progress");
+import Attempt from "../models/attempt.model.js";
 const getProgress = async (req, res) => {
-  const progress = await Progress.find({ userId: req.userId });
+  const progress = await Attempt.find({ userId: req.userId });
   console.log(progress);
   res.json(progress);
 };
-module.exports = getProgress;
+export default getProgress;

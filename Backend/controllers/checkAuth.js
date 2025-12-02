@@ -3,4 +3,4 @@ const checkAuth = async (req, res) => {
   res.status(401).json("unAuthorised");
 }
 
-module.exports = checkAuth;
+export default checkAuth;

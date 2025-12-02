@@ -7,4 +7,4 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = logout;
+export default logout;

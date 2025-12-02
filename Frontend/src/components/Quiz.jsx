@@ -17,6 +17,7 @@ const Quiz = () => {
   const [entryTime, setEntryTime] = useState();
   const [timeSpents, setTimeSpents] = useState({});
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [attemptId,setAttemptId] = useState("")
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -122,6 +123,7 @@ const Quiz = () => {
         category,
         timeSpents,
         selectedOptions,
+        attemptId,
       });
     } catch (err) {
       console.log(err);

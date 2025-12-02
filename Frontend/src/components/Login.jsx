@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import {  Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   axios.defaults.withCredentials = true;
@@ -18,7 +19,8 @@ const Login = () => {
       });
       console.log("Login response:", res.data); 
      
-      navigate("/dashboard"); 
+      navigate("/dashboard");
+      toast.success("Login Success") 
     } catch (error) {
       console.error(error)
       console.error(

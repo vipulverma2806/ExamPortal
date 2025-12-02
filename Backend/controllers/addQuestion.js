@@ -1,5 +1,4 @@
-
-const Question = require("../models/question.model")
+import Question from "../models/question.model.js";
 const addQuestion = async (req, res) => {
   const { question, options, answer, category } = req.body;
   const newQuestion = new Question({ question, options, answer, category });
@@ -7,7 +6,7 @@ const addQuestion = async (req, res) => {
   await newQuestion.save();
   res.send('Question added!');
 }
-module.exports = addQuestion;
+export default addQuestion;
 
 
 const arra = [

@@ -1,25 +1,31 @@
-const User = require("../models/user.model");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-require("dotenv").config()
+import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import { configDotenv } from "dotenv";
+configDotenv();
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("password name");
+    console.log("user",user)
 
     if (!user) return res.status(401).send("User Not Found");
+    console.log(password, user.password);
+    const decoded = await bcrypt.compare(password, user.password);
 
-    const decoded =  bcrypt.compare(password , user.password)
+    if (!decoded) return res.status(401).json("Invalid Password");
 
-    if(!decoded) return res.status(401).json("Invalid Password") 
-    
-    const token = jwt.sign({ userId: user._id },process.env.SECRET_KEY, { expiresIn: "1h" });
-    res.cookie("token",token)
-    res.status(202).json("Log in success")
+    const token = jwt.sign(
+      { userId: user._id, name: user.name },
+      process.env.SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+    res.cookie("token", token), { httpOnly: true };
+    res.status(202).json("Log in success");
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).send("Error logging in");
   }
 };
 
-module.exports = login;
+export default login;

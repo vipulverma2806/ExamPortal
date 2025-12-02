@@ -1,15 +1,16 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const apiRoutes = require("./routes/apiRoutes");
-const authRoutes = require("./routes/authRoutes");
-const dbConnect = require("./config/dbConnect");
-const cookieParser = require("cookie-parser")
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import bodyParser from "body-parser";
+import apiRoutes from "./routes/apiRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import dbConnect from "./config/dbConnect.js";
+import cookieParser from "cookie-parser";
+import { configDotenv } from "dotenv";
 const app = express();
-require("dotenv").config();
+configDotenv();
 const PORT = process.env.PORT;
-app.use(cookieParser())
+app.use(cookieParser());
 
 dbConnect();
 app.use(

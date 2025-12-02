@@ -1,7 +1,8 @@
-const Question = require("../models/question.model")
+
+import Question from "../models/question.model.js";
 const getCategories= async (req, res) => {
   const categories = await Question.distinct('category');
   res.json(categories);
 };
 
-module.exports = getCategories;
+export default getCategories;
