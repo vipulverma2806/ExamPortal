@@ -35,8 +35,8 @@ const StudentDashboard = () => {
     <div className="p-4 flex text-white h-screen bg-gray-700 ">
       <div className="fixed py-4 px-4 flex gap-x-5 shadow-xl shadow-black bg-gray-600 rounded-3xl pb-4 w-[97%] h-[95%]">
         <div className="w-60 flex flex-col justify-between shadow-md shadow-black rounded-xl p-6 bg-gray-800 h-full">
-          <nav className="flex flex-col gap-4">
-            <h2 className="text-3xl font-bold ml-2 text-white mb-6">
+          <nav className="flex flex-col gap-3">
+            <h2 className="text-3xl font-bold ml-2 text-white mb-2">
               Student Dashboard
             </h2>
             <h3>Welcome - name here</h3>
@@ -45,7 +45,7 @@ const StudentDashboard = () => {
               end
               className={({ isActive }) =>
                 `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-gray-200 bg-gray-600 "
+                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-500  "
                 }`
               }
             >
@@ -53,36 +53,56 @@ const StudentDashboard = () => {
             </NavLink>
 
             <NavLink
-              to="statistics"
+              to="allExams"
               className={({ isActive }) =>
                 `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-gray-200"
+                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
                 }`
               }
             >
-              Statistics
+              All Exams
             </NavLink>
 
             <NavLink
-              to="allListings"
+              to="leaderboard"
               className={({ isActive }) =>
                 `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-gray-200"
+                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
                 }`
               }
             >
-              All Listings
+              Leaderboard
             </NavLink>
 
             <NavLink
-              to="allUsers"
+              to="reviewExams"
               className={({ isActive }) =>
                 `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-gray-200"
+                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
                 }`
               }
             >
-              All Users
+              Review Exams
+            </NavLink>
+            <NavLink
+              to="certificates"
+              className={({ isActive }) =>
+                `p-2 rounded-md ${
+                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
+                }`
+              }
+            >
+              Certificates
+            </NavLink>
+            <NavLink
+              to="profileSettings"
+              className={({ isActive }) =>
+                `p-2 rounded-md ${
+                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
+                }`
+              }
+            >
+              Profile Settings
             </NavLink>
           </nav>
           <button
@@ -97,7 +117,7 @@ const StudentDashboard = () => {
           </button>
         </div>
 
-        <div className="flex-1 shadow-md shadow-black bg-gray-100 overflow-auto rounded-xl  p-5">
+        <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto rounded-2xl  p-3 ">
           <Outlet />
         </div>
       </div>

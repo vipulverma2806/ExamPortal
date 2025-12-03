@@ -9,6 +9,7 @@ import getProgress from "../controllers/getProgress.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import getName from "../controllers/getName.js";
 
+
 const router = Router();
 router.post("/add-question", addQuestion);
 router.get("/categories", getCategories);
@@ -16,4 +17,5 @@ router.get("/questions/:category", getQuestions);
 router.post("/save-progress", authMiddleware, saveProgress);
 router.get("/progress", authMiddleware, getProgress);
 router.get("/getName", authMiddleware, getName);
+router.get("/getSummaryData",authMiddleware,getSummaryData)
 export default router;

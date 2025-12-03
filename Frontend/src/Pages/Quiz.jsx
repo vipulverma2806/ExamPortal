@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { toast } from "react-toastify";
 
 const Quiz = () => {
   axios.defaults.withCredentials = true;
@@ -17,7 +18,8 @@ const Quiz = () => {
   const [entryTime, setEntryTime] = useState();
   const [timeSpents, setTimeSpents] = useState({});
   const [selectedOptions, setSelectedOptions] = useState({});
-  const [attemptId,setAttemptId] = useState("")
+  const [attemptId, setAttemptId] = useState("");
+  const [saveButton, setSaveButton] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -111,22 +113,25 @@ const Quiz = () => {
     }
   }, [timeLeft]);
 
-  
-
   const saveProgress = async () => {
     console.log("saved progress");
     console.log(timeSpents);
     console.log(selectedOptions);
     try {
+      setSaveButton(true);
       await axios.post("http://localhost:5000/api/save-progress", {
         userId: userInfo,
         category,
         timeSpents,
         selectedOptions,
-        attemptId,
       });
+      toast.success("Exam Completed");
+      navigate("/dashboard");
+      setSaveButton(false);
     } catch (err) {
+      setSaveButton(false);
       console.log(err);
+      toast.error("Some error occurred");
     }
   };
 
@@ -192,10 +197,11 @@ const Quiz = () => {
                   Previous
                 </button>
                 <button
-                  className="text-gray-100 cursor-pointer bg-teal-700 px-3 rounded-xl w-30 text-left font-semibold"
+                  disabled={saveButton}
+                  className="text-gray-100 hover:bg-teal-900  cursor-pointer bg-teal-700 px-3 rounded-xl w-30 text-left font-semibold"
                   onClick={saveProgress}
                 >
-                  Submit Exam
+                  {`${saveButton ? "Wait" : "Submit Exam"}`}
                 </button>
                 <button
                   disabled={currentQuestion === questions.length - 1}

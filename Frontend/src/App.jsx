@@ -7,16 +7,24 @@ import {
 
 import Navbar from "./components/Navbar";
 import Quiz2 from "./components/Quiz2";
-import Quiz from "./components/Quiz";
+import Quiz from "../src/Pages/Quiz";
 import StudentDashboard from "./Pages/StudentDashboard";
 import AddQuestion from "./components/AddQuestion";
-import Dashboard from "./components/Dashboard";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import UserDashboard from "./components/UserDashboard";
+import Dashboard from "./Pages/Dashboard";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
+import UserDashboard from "./Pages/UserDashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import Dashboard2 from "./components/Dashboard2";
+import AllExams from "./Pages/AllExams"
+import Certificates from "./Pages/Certificates"
+import Leaderboard from "./Pages/LeaderBoard"
+import profileSettings from "./Pages/ProfileSettings"
+import ReviewExams from "./Pages/ReviewExams"
+import StudentSummary from "./Pages/StudentSummary"
+
+
 
 function App() {
   const router = createBrowserRouter([
@@ -43,6 +51,32 @@ function App() {
     {
       path: "/studentDashboard",
       element: <PrivateRoute element={StudentDashboard} />,
+      children: [
+        {
+          index: true,
+          element: <PrivateRoute element={StudentSummary} />,
+        },
+        {
+          path: "allExams",
+          element: <PrivateRoute element={AllExams} />,
+        },
+        {
+          path: "certificates",
+          element: <PrivateRoute element={Certificates} />,
+        },
+        {
+          path: "leaderboard",
+          element: <PrivateRoute element={Leaderboard} />,
+        },
+        {
+          path: "profileSettings",
+          element: <PrivateRoute element={profileSettings} />,
+        },
+        {
+          path: "reviewExams",
+          element: <PrivateRoute element={ReviewExams} />,
+        },
+      ],
     },
     // {
     //   path: "/dashboard",
