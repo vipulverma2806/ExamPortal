@@ -30,6 +30,21 @@ const attemptSchema = new mongoose.Schema(
       of: String,
       default: {},
     },
+    rightAnswers: {
+      type: Number,
+      default: 0,
+      required:true
+    },
+    wrongAnswers: {
+      type: Number,
+      default: 0,
+      required:true
+    },
+    totalMarks:{
+      type:Number,
+      default:0,
+      required:true,
+    },
   },
   { timestamps: true }
 );

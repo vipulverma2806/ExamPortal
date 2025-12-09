@@ -3,13 +3,35 @@ import Attempt from "../models/attempt.model.js";
 import Question from "../models/question.model.js";
 
 const saveProgress = async (req, res) => {
-  let { attemptId, category, timeSpents, selectedOptions } = req.body;
+  let { category, timeSpents, selectedOptions } = req.body;
   console.log(req.body);
   try {
-    console.log("inside try", attemptId);
-    const categoryQues = await Question.find({category:category})
-    
+    const categoryQues = await Question.find({ category: category })
+      .select("_id answer")
+      .lean();
 
+    let ansObj = {};
+
+    categoryQues.forEach((item) => {
+      ansObj[item._id.toString()] = item.answer;
+    });
+
+    let totalMarks = 0;
+    let rightAnswers = 0;
+    let wrongAnswers = 0;
+
+    for (const key in ansObj) {
+      if (!selectedOptions[key]) {
+        continue;
+      }
+      if (ansObj[key] === selectedOptions[key]) {
+        totalMarks += 4;
+        rightAnswers += 1;
+      } else {
+        totalMarks -= 1;
+        wrongAnswers += 1;
+      }
+    }
 
     const found = await Attempt.findOne({
       userId: req.userId,
@@ -22,16 +44,16 @@ const saveProgress = async (req, res) => {
           $set: {
             timeSpents,
             selectedOptions,
+            totalMarks,
+            rightAnswers,
+            wrongAnswers,
           },
         },
 
         { new: true }
       );
 
-
-
-
-     return res.status(200).send("Progress saved!");
+      return res.status(200).send("Progress saved!");
     }
 
     await Attempt.create({
@@ -40,8 +62,11 @@ const saveProgress = async (req, res) => {
       selectedOptions,
       userId: req.userId,
       name: req.userName,
+      totalMarks,
+      rightAnswers,
+      wrongAnswers,
     });
-   return res.status(200).send("Progress saved!");
+    return res.status(200).send("Progress saved!");
   } catch (err) {
     res.status(500).send(err);
   }

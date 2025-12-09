@@ -21,7 +21,7 @@ const Quiz = () => {
   const [attemptId, setAttemptId] = useState("");
   const [saveButton, setSaveButton] = useState(false);
   const navigate = useNavigate();
-
+  // console.log("this console log running continuously ")
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -29,7 +29,10 @@ const Quiz = () => {
           `http://localhost:5000/api/questions/${category}`
         );
         setQuestions(res.data);
-        // console.log(res.data);
+        for (let i =1;i<=res.data.length;i++){
+          setTimeSpents((prev)=>({...prev,[i]:0}))
+        }
+        console.log(timeSpents);
       } catch (err) {
         console.log(err);
       }
@@ -72,8 +75,11 @@ const Quiz = () => {
     const timePeriod = Math.floor(((exitTime - entryTime) / 1000) * 100) / 100;
     setTimeSpents((prev) => ({
       ...prev,
-      [questions[currentQuestion]._id]:
-        (prev[questions[currentQuestion]._id] || 0) + timePeriod,
+      // [questions[currentQuestion]._id]:
+      //   (prev[questions[currentQuestion]._id] || 0) + timePeriod,
+       [currentQuestion + 1] :
+         (prev[questions[currentQuestion]._id] || 0) + timePeriod,
+      
     }));
     setSelectedOptions((prev) => ({
       ...prev,
@@ -103,8 +109,7 @@ const Quiz = () => {
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
     } else {
-      setLastQ(true);
-      saveProgress();
+      setCurrentQuestion(0);
     }
   };
   useEffect(() => {
@@ -128,6 +133,7 @@ const Quiz = () => {
       toast.success("Exam Completed");
       navigate("/dashboard");
       setSaveButton(false);
+      console.log(timeSpents)
     } catch (err) {
       setSaveButton(false);
       console.log(err);
