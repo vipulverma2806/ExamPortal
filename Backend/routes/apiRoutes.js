@@ -17,5 +17,5 @@ router.get("/questions/:category", getQuestions);
 router.post("/save-progress", authMiddleware, saveProgress);
 router.get("/progress", authMiddleware, getProgress);
 router.get("/getName", authMiddleware, getName);
-router.get("/getStudentSummary/:id", authMiddleware, getStudentSummary);
+router.get("/getStudentSummary", authMiddleware, getStudentSummary);
 export default router;

@@ -27,52 +27,97 @@ ChartJS.register(
 const TimePerQues = () => {
   axios.defaults.withCredentials = true;
   const [chartData, setChartData] = useState(null);
-  const [category,setCategory] = useState("")
-//   const category = "AI";
+  const [categories, setCategories] = useState([]);
+  const [selectCategory, setSelectCategory] = useState("");
+  const [allAttempts, setAllAttempts] = useState([]);
+  //   const category = "AI";
+
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`${URL}/api/getStudentSummary`);
-      const apiData = res.data[0];
+      try {
+        const res = await axios.get(`${URL}/api/getStudentSummary`);
+        const attemptsArr = res.data;
+        setAllAttempts(attemptsArr);
+        const categoriesArr = attemptsArr.map((attempt, i) => attempt.category);
+        setCategories(categoriesArr);
+        const attempt = attemptsArr[0];
 
-      const timeSpents = Object.values(apiData.timeSpents);
-      const QuesNo = Object.keys(apiData.timeSpents);
-      console.log(apiData);
+        const timeSpents = Object.values(attempt.timeSpents);
+        const QuesNo = Object.keys(attempt.selectedOptions);
 
-      const formatted = {
-        labels: QuesNo,
+        const formatted = {
+          labels: QuesNo,
 
-        datasets: [
-          {
-            label: "Total Bookings",
-            data: timeSpents,
+          datasets: [
+            {
+              label: "Total Bookings",
+              data: timeSpents,
 
-            borderColor: "rgba(75,192,192,1)",
-            backgroundColor: "rgba(75,192,192,0.3)",
-            fill: true,
-            tension: 0.4,
-          },
-        ],
-      };
-
-      setChartData(formatted);
+              borderColor: "rgba(75,192,192,1)",
+              backgroundColor: "rgba(75,192,192,0.3)",
+              fill: true,
+              tension: 0.4,
+            },
+          ],
+        };
+        setChartData(formatted);
+        console.log();
+      } catch (err) {
+        console.log(err);
+      }
+      //   const timeSpents = Object.values(apiData.timeSpents);
+      //   const QuesNo = Object.keys(apiData.timeSpents);
+      //   console.log(apiData);
     };
 
     fetchData();
   }, []);
 
+  const showCategory = (cat) => {
+    setSelectCategory(cat)
+    const attempt = allAttempts.filter(
+      (attempt, i) => attempt.category === selectCategory
+    );
+    const timeSpents = Object.values(attempt[0].timeSpents);
+    // const QuesNo = Object.keys(attempt[0].timeSpents);
+    const QuesNo = [1,2,3,4,5,6,7]
+    console.log();
+
+    const formatted = {
+      labels: QuesNo,
+
+      datasets: [
+        {
+          label: "Total Bookings",
+          data: [1,2,3,4,5,6,7,8],
+
+          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(75,192,192,0.3)",
+          fill: true,
+          tension: 0.4,
+        },
+      ],
+    };
+    setChartData(formatted);
+  };
+
   return (
     <div>
-        <h2 className="text-xl text-left text-white font-bold mb-1 pl-5 py-2">
-          Time taken per Question
-        </h2>
-        <select name="" id="">
-            {category.map((cat,i)=>{
-                return <option value={cat} onClick={()=>setCategory(cat)}>{cat}</option>
-            })}
-        </select>
+      <h2 className="text-xl text-left text-white font-bold mb-1 pl-5 py-2">
+        Time taken per Question
+      </h2>
+      <select name="" id="" className="w-[200px] bg-gray-700">
+        {categories.map((cat, i) => {
+          return (
+            <option value={cat} onClick={()=>showCategory(cat) }>
+              {cat}
+            </option>
+          );
+        })}
+      </select>
       <div className="w-full h-full px-5 py-3 bg-white rounded shadow-xl border">
         <h2 className="text-xl h-1/2 text-black font-bold mb-1 text-center">
-          {category}
+          {}
         </h2>
 
         {chartData ? (

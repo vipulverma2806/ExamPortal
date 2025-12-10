@@ -5,7 +5,7 @@ const getStudentSummary = async (req, res) => {
   const category = req.params.id;
   console.log(userId,category)
   try {
-    const data = await Attempt.find({ category: category, userId: userId });
+    const data = await Attempt.find({ userId: userId });
     console.log("getStudentSummary",data);
    return res.json(data)
   } catch (err) {
