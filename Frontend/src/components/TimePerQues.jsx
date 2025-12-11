@@ -24,35 +24,33 @@ ChartJS.register(
   Legend,
   Filler
 );
-const TimePerQues = () => {
+const TimePerQues = ({attemptArr}) => {
   axios.defaults.withCredentials = true;
   const [chartData, setChartData] = useState(null);
   const [categories, setCategories] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
   const [allAttempts, setAllAttempts] = useState([]);
-  //   const category = "AI";
+
 
   useEffect(() => {
     const fetchData = async () => {
+
       try {
-        const res = await axios.get(`${URL}/api/getStudentSummary`);
-        const attemptsArr = res.data;
-        setAllAttempts(attemptsArr);
-        const categoriesArr = attemptsArr.map((attempt, i) => attempt.category);
+      
+        const categoriesArr = attemptArr.map((attempt, i) => attempt.category);
         setCategories(categoriesArr);
-        const attempt = attemptsArr[0];
-
+        const attempt = attemptArr[0];
+        console.log(attemptArr)
         const timeSpents = Object.values(attempt.timeSpents);
-        const QuesNo = Object.keys(attempt.selectedOptions);
-
+        const QuesNo = Object.keys(attempt.timeSpents);
+    
         const formatted = {
           labels: QuesNo,
 
           datasets: [
             {
-              label: "Total Bookings",
+              label: "Time Taken per Question",
               data: timeSpents,
-
               borderColor: "rgba(75,192,192,1)",
               backgroundColor: "rgba(75,192,192,0.3)",
               fill: true,
@@ -61,35 +59,31 @@ const TimePerQues = () => {
           ],
         };
         setChartData(formatted);
-        console.log();
       } catch (err) {
         console.log(err);
       }
-      //   const timeSpents = Object.values(apiData.timeSpents);
-      //   const QuesNo = Object.keys(apiData.timeSpents);
-      //   console.log(apiData);
+    
     };
 
     fetchData();
   }, []);
 
   const showCategory = (cat) => {
-    setSelectCategory(cat)
-    const attempt = allAttempts.filter(
-      (attempt, i) => attempt.category === selectCategory
+    const attempt = attemptArr.filter(
+      (attempt, i) => attempt.category === cat
     );
+    console.log(attempt);
     const timeSpents = Object.values(attempt[0].timeSpents);
-    // const QuesNo = Object.keys(attempt[0].timeSpents);
-    const QuesNo = [1,2,3,4,5,6,7]
-    console.log();
+    const QuesNo = Object.keys(attempt[0].timeSpents);
+   
 
     const formatted = {
       labels: QuesNo,
 
       datasets: [
         {
-          label: "Total Bookings",
-          data: [1,2,3,4,5,6,7,8],
+          label: "Time Taken per Question",
+          data: timeSpents,
 
           borderColor: "rgba(75,192,192,1)",
           backgroundColor: "rgba(75,192,192,0.3)",
@@ -102,33 +96,72 @@ const TimePerQues = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-xl text-left text-white font-bold mb-1 pl-5 py-2">
-        Time taken per Question
-      </h2>
-      <select name="" id="" className="w-[200px] bg-gray-700">
+    <div className="h-full py-1  rounded-2xl bg-gray-600 ">
+      <select
+        name=""
+        id=""
+        className="w-[200px] ml-10 mt-5 rounded-xl relative top-3 z-40 px-3 py-1 bg-gray-500 text-white font-semibold text-xl"
+        onChange={(e) => {
+          showCategory(e.target.value);
+          console.log("working", e.target.value);
+        }}
+      >
         {categories.map((cat, i) => {
-          return (
-            <option value={cat} onClick={()=>showCategory(cat) }>
-              {cat}
-            </option>
-          );
+          return <option className="hover:bg-red-600" value={cat}>{cat}</option>;
         })}
       </select>
-      <div className="w-full h-full px-5 py-3 bg-white rounded shadow-xl border">
-        <h2 className="text-xl h-1/2 text-black font-bold mb-1 text-center">
-          {}
-        </h2>
-
+      <div className="w-full h-full relative z-10 bottom-15 px-5 py-5 flex justify-center items-center   ">
         {chartData ? (
           <Line
+            className="bg-white p-3  rounded-xl  shadow-xl border"
             data={chartData}
             options={{
+              plugins: {
+                legend: {
+                  labels: {
+                    font: {
+                      size: 18,
+                      weight: "bold",
+                    },
+                  },
+                },
+                
+              },
+
+              maintainAspectRatio:false,
+              responsive: true,
               scales: {
                 y: {
                   beginAtZero: true,
                   ticks: {
                     stepSize: 1,
+                    font: {
+                      size: 13,
+                    },
+                  },
+                  title: {
+                    display: true,
+                    text: "time in seconds",
+                    font: {
+                      size: 18,
+                      weight: "bold",
+                    },
+                  },
+                },
+                x: {
+                  ticks: {
+                    stepSize: 1,
+                    font: {
+                      size: 13,
+                    },
+                  },
+                  title: {
+                    display: true,
+                    text: "Question Numbers",
+                    font: {
+                      size: 18,
+                      weight: "bold",
+                    },
                   },
                 },
               },

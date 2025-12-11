@@ -117,7 +117,7 @@ const StudentDashboard = () => {
           </button>
         </div>
 
-        <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto rounded-2xl  p-3 ">
+        <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto h-auto rounded-2xl  p-3 ">
           <Outlet />
         </div>
       </div>
