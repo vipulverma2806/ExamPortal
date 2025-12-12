@@ -29,7 +29,7 @@ const RightWrongPie = ({attemptArr}) => {
     fetchData();
   }, []);
 
-  console.log(rightAns, wrongAns);
+  // console.log(rightAns, wrongAns);
 
   const pieData = {
     labels: ["Right Answers", "Wrong Answerss"],

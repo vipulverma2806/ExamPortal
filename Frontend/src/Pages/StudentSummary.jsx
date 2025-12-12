@@ -6,7 +6,7 @@ import { useOutletContext } from "react-router-dom";
 import axios from "axios";
 const URL = import.meta.env.VITE_URL;
 const StudentSummary = () => {
-  const attemptArr = useOutletContext();
+  const {attemptArr} = useOutletContext();
 
   return (
     <>

@@ -11,6 +11,7 @@ const URL = import.meta.env.VITE_URL;
 axios.defaults.withCredentials = true;
 const StudentDashboard = () => {
   const [attemptArr, setAttemptArr] = useState([]);
+  const [details, setDetails] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,7 +23,7 @@ const StudentDashboard = () => {
     };
     fetchData();
   }, []);
-  console.log(attemptArr);
+  // console.log(attemptArr);
 
   //   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,69 +47,79 @@ const StudentDashboard = () => {
     }
   };
 
+  useEffect(() => {
+    const getDetails = async () => {
+      try {
+        const success = await axios.get(`${URL}/auth/getDetails`);
+
+        return setDetails(success.data);
+      } catch (err) {
+        return console.log(err);
+      }
+    };
+    getDetails();
+  }, []);
+
   return (
     <div className="p-4 flex text-white h-screen bg-gray-700 ">
       <div className="fixed py-4 px-4 flex gap-x-5 shadow-xl shadow-black bg-gray-600 rounded-3xl pb-4 w-[97%] h-[95%]">
         <div className="w-60 flex flex-col justify-between shadow-md shadow-black rounded-xl p-6 bg-gray-800 h-full">
-          <nav className="flex flex-col gap-3">
-            <h2 className="text-3xl font-bold ml-2 text-white mb-2">
-              Student Dashboard
-            </h2>
-            <h3>Welcome - name here</h3>
-            <NavLink
-              to=""
-              end
-              className={({ isActive }) =>
-                `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-500  "
-                }`
-              }
-            >
-              Summary
-            </NavLink>
-          
+          <nav className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 ">
+              <h2 className="text-3xl font-bold ml-2 text-white">
+                Student Dashboard
+              </h2>
+              <h3 className=" text-2xl rounded-xl bg-gray-900 p-3">
+                Welcome,{" "}
+                <span className="font-bold text-teal-600">{details.name}</span>
+              </h3>
+            </div>
+            <div className="flex flex-col gap-3 ">
+              <NavLink
+                to=""
+                end
+                className={({ isActive }) =>
+                  `p-2 rounded-md ${
+                    isActive ? "bg-blue-600 text-white" : "hover:bg-blue-500  "
+                  }`
+                }
+              >
+                Summary
+              </NavLink>
 
-            <NavLink
-              to="leaderboard"
-              className={({ isActive }) =>
-                `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
-                }`
-              }
-            >
-              Leaderboard
-            </NavLink>
+              <NavLink
+                to="leaderboard"
+                className={({ isActive }) =>
+                  `p-2 rounded-md ${
+                    isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
+                  }`
+                }
+              >
+                Leaderboard
+              </NavLink>
 
-            <NavLink
-              to="reviewExams"
-              className={({ isActive }) =>
-                `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
-                }`
-              }
-            >
-              Review Exams
-            </NavLink>
-            <NavLink
-              to="certificates"
-              className={({ isActive }) =>
-                `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
-                }`
-              }
-            >
-              Certificates
-            </NavLink>
-            <NavLink
-              to="profileSettings"
-              className={({ isActive }) =>
-                `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
-                }`
-              }
-            >
-              Profile Settings
-            </NavLink>
+              <NavLink
+                to="reviewExams"
+                className={({ isActive }) =>
+                  `p-2 rounded-md ${
+                    isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
+                  }`
+                }
+              >
+                Review Exams
+              </NavLink>
+
+              <NavLink
+                to="profileSettings"
+                className={({ isActive }) =>
+                  `p-2 rounded-md ${
+                    isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
+                  }`
+                }
+              >
+                Profile Settings
+              </NavLink>
+            </div>
           </nav>
           <div className="flex flex-col gap-y-4">
             <NavLink
@@ -137,7 +148,7 @@ const StudentDashboard = () => {
         </div>
 
         <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto h-auto rounded-2xl  p-3 ">
-          <Outlet context={attemptArr}/>
+          <Outlet context={{ details, attemptArr }} />
         </div>
       </div>
     </div>

@@ -17,11 +17,22 @@ const LeaderBoard = () => {
   }, []);
   return (
     <div>
+      <div className="grid  text-2xl font-bold text-center bg-teal-700 mb-3 rounded-xl   border-2 border-gray-300  py-2 grid-cols-3">
+        <span className="">Rank</span><span>Name</span><span>Marks</span>
+      </div>
       {leaderArray.map((student, i) => {
-        return <div>
-          <span>{i==0 && "🥇"}{i==1 && "🥈"}{i==2 && "🥇"}</span><span></span><span></span>
-        </div>
-        
+        return (
+          <div className="grid text-center bg-gray-600 mb-3 rounded-3xl py-2 grid-cols-3">
+            <span className="text-4xl ">
+              {i == 0 && "🥇"}
+              {i == 1 && "🥈"}
+              {i == 2 && "🥉"}
+              {i > 2 && `${i + 1}.`}
+            </span>
+            <span className="text-2xl ">{student.name}</span>
+            <span className="text-2xl">{student.finalMarks}</span>
+          </div>
+        );
       })}
     </div>
   );

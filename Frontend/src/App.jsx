@@ -18,7 +18,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import Dashboard2 from "./components/Dashboard2";
 import AllExams from "./Pages/AllExams"
-import Certificates from "./Pages/Certificates"
+
 import Leaderboard from "./Pages/LeaderBoard"
 import profileSettings from "./Pages/ProfileSettings"
 import ReviewExams from "./Pages/ReviewExams"
@@ -60,10 +60,7 @@ function App() {
           path: "allExams",
           element: <PrivateRoute element={AllExams} />,
         },
-        {
-          path: "certificates",
-          element: <PrivateRoute element={Certificates} />,
-        },
+       
         {
           path: "leaderboard",
           element: <PrivateRoute element={Leaderboard} />,

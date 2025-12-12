@@ -37,7 +37,7 @@ const TimePerQues = ({ attemptArr }) => {
         const categoriesArr = attemptArr.map((attempt, i) => attempt.category);
         setCategories(categoriesArr);
         const attempt = attemptArr[0];
-        console.log(attemptArr);
+        // console.log(attemptArr);
         const timeSpents = Object.values(attempt.timeSpents);
         const QuesNo = Object.keys(attempt.timeSpents);
 

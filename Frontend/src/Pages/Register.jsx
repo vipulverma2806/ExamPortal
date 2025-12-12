@@ -26,52 +26,7 @@ const Register = () => {
     }
   };
 
-  // return (
-  //   <div className="w-full justify-center items-center min-h-screen flex">
-
-  //       <form onSubmit={handleSubmit} className="lg:w-1/3 w-full flex justify-center items-center flex-col">
-  //         <h1>Register</h1>
-  //         <input
-  //           type="text"
-  //           placeholder="name"
-  //           value={name}
-  //           onChange={(e) => setname(e.target.value)}
-  //           className=""
-  //         />
-  //         <input
-  //           type="email"
-  //           placeholder="Email"
-  //           value={email}
-  //           onChange={(e) => setEmail(e.target.value)}
-  //           className=""
-  //         />
-  //         <input
-  //           type="password"
-  //           placeholder="Password"
-  //           value={password}
-  //           onChange={(e) => setPassword(e.target.value)}
-  //           className=""
-  //         />
-  //         <button type="submit" className="">
-  //           Register
-  //         </button>
-  //          <p className="text-left w-full">
-  //         Already have an account?{" "}
-  //         <Link to path="/login" className="text-blue-600 hover:cursor-pointer">
-  //           Login here
-  //         </Link>
-  //       </p>
-  //       </form>
-
-  //     <div className="hidden lg:block lg:w-2/3">
-  //       <img
-  //         src="../../public/exam.jpg"
-  //         className="min-h-screen object-cover"
-  //         alt="Description"
-  //       />
-  //     </div>
-  //   </div>
-  // );
+  
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center">
