@@ -51,7 +51,7 @@ const RightWrongPie = ({attemptArr}) => {
         position: "bottom",
         labels: {
           font: { size: 16, },
-          color : "white",
+          color : "black",
         },
         
       },
@@ -59,7 +59,7 @@ const RightWrongPie = ({attemptArr}) => {
         display: true,
         text: "Performance Breakdown",
         font: { size:20, weight: "bold" },
-        color: "white",
+        color: "black",
         padding: 10,
         
       },
@@ -67,8 +67,8 @@ const RightWrongPie = ({attemptArr}) => {
   };
 
   return (
-    <div className="w-1/3  bg-gray-600 p-1 my-4 rounded-2xl">
-      <Pie data={pieData} options={pieOptions} />
+    <div className="w-1/3  bg-white p-1 my-4 rounded-2xl">
+      <Pie data={pieData} options={pieOptions}  />
     </div>
   );
 };

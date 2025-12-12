@@ -3,13 +3,28 @@ import { Outlet, NavLink, useNavigate } from "react-router-dom";
 // import NavBar from "../Component/NavBar";
 // import { getAdminData, cleanAdminData } from "../Redux/AdminSlice";
 import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
 // import { logout } from "../Redux/AuthSlice";
 // import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 const URL = import.meta.env.VITE_URL;
 axios.defaults.withCredentials = true;
 const StudentDashboard = () => {
-//   const dispatch = useDispatch();
+  const [attemptArr, setAttemptArr] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${URL}/api/getStudentSummary`);
+        setAttemptArr(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
+  console.log(attemptArr);
+
+  //   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const loading = useSelector((state) => state.auth.loading);
   // const logoutSuccess = useSelector((state) => state.listing.navigate);
@@ -22,7 +37,7 @@ const StudentDashboard = () => {
     try {
       setLoading(true);
       const success = await axios.delete(`${URL}/auth/logout`);
-    //   dispatch(cleanAdminData());
+      //   dispatch(cleanAdminData());
       toast.success("Logout Succesfully");
       navigate("/");
       return setLoading(false);
@@ -51,17 +66,7 @@ const StudentDashboard = () => {
             >
               Summary
             </NavLink>
-
-            <NavLink
-              to="allExams"
-              className={({ isActive }) =>
-                `p-2 rounded-md ${
-                  isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
-                }`
-              }
-            >
-              All Exams
-            </NavLink>
+          
 
             <NavLink
               to="leaderboard"
@@ -105,20 +110,34 @@ const StudentDashboard = () => {
               Profile Settings
             </NavLink>
           </nav>
-          <button
-            onClick={logout}
-            className={`
+          <div className="flex flex-col gap-y-4">
+            <NavLink
+              to="/dashboard"
+              className={`
+                p-2 text-center rounded-md
+                     text-white   ${
+                       loading
+                         ? "bg-red-600"
+                         : "bg-green-600 hover:bg-green-800"
+                     }`}
+            >
+              Give Exam
+            </NavLink>
+            <button
+              onClick={logout}
+              className={`
                 p-2 rounded-md
                      text-white   ${
                        loading ? "bg-green-600" : "bg-red-600 hover:bg-red-800"
                      }`}
-          >
-            {loading ? "Wait..." : "Logout"}
-          </button>
+            >
+              {loading ? "Wait..." : "Logout"}
+            </button>
+          </div>
         </div>
 
         <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto h-auto rounded-2xl  p-3 ">
-          <Outlet />
+          <Outlet context={attemptArr}/>
         </div>
       </div>
     </div>

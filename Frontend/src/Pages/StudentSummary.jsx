@@ -2,22 +2,12 @@ import React, { useEffect, useState } from "react";
 import TimePerQues from "../components/TimePerQues";
 import RightWrongPie from "../components/RightWrongPie";
 import TopicWiseBar from "../components/TopicWiseBar";
+import { useOutletContext } from "react-router-dom";
 import axios from "axios";
 const URL = import.meta.env.VITE_URL;
 const StudentSummary = () => {
-  const [attemptArr, setAttemptArr] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`${URL}/api/getStudentSummary`);
-        setAttemptArr(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, []);
-  console.log(attemptArr);
+  const attemptArr = useOutletContext();
+
   return (
     <>
       {attemptArr.length == 0 ? (
