@@ -47,16 +47,17 @@ const StudentDashboard = () => {
     }
   };
 
-  useEffect(() => {
-    const getDetails = async () => {
-      try {
-        const success = await axios.get(`${URL}/auth/getDetails`);
+  const getDetails = async () => {
+    try {
+      const success = await axios.get(`${URL}/auth/getDetails`);
 
-        return setDetails(success.data);
-      } catch (err) {
-        return console.log(err);
-      }
-    };
+      return setDetails(success.data);
+    } catch (err) {
+      return console.log(err);
+    }
+  };
+
+  useEffect(() => {
     getDetails();
   }, []);
 
@@ -148,7 +149,7 @@ const StudentDashboard = () => {
         </div>
 
         <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto h-auto rounded-2xl  p-3 ">
-          <Outlet context={{ details, attemptArr }} />
+          <Outlet context={{ details, attemptArr,getDetails }} />
         </div>
       </div>
     </div>

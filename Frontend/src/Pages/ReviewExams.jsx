@@ -64,7 +64,7 @@ const ReviewExams = () => {
         {filteredQues.map((que, i) => {
           let Qid = que._id;
           return (
-            <div className="w-full mb-6 rounded-3xl py-10 h-full bg-gray-600 px-10 ">
+            <div className="w-full mb-6 rounded-3xl py-10 h-full bg-gray-600 bg-gradient-to-br from-gray-700 to-teal-800 px-10 ">
               <h1 className="text-3xl text-gray-200 font-semibold mb-3">
                 <span>Q.{i + 1} </span> {que.question}
               </h1>

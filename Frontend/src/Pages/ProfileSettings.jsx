@@ -2,25 +2,37 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 const ProfileSettings = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(true);
   const navigate = useNavigate();
-  const { details } = useOutletContext();
-  const handleRegister = async (e) => {
+  const { details ,getDetails } = useOutletContext();
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
+
+    if (password.trim() !== rePassword.trim()) return setPasswordMatch(false);
+    if (!(name || email)) return toast.error("Please fill something");
+    setPasswordMatch(true);
+    console.log(passwordMatch);
+
     try {
-      await axios.post("http://localhost:5000/auth/register", {
-        name,
-        email,
-        password,
+      await axios.put("http://localhost:5000/auth/updateProfile", {
+        name: name.trim(),
+        email : email.trim(),
+        password : password.trim(),
       });
-      toast.success("Registered Successfully");
+      toast.success("updated Successfully");
       setName("");
       setPassword("");
-      navigate("/");
+      setEmail("");
+      getDetails();
+      navigate("/studentDashboard")
     } catch (error) {
       console.error("Registration failed:", error);
     }
@@ -30,7 +42,7 @@ const ProfileSettings = () => {
   return (
     <div className="flex justify-center items-center  w-full h-full">
       <form
-        onSubmit={handleRegister}
+        onSubmit={handleUpdate}
         className="bg-gray-800 flex flex-col p-6   rounded-2xl space-y-5 max-w-2xl w-full "
       >
         <h1 className="text-gray-100 mb-10 text-center text-5xl w-full  font-bold">
@@ -40,9 +52,10 @@ const ProfileSettings = () => {
           type="text"
           placeholder={details.name}
           className={inputCSS}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {setName(e.target.value)
+         
+          }}
           value={name}
-          required
         />
         <input
           type="email"
@@ -50,24 +63,35 @@ const ProfileSettings = () => {
           className={inputCSS}
           onChange={(e) => setEmail(e.target.value)}
           value={email}
-          required
         />
         <input
           type="password"
           placeholder="New Password"
           className={inputCSS}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
           value={password}
-          required
         />
         <input
           type="password"
           placeholder="Re-Enter New Password"
           className={inputCSS}
-          onChange={(e) => setRePassword(e.target.value)}
+          onChange={(e) => {
+            setRePassword(e.target.value);
+          }}
           value={rePassword}
-          required
         />
+        <div className=" h-2">
+          <p
+            className={`text-red-500 semibold ${
+              passwordMatch ? "hidden" : "blcok"
+            }`}
+          >
+            *Password does not match
+          </p>
+        </div>
+
         <button
           type="submit"
           className="bg-blue-500 rounded-2xl p-3 hover:bg-blue-700 hover:cursor-pointer text-xl text-white w-full"
