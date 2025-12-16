@@ -37,7 +37,7 @@ const StudentDashboard = () => {
   const logout = async () => {
     try {
       setLoading(true);
-      const success = await axios.delete(`${URL}/auth/logout`);
+      const success = await axios.post(`${URL}/auth/logout`);
       //   dispatch(cleanAdminData());
       toast.success("Logout Succesfully");
       navigate("/");

@@ -19,7 +19,7 @@ const Login = () => {
       });
       console.log("Login response:", res.data); 
      
-      navigate("/dashboard");
+      navigate("/studentDashboard");
       toast.success("Login Success") 
     } catch (error) {
       console.error(error)

@@ -7,7 +7,7 @@ const Navbar = () => {
   const location = useLocation();
   const allPaths = [
     { path: "/dashboard", label: "Choose a Category" },
-    { path: "/user-dashboard", label: "User Dashboard" },
+    { path: "/studentDashboard", label: "Dashboard" },
   ];
 
   const otherPaths = allPaths.filter((page) => page.path !== location.pathname);
@@ -25,9 +25,9 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="fixed w-full">
+    <div className="fixed  w-full">
       <nav className="">
-        <ul className="flex pt-5 p-4 justify-between bg-gray-950">
+        <ul className="flex pt-5 p-4 justify-between bg-gradient-to-r from-teal-800 to-gray-950">
           <h1 className="text-gray-300  flex justify-center items-center font-bold text-3xl">
             Welcome to ExamPortal
           </h1>
@@ -45,7 +45,7 @@ const Navbar = () => {
               Logout
             </button>
             {}
-            <button className="text-white rounded-full ml-3 h-10 w-10 bg-gray-600">A</button>
+           
           </li>
           </div>
         </ul>

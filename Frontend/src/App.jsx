@@ -17,29 +17,20 @@ import UserDashboard from "./Pages/UserDashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import Dashboard2 from "./components/Dashboard2";
-import AllExams from "./Pages/AllExams"
+import AllExams from "./Pages/AllExams";
 
-import Leaderboard from "./Pages/LeaderBoard"
-import profileSettings from "./Pages/ProfileSettings"
-import ReviewExams from "./Pages/ReviewExams"
-import StudentSummary from "./Pages/StudentSummary"
-
-
+import Leaderboard from "./Pages/LeaderBoard";
+import profileSettings from "./Pages/ProfileSettings";
+import ReviewExams from "./Pages/ReviewExams";
+import StudentSummary from "./Pages/StudentSummary";
 
 function App() {
   const router = createBrowserRouter([
-    // {
-    //   path: '/register',
-    //   element: <Navigate to="/register" /> // Redirect to register page
-    // },
     {
       path: "/quiz/:category",
       element: <PrivateRoute element={Quiz} />,
     },
-    // {
-    //   path: "/quiz/:category",
-    //   element: <PrivateRoute element={Quiz} />,
-    // },
+
     {
       path: "/add-question",
       element: <AddQuestion />,
@@ -60,7 +51,7 @@ function App() {
           path: "allExams",
           element: <PrivateRoute element={AllExams} />,
         },
-       
+
         {
           path: "leaderboard",
           element: <PrivateRoute element={Leaderboard} />,
@@ -75,10 +66,43 @@ function App() {
         },
       ],
     },
-    // {
-    //   path: "/dashboard",
-    //   element: <PrivateRoute element={Dashboard} />,
-    // },
+
+ {
+      path: "/teacherDashboard",
+      element: <PrivateRoute element={TeacherDashboard} />,
+      children: [
+        {
+          index: true,
+          element: <PrivateRoute element={TeacherSummary} />,
+        },
+        {
+          path: "add-Exam",
+          element: <PrivateRoute element={AddExam} />,
+        },
+
+        {
+          path: "modifyExam",
+          element: <PrivateRoute element={ModifyExam} />,
+        },
+        {
+          path: "profileSettings",
+          element: <PrivateRoute element={Leader} />,
+        },
+        {
+          path: "reviewExams",
+          element: <PrivateRoute element={ReviewExams} />,
+        },
+      ],
+    },
+    
+
+
+
+
+
+
+
+
     {
       path: "/register",
       element: <Register />,
@@ -86,10 +110,6 @@ function App() {
     {
       path: "/",
       element: <Login />,
-    },
-    {
-      path: "/user-dashboard",
-      element: <PrivateRoute element={UserDashboard} />,
     },
   ]);
 
