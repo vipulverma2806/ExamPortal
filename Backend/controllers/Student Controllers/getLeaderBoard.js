@@ -13,7 +13,7 @@ const getStudentSummary = async (req, res) => {
         },
       },
     ]).sort({ finalMarks: -1 });
-    console.log("getLeaderBoard", data);
+    // console.log("getLeaderBoard", data);
     return res.json(data);
   } catch (err) {
     console.log(err);

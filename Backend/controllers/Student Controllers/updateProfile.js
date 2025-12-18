@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 const updateProfile = async (req, res) => {
   const userId = req.userId;
   const { name, email, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   let updateData = {};
 
   if (name && name.trim() !== "") updateData.name = name;
@@ -19,13 +19,13 @@ const updateProfile = async (req, res) => {
   if (Object.keys(updateData).length == 0)
     return res.status(400).json("nothing to update");
   try {
-    console.log(userId)
+    // console.log(userId)
     const updated = await User.findByIdAndUpdate(
       userId,
       { $set: updateData },
       { runValidators: true, new: true }
     );
-    console.log("update",updated);
+    // console.log("update",updated);
     return res.status(200).json("update Successfull");
   } catch (err) {
     console.log(err);

@@ -13,16 +13,20 @@ import AddQuestion from "./components/AddQuestion";
 import Dashboard from "./Pages/Dashboard";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
-import UserDashboard from "./Pages/UserDashboard";
+import AddExam from "./Pages/AddExam";
+import ExamStats from "./Pages/ExamStats"
+import ManageStudents from "./Pages/ManageStudents"
+import ModifyExams from "./Pages/ModifyExams"
+import TeacherDashboard from "./Pages/TeacherDashboard"
+import TeacherSummary from "./Pages/TeacherSummary"
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import Dashboard2 from "./components/Dashboard2";
-import AllExams from "./Pages/AllExams";
-
 import Leaderboard from "./Pages/LeaderBoard";
 import profileSettings from "./Pages/ProfileSettings";
 import ReviewExams from "./Pages/ReviewExams";
 import StudentSummary from "./Pages/StudentSummary";
+import ProfileSettings from "./Pages/ProfileSettings";
 
 function App() {
   const router = createBrowserRouter([
@@ -47,10 +51,7 @@ function App() {
           index: true,
           element: <PrivateRoute element={StudentSummary} />,
         },
-        {
-          path: "allExams",
-          element: <PrivateRoute element={AllExams} />,
-        },
+       
 
         {
           path: "leaderboard",
@@ -73,24 +74,29 @@ function App() {
       children: [
         {
           index: true,
-          element: <PrivateRoute element={TeacherSummary} />,
+          element: <PrivateRoute element={ExamStats} />,
         },
         {
-          path: "add-Exam",
+          path: "add-exam",
           element: <PrivateRoute element={AddExam} />,
         },
 
         {
-          path: "modifyExam",
-          element: <PrivateRoute element={ModifyExam} />,
+          path: "modify-exam",
+          element: <PrivateRoute element={ModifyExams} />,
         },
         {
-          path: "profileSettings",
-          element: <PrivateRoute element={Leader} />,
+          path: "leaderboard",
+          element: <PrivateRoute element={Leaderboard} />,
+        },
+        
+        {
+          path: "manage-students",
+          element: <PrivateRoute element={ManageStudents} />,
         },
         {
-          path: "reviewExams",
-          element: <PrivateRoute element={ReviewExams} />,
+          path: "profile-settings",
+          element: <PrivateRoute element={ProfileSettings} />,
         },
       ],
     },

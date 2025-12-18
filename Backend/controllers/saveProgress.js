@@ -4,7 +4,7 @@ import Question from "../models/question.model.js";
 
 const saveProgress = async (req, res) => {
   let { category, timeSpents, selectedOptions } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const categoryQues = await Question.find({ category: category })
       .select("_id answer")

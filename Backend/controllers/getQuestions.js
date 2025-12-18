@@ -4,7 +4,7 @@ const getQuestions = async (req, res) => {
   try {
     if (category === "all") {
       const questions = await Question.find();
-      console.log(questions)
+      // console.log(questions)
       return res.json(questions);
     } else {
       const questions = await Question.find({ category });
