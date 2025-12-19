@@ -6,6 +6,7 @@ const ExamStats = () => {
   const [allAttempts, setAllAttempts] = useState([]);
   const [allQuestions, setAllQuestions] = useState([]);
   const [bestWorstSub, setBestWorstSub] = useState([]);
+  const [chartData, setChartData] = useState(null);
   const [avg, setAvg] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [chosenSubject, setChosenSubject] = useState([]);
@@ -66,6 +67,7 @@ const ExamStats = () => {
     const filteredAttempt = allAttempts.filter((att, i) => att.category == sub);
     // console.log("filtr",filteredAttempt)
     const QuesCount = Object.keys(filteredAttempt[0].timeSpents).length;
+    const QuesNo = Object.keys(filteredAttempt[0].timeSpents)
     for (let i = 0; i < QuesCount; i++) {
       const Q = filteredAttempt.map((att) => {
         return Object.values(att.timeSpents)[i];
@@ -74,6 +76,28 @@ const ExamStats = () => {
       const avg = Q.reduce((acc, curr) => acc + curr, 0) / Q.length;
       setAvg((prev)=>([...prev,{[i+1]:avg}]))
     }
+
+ const formatted = {
+      labels: QuesNo,
+
+      datasets: [
+        {
+          label: "Avg Time Taken per Question",
+          data: avg,
+
+          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(75,192,192,0.3)",
+          fill: true,
+          tension: 0.4,
+        },
+      ],
+    };
+    setChartData(formatted);
+
+
+
+
+
   };
 
   console.log("avg ye rha   ",avg)
@@ -116,6 +140,77 @@ const ExamStats = () => {
           </select>
           <span>Students Appeard in this subject :{chosenSubject} </span>
         </div>
+        <div>{chartData ? (
+                  <Line
+                    className="bg-white p-3  "
+                    data={chartData}
+                    options={{
+                      plugins: {
+                        legend: {
+                          labels: {
+                            font: {
+                              size: 18,
+                              weight: "bold",
+                            },
+                          },
+                        },
+                      },
+        
+                      maintainAspectRatio: false,
+                      responsive: true,
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          ticks: {
+                            color: "black",
+                            stepSize: 1,
+        
+                            font: {
+                              size: 13,
+                              weight: "bold",
+                            },
+                          },
+                          title: {
+                            display: true,
+                            text: "time in seconds",
+                            color: "black",
+                            font: {
+                              size: 18,
+                              weight: "bold",
+                            },
+                          },
+                          grid: {
+                            color: "rgba(0,0,0,0.2)",
+                          },
+                        },
+                        x: {
+                          ticks: {
+                            color: "black",
+                            stepSize: 1,
+                            font: {
+                              size: 13,
+                              weight: "bold",
+                            },
+                          },
+                          title: {
+                            display: true,
+                            text: "Question Numbers",
+                            color: "black",
+                            font: {
+                              size: 18,
+                              weight: "bold",
+                            },
+                          },
+                          grid: {
+                            color: "rgba(0,0,0,0.2)",
+                          },
+                        },
+                      },
+                    }}
+                  />
+                ) : (
+                  <p>Loading...</p>
+                )}</div>
       </div>
     </div>
   );
