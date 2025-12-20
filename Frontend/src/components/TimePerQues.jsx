@@ -28,14 +28,16 @@ const TimePerQues = ({ attemptArr }) => {
   axios.defaults.withCredentials = true;
   const [chartData, setChartData] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [selectCategory, setSelectCategory] = useState("");
+ 
   const [allAttempts, setAllAttempts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      if(!attemptArr || attemptArr.length == 0) return;
       try {
         const categoriesArr = attemptArr.map((attempt, i) => attempt.category);
         setCategories(categoriesArr);
+        if(attemptArr.length == 0) return;
         const attempt = attemptArr[0];
         // console.log(attemptArr);
         const timeSpents = Object.values(attempt.timeSpents);
@@ -62,13 +64,14 @@ const TimePerQues = ({ attemptArr }) => {
     };
 
     fetchData();
-  }, []);
+  }, [attemptArr]);
 
   const showCategory = (cat) => {
-    const attempt = attemptArr.filter((attempt, i) => attempt.category === cat);
+    const attempt = attemptArr.find((attempt) => attempt.category === cat);
+    if(!attempt) return;
     console.log(attempt);
-    const timeSpents = Object.values(attempt[0].timeSpents);
-    const QuesNo = Object.keys(attempt[0].timeSpents);
+    const timeSpents = Object.values(attempt.timeSpents);
+    const QuesNo = Object.keys(attempt.timeSpents);
 
     const formatted = {
       labels: QuesNo,
@@ -86,6 +89,7 @@ const TimePerQues = ({ attemptArr }) => {
       ],
     };
     setChartData(formatted);
+    console.log("chardata", cat, chartData);
   };
 
   return (
