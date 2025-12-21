@@ -44,6 +44,7 @@ const ExamStats = () => {
   useEffect(() => {
     setAllStudents(studentsFromStore);
     setAllAttempts(attemptsFromStore);
+    setAllQuestions(questionsFromStore)
     bestWorstArray.sort((a, b) => b.count - a.count);
     setBestWorstSub(bestWorstArray);
   }, [studentsFromStore]);
@@ -80,7 +81,7 @@ const ExamStats = () => {
     },
   ];
 
-  //---function-------------------
+  //---function  avg time per question-------------------
   useEffect(() => {
     const showChart = (sub) => {
       if (!allAttempts.length || !sub) return;
@@ -129,6 +130,77 @@ const ExamStats = () => {
 
     showChart(chosenSubject);
   }, [chosenSubject]);
+  //---function  avg time per question-|^|^|^------------------
+
+  //---function  right wrong not-attempted stacked chart per questio
+  useEffect(() => {
+    const showChart = (sub) => {
+      if (!allAttempts.length || !sub) return;
+      // setAvg([]);
+      let allAvg = [];
+
+      const filteredAttempt = allAttempts.filter(
+        (att, i) => att.category == sub
+      );
+      const filteredQuestion = allQuestions.filter(
+        (que,i) => que.category == sub
+      
+      );
+      // console.log("filtr",filteredAttempt)
+      const QuesCount = Object.keys(filteredAttempt[0].timeSpents).length;
+      const QuesNo = Object.keys(filteredAttempt[0].timeSpents);
+      console.log("QuesNo", QuesNo);
+      // for (let Qno = 1; i <= QuesCount; i++) {
+        
+        const Q = filteredAttempt.map((att) => {
+          // return Object.values(att.selectedOptions)[i];
+          const currentQue = filteredQuestion.find((que)=>que._id == att.selectedOptions?.[] )
+          return Object.values(att.timeSpents)[i];
+        });
+        // console.log("ye rha Q",Q)
+        Q.forEach((ans)=>{
+          if(ans === )
+        })
+
+
+        let avg = [];
+        avg = Q.reduce((acc, curr) => acc + curr, 0) / Q.length;
+        // setAvg((prev) => [...prev, avg]);
+        allAvg.push(avg);
+      }
+      console.log();
+      const data = {
+        labels: QuesNo, // each label = one bar
+        datasets: [
+          {
+            label: "Correct",
+            data: [30, 25, 40],
+            backgroundColor: "#22c55e",
+            stack: "stack1",
+          },
+          {
+            label: "Wrong",
+            data: [10, 15, 8],
+            backgroundColor: "#ef4444",
+            stack: "stack1",
+          },
+          {
+            label: "Skipped",
+            data: [5, 7, 12],
+            backgroundColor: "#facc15",
+            stack: "stack1",
+          },
+        ],
+      };
+
+      setChartData(formatted);
+      console.log("chardata", chartData);
+    };
+
+    showChart(chosenSubject);
+  }, [chosenSubject]);
+
+  //---function  right wrong not attempted stacked chart per question-------------------
 
   // console.log("avg ye rha   ", avg);
   return (
@@ -171,12 +243,11 @@ const ExamStats = () => {
           </select>
           {studentCount ? (
             <span className="font-semibold text-xl">
-              Students Appeard in this subject :<span className="ml-2 ">{studentCount}</span>{" "}
+              Students Appeard in this subject :
+              <span className="ml-2 ">{studentCount}</span>{" "}
             </span>
           ) : null}
         </div>
-
-
 
         {/* Avg time per question area chart */}
         <div className="w-full h-[400px]  bottom-15  pt-1 flex justify-center items-center   ">
@@ -254,13 +325,8 @@ const ExamStats = () => {
             <p>Loading...</p>
           )}
         </div>
-        
-
-
 
         {/* right - wrong - unattempt per question */}
-
-        
       </div>
     </div>
   );
