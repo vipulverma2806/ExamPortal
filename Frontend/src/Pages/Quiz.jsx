@@ -31,7 +31,10 @@ const Quiz = () => {
         setQuestions(res.data);
         for (let i =1;i<=res.data.length;i++){
           setTimeSpents((prev)=>({...prev,[i]:0}))
-        }
+           }
+        res.data.forEach((que)=>{
+          setSelectedOptions((prev)=>({...prev,[que._id]:null}))
+        })
         console.log(timeSpents);
       } catch (err) {
         console.log(err);
@@ -133,7 +136,7 @@ const Quiz = () => {
       toast.success("Exam Completed");
       navigate("/dashboard");
       setSaveButton(false);
-      console.log(timeSpents)
+      // console.log(timeSpents)
     } catch (err) {
       setSaveButton(false);
       console.log(err);

@@ -1,39 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useState } from "react";
-ChartJS.register(
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-  Filler
-);
-import { Line } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  LineElement,
   CategoryScale,
   LinearScale,
-  PointElement,
+  BarElement,
   Tooltip,
   Legend,
+  LineElement,
+  PointElement,
   Filler,
 } from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  LineElement,
+  PointElement,
+  Filler
+);
 const ExamStats = () => {
   const [allStudents, setAllStudents] = useState([]);
   const [allAttempts, setAllAttempts] = useState([]);
   const [allQuestions, setAllQuestions] = useState([]);
   const [bestWorstSub, setBestWorstSub] = useState([]);
   const [chartData, setChartData] = useState(null);
+  const [stackedChartData, setStackedChartData] = useState(null);
   const [studentCount, setStudentCount] = useState(0);
   const [subjects, setSubjects] = useState([]);
   const [chosenSubject, setChosenSubject] = useState([]);
-  const studentsFromStore = useSelector((state) => state.adminData.allStudents);
-  const attemptsFromStore = useSelector((state) => state.adminData.allAttempts);
+  const [rightCountArr, setRightCountArr] = useState([]);
+  const [wrongCountArr, setWrongCountArr] = useState([]);
+  const [skippedCountArr, setSkippedCountArr] = useState([]);
+  const studentsFromStore = useSelector(
+    (state) => state.adminData?.allStudents
+  );
+  const attemptsFromStore = useSelector(
+    (state) => state.adminData?.allAttempts
+  );
   const questionsFromStore = useSelector(
-    (state) => state.adminData.allQuestions
+    (state) => state.adminData?.allQuestions
   );
   const bestWorstFromStore = useSelector(
     (state) => state.adminData.bestWorstSub
@@ -42,15 +52,28 @@ const ExamStats = () => {
   // console.log(attemptsFromStore);
   // console.log(studentsFromStore)
   useEffect(() => {
+    if (
+      studentsFromStore.length === 0 ||
+      attemptsFromStore.length === 0 ||
+      attemptsFromStore.length === 0
+    ) {
+      console.log("Complete Data not available ");
+      return;
+    }
     setAllStudents(studentsFromStore);
     setAllAttempts(attemptsFromStore);
-    setAllQuestions(questionsFromStore)
+    setAllQuestions(questionsFromStore);
     bestWorstArray.sort((a, b) => b.count - a.count);
     setBestWorstSub(bestWorstArray);
   }, [studentsFromStore]);
 
   useEffect(() => {
     const getSubjects = () => {
+      // console.log("attempt from store",attemptsFromStore)
+      if (attemptsFromStore.length === 0) {
+        console.log("no data available for selected subject");
+        return;
+      }
       let sub = attemptsFromStore.map((sub, i) => {
         return sub.category;
       });
@@ -91,11 +114,16 @@ const ExamStats = () => {
       const filteredAttempt = allAttempts.filter(
         (att, i) => att.category == sub
       );
+      if (filteredAttempt.length === 0) {
+        console.log("no data available for selected subject");
+        return;
+      }
       setStudentCount(filteredAttempt.length);
       // console.log("filtr",filteredAttempt)
       const QuesCount = Object.keys(filteredAttempt[0].timeSpents).length;
       const QuesNo = Object.keys(filteredAttempt[0].timeSpents);
-      console.log("QuesNo", QuesNo);
+      // console.log("QuesNo", QuesNo);
+
       for (let i = 0; i < QuesCount; i++) {
         const Q = filteredAttempt.map((att) => {
           return Object.values(att.timeSpents)[i];
@@ -106,7 +134,7 @@ const ExamStats = () => {
         // setAvg((prev) => [...prev, avg]);
         allAvg.push(avg);
       }
-      console.log();
+
       const formatted = {
         labels: QuesNo,
         // labels: ['a', 'b', 'c', 'd', 'e', 'f'],
@@ -125,7 +153,7 @@ const ExamStats = () => {
         ],
       };
       setChartData(formatted);
-      console.log("chardata", chartData);
+      // console.log("chardata", chartData);
     };
 
     showChart(chosenSubject);
@@ -142,65 +170,210 @@ const ExamStats = () => {
       const filteredAttempt = allAttempts.filter(
         (att, i) => att.category == sub
       );
+
       const filteredQuestion = allQuestions.filter(
-        (que,i) => que.category == sub
-      
+        (que, i) => que.category == sub
       );
+
+      let QuesIdsAns = {};
+      filteredQuestion.forEach((queObj) => {
+        QuesIdsAns = { ...QuesIdsAns, [queObj._id]: queObj.answer };
+      });
+      // const QuesIdsArr = filteredQuestion.map((q) => q._id)
       // console.log("filtr",filteredAttempt)
-      const QuesCount = Object.keys(filteredAttempt[0].timeSpents).length;
+      // const QuesCount = Object.keys(filteredAttempt[0].timeSpents).length;
       const QuesNo = Object.keys(filteredAttempt[0].timeSpents);
-      console.log("QuesNo", QuesNo);
-      // for (let Qno = 1; i <= QuesCount; i++) {
-        
-        const Q = filteredAttempt.map((att) => {
-          // return Object.values(att.selectedOptions)[i];
-          const currentQue = filteredQuestion.find((que)=>que._id == att.selectedOptions?.[] )
-          return Object.values(att.timeSpents)[i];
+      let rightCounts = [];
+      let wrongCounts = [];
+      let skippedCounts = [];
+
+      for (const key in QuesIdsAns) {
+        const selectedAnsArr = filteredAttempt.map(
+          (att) => att.selectedOptions?.[key]
+        );
+        let rightCount = 0;
+        let wrongCount = 0;
+        let skippedCount = 0;
+        // console.log("selectedansarr",selectedAnsArr)
+        // console.log("questionIdAns",QuesIdsAns)
+        selectedAnsArr.forEach((ans) => {
+          console.log("quesidans", QuesIdsAns[key], ans);
+          if (ans === QuesIdsAns[key]) {
+            rightCount++;
+            return;
+          }
+          if (ans === null) {
+            skippedCount++;
+            return;
+          }
+          if (ans !== QuesIdsAns[key]) {
+            wrongCount++;
+            return;
+          }
         });
-        // console.log("ye rha Q",Q)
-        Q.forEach((ans)=>{
-          if(ans === )
-        })
-
-
-        let avg = [];
-        avg = Q.reduce((acc, curr) => acc + curr, 0) / Q.length;
-        // setAvg((prev) => [...prev, avg]);
-        allAvg.push(avg);
+        rightCounts.push(rightCount);
+        wrongCounts.push(wrongCount);
+        skippedCounts.push(skippedCount);
       }
-      console.log();
-      const data = {
-        labels: QuesNo, // each label = one bar
+      setRightCountArr(rightCounts);
+      setWrongCountArr(wrongCounts);
+      setSkippedCountArr(skippedCounts);
+
+      const formatted = {
+        labels: QuesNo,
         datasets: [
           {
             label: "Correct",
-            data: [30, 25, 40],
+            data: rightCounts,
             backgroundColor: "#22c55e",
             stack: "stack1",
           },
           {
             label: "Wrong",
-            data: [10, 15, 8],
+            data: wrongCounts,
             backgroundColor: "#ef4444",
             stack: "stack1",
           },
           {
             label: "Skipped",
-            data: [5, 7, 12],
+            data: skippedCounts,
             backgroundColor: "#facc15",
             stack: "stack1",
           },
         ],
       };
 
-      setChartData(formatted);
-      console.log("chardata", chartData);
+      setStackedChartData(formatted);
+      // console.log("chardata", chartData);
     };
 
     showChart(chosenSubject);
   }, [chosenSubject]);
 
   //---function  right wrong not attempted stacked chart per question-------------------
+
+  const areaChartOptions = {
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            size: 18,
+            weight: "bold",
+          },
+        },
+      },
+    },
+
+    maintainAspectRatio: false,
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: "black",
+          stepSize: 0.1,
+
+          font: {
+            size: 13,
+            weight: "bold",
+          },
+        },
+        title: {
+          display: true,
+          text: "time in seconds",
+          color: "black",
+          font: {
+            size: 18,
+            weight: "bold",
+          },
+        },
+        grid: {
+          color: "rgba(0,0,0,0.2)",
+        },
+      },
+      x: {
+        ticks: {
+          color: "black",
+          stepSize: 1,
+          font: {
+            size: 13,
+            weight: "bold",
+          },
+        },
+        title: {
+          display: true,
+          text: "Question Numbers",
+          color: "black",
+          font: {
+            size: 18,
+            weight: "bold",
+          },
+        },
+        grid: {
+          color: "rgba(0,0,0,0.2)",
+        },
+      },
+    },
+  };
+
+  const stackedChartoptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          font: {
+            size: 18,
+            weight: "bold",
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        stacked: true,
+        ticks: {
+          color: "black",
+          stepSize: 1,
+          font: {
+            size: 13,
+            weight: "bold",
+          },
+        },
+        title: {
+          display: true,
+          text: "Question numbers",
+          color: "black",
+          font: {
+            size: 18,
+            weight: "bold",
+          },
+        },
+      },
+      y: {
+        stacked: true,
+        beginAtZero: true,
+        ticks: {
+          color: "black",
+          stepSize: 1,
+          font: {
+            size: 13,
+            weight: "bold",
+          },
+        },
+        title: {
+          display: true,
+          text: "Student count",
+          color: "black",
+          font: {
+            size: 18,
+            weight: "bold",
+          },
+        },
+      },
+    },
+  };
 
   // console.log("avg ye rha   ", avg);
   return (
@@ -228,7 +401,7 @@ const ExamStats = () => {
             id=""
             onChange={(e) => {
               setChosenSubject(e.target.value);
-              console.log("working", e.target.value);
+              // console.log("working", e.target.value);
             }}
             className="bg-gray-800 rounded-xl mr-5 mt-5  py-2 border border-gray-400 my-3 px-4 w-60 shadow-2xs shadow-white"
           >
@@ -250,83 +423,23 @@ const ExamStats = () => {
         </div>
 
         {/* Avg time per question area chart */}
-        <div className="w-full h-[400px]  bottom-15  pt-1 flex justify-center items-center   ">
-          {console.log("jsx chardata", chartData)}
-          {chartData ? (
-            <Line
-              key={chosenSubject}
-              className="bg-white w-full p-3 rounded-4xl "
-              data={chartData}
-              options={{
-                plugins: {
-                  legend: {
-                    labels: {
-                      font: {
-                        size: 18,
-                        weight: "bold",
-                      },
-                    },
-                  },
-                },
-
-                maintainAspectRatio: false,
-                responsive: true,
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    ticks: {
-                      color: "black",
-                      stepSize: 0.1,
-
-                      font: {
-                        size: 13,
-                        weight: "bold",
-                      },
-                    },
-                    title: {
-                      display: true,
-                      text: "time in seconds",
-                      color: "black",
-                      font: {
-                        size: 18,
-                        weight: "bold",
-                      },
-                    },
-                    grid: {
-                      color: "rgba(0,0,0,0.2)",
-                    },
-                  },
-                  x: {
-                    ticks: {
-                      color: "black",
-                      stepSize: 1,
-                      font: {
-                        size: 13,
-                        weight: "bold",
-                      },
-                    },
-                    title: {
-                      display: true,
-                      text: "Question Numbers",
-                      color: "black",
-                      font: {
-                        size: 18,
-                        weight: "bold",
-                      },
-                    },
-                    grid: {
-                      color: "rgba(0,0,0,0.2)",
-                    },
-                  },
-                },
-              }}
-            />
-          ) : (
-            <p>Loading...</p>
+        <div className="w-full h-[1036px]  p-3 gap-3 flex-col  flex justify-center items-center   ">
+          {stackedChartData && (
+            <div className="bg-white w-full h-[500px] p-3 rounded-4xl ">
+              <Bar data={stackedChartData} options={stackedChartoptions} />
+            </div>
+          )}
+          {console.log({
+            right: rightCountArr,
+            wrong: wrongCountArr,
+            skip: skippedCountArr,
+          })}
+          {chartData && (
+            <div className="bg-white w-full h-[500px] p-3 rounded-4xl ">
+              <Line data={chartData} options={areaChartOptions} />
+            </div>
           )}
         </div>
-
-        {/* right - wrong - unattempt per question */}
       </div>
     </div>
   );

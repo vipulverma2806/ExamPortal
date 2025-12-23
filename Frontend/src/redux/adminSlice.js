@@ -42,6 +42,7 @@ export const getAllQuestions = createAsyncThunk(
     try {
       console.log("pending question");
       const res = await axios.get(`${URL}/adminRoutes/getAllQuestions`);
+      console.log(res.data.length)
       return res.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -106,8 +107,9 @@ const AdminSlice = createSlice({
         console.log("unsuccessfull");
       })
       .addCase(getAllQuestions.fulfilled, (state, action) => {
-        console.log("question fulfill");
-        state.allQuestions = action.payload.data;
+        console.log("getquestion fulfill");
+        state.allQuestions = action.payload;
+        
       })
       .addCase(getAllQuestions.pending, (state, action) => {
         console.log(" getAllQuestions pending");

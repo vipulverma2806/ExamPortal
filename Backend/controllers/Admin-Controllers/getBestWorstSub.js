@@ -16,7 +16,7 @@ const getBestWorstSub = async (req, res) => {
     // console.log("category with marks count", passingMarksPerSub);
 
     const passingMarksPerSubObj = Object.assign({}, ...passingMarksPerSub);
-    console.log(passingMarksPerSubObj);
+    // console.log(passingMarksPerSubObj);
 
     //---passed Student Count-------
     const orConditions = Object.entries(passingMarksPerSubObj).map(
@@ -39,15 +39,17 @@ const getBestWorstSub = async (req, res) => {
         },
       },
       {
-        $project:{ _id: 0, subject: "$_id", count:1 }
-      }
+        $project: { _id: 0, subject: "$_id", count: 1 },
+      },
     ]);
 
     // console.log("passed", passedStudentCount);
     if (passedStudentCount.length == 0)
       return res.status(200).json({ message: "No one Passed", data: [] });
     // console.log("allstudents", allStudents);
-    res.status(200).json({message : "Best and Worst sub", data: passedStudentCount });
+    res
+      .status(200)
+      .json({ message: "Best and Worst sub", data: passedStudentCount });
   } catch (err) {
     res.status(500).json({ message: "some error occured" });
     console.log(err);

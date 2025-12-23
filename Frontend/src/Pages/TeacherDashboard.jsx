@@ -3,7 +3,7 @@ import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllStudents,getAllAttempts,getBestWorstSub } from "../redux/adminSlice";
+import { getAllStudents,getAllAttempts,getBestWorstSub, getAllQuestions } from "../redux/adminSlice";
 const URL = import.meta.env.VITE_URL;
 axios.defaults.withCredentials = true;
 const TeacherDashboard = () => {
@@ -47,9 +47,10 @@ const TeacherDashboard = () => {
     dispatch(getAllStudents());
     dispatch(getAllAttempts());
     dispatch(getBestWorstSub())
+    dispatch(getAllQuestions());
   }, []);
 
-  
+
   return (
     <div className="p-4  flex text-white h-screen bg-gray-700 ">
       <div className="fixed py-4 px-4 flex gap-x-5 shadow-xl shadow-black bg-gray-600 rounded-3xl pb-4 w-[97%] h-[95%]">
