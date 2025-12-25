@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Bar, Line } from "react-chartjs-2";
+import { Bar, Line, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
+  ArcElement,
   CategoryScale,
   LinearScale,
   BarElement,
@@ -14,6 +15,7 @@ import {
 } from "chart.js";
 
 ChartJS.register(
+  ArcElement,
   CategoryScale,
   LinearScale,
   BarElement,
@@ -29,13 +31,13 @@ const ExamStats = () => {
   const [allQuestions, setAllQuestions] = useState([]);
   const [bestWorstSub, setBestWorstSub] = useState([]);
   const [chartData, setChartData] = useState(null);
+  const [pieData, setPieData] = useState(null);
+  const [barPerformanceData, setBarPerformanceData] = useState(null);
   const [stackedChartData, setStackedChartData] = useState(null);
   const [studentCount, setStudentCount] = useState(0);
   const [subjects, setSubjects] = useState([]);
   const [chosenSubject, setChosenSubject] = useState([]);
-  const [rightCountArr, setRightCountArr] = useState([]);
-  const [wrongCountArr, setWrongCountArr] = useState([]);
-  const [skippedCountArr, setSkippedCountArr] = useState([]);
+
   const studentsFromStore = useSelector(
     (state) => state.adminData?.allStudents
   );
@@ -197,7 +199,7 @@ const ExamStats = () => {
         // console.log("selectedansarr",selectedAnsArr)
         // console.log("questionIdAns",QuesIdsAns)
         selectedAnsArr.forEach((ans) => {
-          console.log("quesidans", QuesIdsAns[key], ans);
+          // console.log("quesidans", QuesIdsAns[key], ans);
           if (ans === QuesIdsAns[key]) {
             rightCount++;
             return;
@@ -215,9 +217,9 @@ const ExamStats = () => {
         wrongCounts.push(wrongCount);
         skippedCounts.push(skippedCount);
       }
-      setRightCountArr(rightCounts);
-      setWrongCountArr(wrongCounts);
-      setSkippedCountArr(skippedCounts);
+      // setRightCountArr(rightCounts);
+      // setWrongCountArr(wrongCounts);
+      // setSkippedCountArr(skippedCounts);
 
       const formatted = {
         labels: QuesNo,
@@ -249,8 +251,81 @@ const ExamStats = () => {
 
     showChart(chosenSubject);
   }, [chosenSubject]);
-
   //---function  right wrong not attempted stacked chart per question-------------------
+
+  useEffect(() => {
+    const showPieChart = (sub) => {
+      if (allAttempts.length === 0 || !sub) return;
+      let pass = 0;
+      let fail = 0;
+      const filteredAttempt = allAttempts.filter(
+        (attempt) => attempt.category === sub
+      );
+
+      const QuesCount = Object.keys(filteredAttempt[0].selectedOptions).length;
+      const totalmarks = QuesCount * 4;
+      const passingMarks = (totalmarks * 33) / 100;
+      filteredAttempt.forEach((attempt) => {
+        if (passingMarks <= attempt.totalMarks) {
+          pass++;
+        } else {
+          fail++;
+        }
+      });
+      const pieData = {
+        labels: ["Pass", "Fail"],
+        datasets: [
+          {
+            label: "Result Breakdown",
+            data: [pass, fail],
+            backgroundColor: ["#22c55e", "#ef4444", "#facc15"],
+            borderColor: "#ffffff",
+            borderWidth: 2,
+          },
+        ],
+      };
+      setPieData(pieData);
+    };
+    showPieChart(chosenSubject);
+  }, [chosenSubject]);
+
+  useEffect(() => {
+    const showBarChart = (sub) => {
+      if (allAttempts.length === 0 || !sub) return;
+
+      const filteredAttempt = allAttempts.filter(
+        (attempt) => attempt.category === sub
+      );
+      filteredAttempt.sort((a, b) => b.totalMarks - a.totalMarks);
+
+      const top5students = filteredAttempt.slice(0, 5);
+      const topperfullNames = top5students.map((attempt) => attempt.name);
+      const toppersFirstNames = topperfullNames.map(
+        (name) => name.split(" ")[0]
+      );
+      const topperMarks = top5students.map((attempt) => attempt.totalMarks);
+      const barData = {
+        labels: toppersFirstNames,
+        datasets: [
+          {
+            data: topperMarks,
+            backgroundColor: [
+              "#3b82f6",
+              "#FF4F4F",
+              "#FFD700",
+              "#A9A9A9",
+              "#4CAF50",
+            ],
+            borderRadius: 10,
+            barThickness: 60,
+          },
+        ],
+      };
+
+      setBarPerformanceData(barData);
+    };
+    showBarChart(chosenSubject);
+  }, [chosenSubject]);
 
   const areaChartOptions = {
     plugins: {
@@ -374,6 +449,76 @@ const ExamStats = () => {
       },
     },
   };
+  const pieOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          font: {
+            size: 14,
+            weight: "bold",
+          },
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const label = context.label || "";
+            const value = context.raw;
+            return `${label}: ${value}`;
+          },
+        },
+      },
+    },
+  };
+
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: "Top 5 Students",
+        color: "black",
+        font: {
+          size: 20,
+          weight: "bold",
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Marks",
+        },
+        ticks: {
+          stepSize: 1,
+          font: {
+            size: 13,
+            weight: "bold",
+          },
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Topper Name",
+        },
+        ticks: {
+          font: {
+            size: 15,
+            weight: "bold",
+          },
+        },
+      },
+    },
+  };
 
   // console.log("avg ye rha   ", avg);
   return (
@@ -423,22 +568,30 @@ const ExamStats = () => {
         </div>
 
         {/* Avg time per question area chart */}
-        <div className="w-full h-[1036px]  p-3 gap-3 flex-col  flex justify-center items-center   ">
+        <div className="w-full h-full  p-3 gap-5 flex-col  flex justify-center items-center   ">
           {stackedChartData && (
-            <div className="bg-white w-full h-[500px] p-3 rounded-4xl ">
+            <div className="bg-white w-full h-[400px] p-3 rounded-2xl ">
               <Bar data={stackedChartData} options={stackedChartoptions} />
             </div>
           )}
-          {console.log({
-            right: rightCountArr,
-            wrong: wrongCountArr,
-            skip: skippedCountArr,
-          })}
+
           {chartData && (
-            <div className="bg-white w-full h-[500px] p-3 rounded-4xl ">
+            <div className="bg-white w-full h-[400px] p-3 rounded-2xl ">
               <Line data={chartData} options={areaChartOptions} />
             </div>
           )}
+          <div className="flex gap-5 w-full">
+            {pieData && (
+              <div className="w-1/3  h-[350px] bg-white pt-4 rounded-2xl">
+                <Pie data={pieData} options={pieOptions} />
+              </div>
+            )}
+            {barPerformanceData && (
+              <div className="w-2/3 h-[350px] bg-white p-4 rounded-2xl">
+                <Bar data={barPerformanceData} options={barOptions} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
