@@ -77,7 +77,7 @@ const TeacherDashboard = () => {
                   }`
                 }
               >
-                Exam Stats
+                Exam Wise Stats
               </NavLink>
 
               <NavLink

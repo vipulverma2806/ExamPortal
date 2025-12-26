@@ -4,7 +4,7 @@ const getAllQuestions = async (req, res) => {
     const questions = await Question.find();
     if (questions.length == 0)
       return res.status(200).json({ message: "Questions not found" });
-    console.trace(questions.length);
+    // console.trace(questions.length);
     return res.status(200).json(questions);
   } catch (err) {
     console.log(err);
