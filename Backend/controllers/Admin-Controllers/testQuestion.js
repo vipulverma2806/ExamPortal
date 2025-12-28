@@ -2,7 +2,7 @@
   {
     "question": "Which of the following is the primary function of React?",
     "options": ["Managing server-side logic", "Building user interfaces", "Database management", "Network security"],
-    "answer": "Building user interfaces"
+    "answer": "Network security"
   },
   {
     "question": "What is JSX in React?",
@@ -17,7 +17,7 @@
   {
     "question": "In React, what is 'state' used for?",
     "options": ["To define the structure of the UI", "To manage data that changes over time and affects the component's rendering", "To handle user authentication", "To make network requests"],
-    "answer": "To manage data that changes over time and affects the component's rendering"
+    "answer": "To handle user authentication"
   }
 ]
 

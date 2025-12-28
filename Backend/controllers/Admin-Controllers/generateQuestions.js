@@ -4,8 +4,14 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const generateQuestions = async (req, res) => {
   try {
-    const { subject, topic, count, difficulty } = req.body;
-    // console.log(req.body)
+    const {
+      selectedSubject: subject,
+      selectedTopic: topic,
+      difficultyLevel: difficulty,
+      questionCount: count,
+    } = req.body;
+
+    console.log("selected", subject, topic, difficulty, count);
     if (!subject || !count || !difficulty) {
       return res.status(400).json({ message: "Missing required field" });
     }
@@ -42,21 +48,23 @@ JSON format:
 ]
 `;
 
-    // const result = await model.generateContent(prompt);
-    // console.log(result.response.text());
-    // let text = result.response.text();
-    const text = testQuestion;
+    const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+    let text = result.response.text();
+    // let text = testQuestion;
     let Questions;
+
     try {
       Questions = JSON.parse(text);
+      // console.log(Questions)
     } catch (err) {
-      res.status(400).json("AI returned invalid format");
+      return res.status(400).json("AI returned invalid format : not parsed");
     }
     const isValidData =
       Array.isArray(Questions) &&
       Questions.every(
         (Q) =>
-          Q.questions &&
+          Q.question &&
           Array.isArray(Q.options) &&
           Q.options.length === 4 &&
           Q.options.includes(Q.answer)
