@@ -14,11 +14,11 @@ import Dashboard from "./Pages/Dashboard";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import AddExam from "./Pages/AddExam";
-import ExamStats from "./Pages/ExamStats"
-import ManageStudents from "./Pages/ManageStudents"
-import ModifyExams from "./Pages/ModifyExams"
-import TeacherDashboard from "./Pages/TeacherDashboard"
-import TeacherSummary from "./Pages/TeacherSummary"
+import ExamStats from "./Pages/ExamStats";
+import ManageStudents from "./Pages/ManageStudents";
+import ModifyExams from "./Pages/ModifyExams";
+import TeacherDashboard from "./Pages/TeacherDashboard";
+import TeacherSummary from "./Pages/TeacherSummary";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import Dashboard2 from "./components/Dashboard2";
@@ -31,7 +31,7 @@ import ProfileSettings from "./Pages/ProfileSettings";
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/quiz/:category",
+      path: "/quiz/:subject",
       element: <PrivateRoute element={Quiz} />,
     },
 
@@ -51,7 +51,6 @@ function App() {
           index: true,
           element: <PrivateRoute element={StudentSummary} />,
         },
-       
 
         {
           path: "leaderboard",
@@ -68,7 +67,7 @@ function App() {
       ],
     },
 
- {
+    {
       path: "/teacherDashboard",
       element: <PrivateRoute element={TeacherDashboard} />,
       children: [
@@ -89,7 +88,7 @@ function App() {
           path: "leaderboard",
           element: <PrivateRoute element={Leaderboard} />,
         },
-        
+
         {
           path: "manage-students",
           element: <PrivateRoute element={ManageStudents} />,
@@ -100,14 +99,6 @@ function App() {
         },
       ],
     },
-    
-
-
-
-
-
-
-
 
     {
       path: "/register",

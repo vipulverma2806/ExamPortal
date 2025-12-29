@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 
 const Quiz2 = () => {
   axios.defaults.withCredentials = true;
-  const { category } = useParams();
+  const { subject } = useParams();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   // const [, setScore] = useState(0);
@@ -23,7 +23,7 @@ const Quiz2 = () => {
     const fetchQuestions = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/questions/${category}`
+          `http://localhost:5000/api/questions/${subject}`
         );
         setQuestions(res.data);
         // console.log(res.data);
@@ -44,7 +44,7 @@ const Quiz2 = () => {
     };
     fetchName();
     fetchQuestions();
-  }, [category]);
+  }, [subject]);
 
   //----timer---------------
   useEffect(() => {
@@ -114,7 +114,7 @@ const Quiz2 = () => {
     // try {
     //   await axios.post("http://localhost:5000/api/save-progress", {
     //     userId: userInfo,
-    //     category,
+    //     subject,
     //     timeSpents,
     //     selectedOptions,
     //   });
@@ -252,7 +252,7 @@ const Quiz2 = () => {
           </div>
 
           <div className="p-4 text-gray-300 text-xl border-b border-gray-700">
-            Category: <span className="text-blue-400">{category}</span>
+            subject: <span className="text-blue-400">{subject}</span>
           </div>
 
           <div className="p-4 text-gray-100 text-xl border-b border-gray-700">

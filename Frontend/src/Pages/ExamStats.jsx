@@ -77,7 +77,7 @@ const ExamStats = () => {
         return;
       }
       let sub = attemptsFromStore.map((sub, i) => {
-        return sub.category;
+        return sub.subject;
       });
       sub = [...new Set(sub)];
       setSubjects(sub);
@@ -114,7 +114,7 @@ const ExamStats = () => {
       let allAvg = [];
 
       const filteredAttempt = allAttempts.filter(
-        (att, i) => att.category == sub
+        (att, i) => att.subject == sub
       );
       if (filteredAttempt.length === 0) {
         console.log("no data available for selected subject");
@@ -170,11 +170,11 @@ const ExamStats = () => {
       let allAvg = [];
 
       const filteredAttempt = allAttempts.filter(
-        (att, i) => att.category == sub
+        (att, i) => att.subject == sub
       );
 
       const filteredQuestion = allQuestions.filter(
-        (que, i) => que.category == sub
+        (que, i) => que.subject == sub
       );
 
       let QuesIdsAns = {};
@@ -259,7 +259,7 @@ const ExamStats = () => {
       let pass = 0;
       let fail = 0;
       const filteredAttempt = allAttempts.filter(
-        (attempt) => attempt.category === sub
+        (attempt) => attempt.subject === sub
       );
 
       const QuesCount = Object.keys(filteredAttempt[0].selectedOptions).length;
@@ -294,7 +294,7 @@ const ExamStats = () => {
       if (allAttempts.length === 0 || !sub) return;
 
       const filteredAttempt = allAttempts.filter(
-        (attempt) => attempt.category === sub
+        (attempt) => attempt.subject === sub
       );
       filteredAttempt.sort((a, b) => b.totalMarks - a.totalMarks);
 

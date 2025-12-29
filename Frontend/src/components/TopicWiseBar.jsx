@@ -20,17 +20,17 @@ ChartJS.register(
 );
 
 const TopicWiseBar = ({ attemptArr }) => {
-  const [categories, setCategories] = useState("");
+  const [Subjects, setSubjects] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
   useEffect(() => {
-    const categoriesArr = attemptArr.map((attempt, i) => attempt.category);
+    const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
     const totalMarksArr = attemptArr.map((attempt, i) => attempt.totalMarks);
     setTotalMarks(totalMarksArr);
-    setCategories(categoriesArr);
+    setSubjects(SubjectsArr);
   }, []);
 
   const barData = {
-    labels: categories, // X-axis labels
+    labels: Subjects, // X-axis labels
     datasets: [
       {
         label: "Final marks Subject wise",

@@ -2,7 +2,7 @@ import express from "express";
 
 import { Router } from "express";
 import addQuestion from "../controllers/addQuestion.js";
-import getCategories from "../controllers/getCategories.js";
+import getSubjects from "../controllers/getSubjects.js";
 import getQuestions from "../controllers/getQuestions.js";
 import saveProgress from "../controllers/saveProgress.js";
 import getProgress from "../controllers/getProgress.js";
@@ -14,8 +14,8 @@ import getReviewExam from "../controllers/Student Controllers/getReviewExam.js";
 
 const router = Router();
 router.post("/add-question", addQuestion);
-router.get("/categories", getCategories);
-router.get("/questions/:category", getQuestions);
+router.get("/Subjects", getSubjects);
+router.get("/questions/:subject", getQuestions);
 router.get("/reviewExam", authMiddleware, getReviewExam);
 router.post("/save-progress", authMiddleware, saveProgress);
 router.get("/progress", authMiddleware, getProgress);

@@ -4,16 +4,16 @@ import Question from "../../models/question.model.js";
 const getBestWorstSub = async (req, res) => {
   try {
     const totalQuesPerSub = await Question.aggregate([
-      { $group: { _id: "$category", Qcount: { $sum: 1 } } },
-      { $project: { _id: 0, category: "$_id", Qcount: 1 } },
+      { $group: { _id: "$subject", Qcount: { $sum: 1 } } },
+      { $project: { _id: 0, subject: "$_id", Qcount: 1 } },
     ]);
-    // console.log("category with question count", totalQuesPerSub);
+    // console.log("subject with question count", totalQuesPerSub);
 
     //-----pass marks-----
     const passingMarksPerSub = totalQuesPerSub.map((sub, i) => {
-      return { [sub.category]: sub.Qcount * 4 * (33 / 100) };
+      return { [sub.subject]: sub.Qcount * 4 * (33 / 100) };
     });
-    // console.log("category with marks count", passingMarksPerSub);
+    // console.log("subject with marks count", passingMarksPerSub);
 
     const passingMarksPerSubObj = Object.assign({}, ...passingMarksPerSub);
     // console.log(passingMarksPerSubObj);
@@ -21,7 +21,7 @@ const getBestWorstSub = async (req, res) => {
     //---passed Student Count-------
     const orConditions = Object.entries(passingMarksPerSubObj).map(
       ([subject, passingMarks]) => ({
-        category: subject,
+        subject: subject,
         totalMarks: { $gte: passingMarks },
       })
     );
@@ -34,7 +34,7 @@ const getBestWorstSub = async (req, res) => {
       },
       {
         $group: {
-          _id: "$category",
+          _id: "$subject",
           count: { $sum: 1 },
         },
       },

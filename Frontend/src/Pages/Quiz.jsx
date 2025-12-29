@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const Quiz = () => {
   axios.defaults.withCredentials = true;
-  const { category } = useParams();
+  const { subject } = useParams();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   // const [, setScore] = useState(0);
@@ -26,15 +26,15 @@ const Quiz = () => {
     const fetchQuestions = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/questions/${category}`
+          `http://localhost:5000/api/questions/${subject}`
         );
         setQuestions(res.data);
-        for (let i =1;i<=res.data.length;i++){
-          setTimeSpents((prev)=>({...prev,[i]:0}))
-           }
-        res.data.forEach((que)=>{
-          setSelectedOptions((prev)=>({...prev,[que._id]:null}))
-        })
+        for (let i = 1; i <= res.data.length; i++) {
+          setTimeSpents((prev) => ({ ...prev, [i]: 0 }));
+        }
+        res.data.forEach((que) => {
+          setSelectedOptions((prev) => ({ ...prev, [que._id]: null }));
+        });
         console.log(timeSpents);
       } catch (err) {
         console.log(err);
@@ -53,7 +53,7 @@ const Quiz = () => {
     };
     fetchName();
     fetchQuestions();
-  }, [category]);
+  }, [subject]);
 
   //----timer---------------
   useEffect(() => {
@@ -80,9 +80,8 @@ const Quiz = () => {
       ...prev,
       // [questions[currentQuestion]._id]:
       //   (prev[questions[currentQuestion]._id] || 0) + timePeriod,
-       [currentQuestion + 1] :
-         (prev[questions[currentQuestion]._id] || 0) + timePeriod,
-      
+      [currentQuestion + 1]:
+        (prev[questions[currentQuestion]._id] || 0) + timePeriod,
     }));
     setSelectedOptions((prev) => ({
       ...prev,
@@ -129,7 +128,7 @@ const Quiz = () => {
       setSaveButton(true);
       await axios.post("http://localhost:5000/api/save-progress", {
         userId: userInfo,
-        category,
+        subject,
         timeSpents,
         selectedOptions,
       });
@@ -171,10 +170,10 @@ const Quiz = () => {
     <>
       <Navbar />
 
-      <div className="flex  w-full bg-gray-900 h-screen border-t-2 border-white">
-        <div className="lg:w-3/4 w-full border-r-2 pt-30 p-15  border-gray-700 flex justify-center items-center h-full">
-          <div className=" w-full bg-gray-800  flex justify-center flex-col items-center py-10 border rounded-3xl">
-            <div className="w-full h-full  px-30 ">
+      <div className="flex  w-full bg-gray-900 h-full  border-t-2 border-white">
+        <div className="lg:w-3/4 w-full border-r-2 p-15 mt-10 border-gray-700 flex justify-center items-center h-full ">
+          <div className=" w-full bg-gray-800  flex justify-center flex-col items-center py-10  border rounded-3xl">
+            <div className="w-full h-full  px-20 ">
               {questions.length > 0 && (
                 <>
                   <h1 className="text-3xl text-gray-200 font-semibold mb-3">
@@ -228,26 +227,26 @@ const Quiz = () => {
             </div>
           </div>
         </div>
-        <div className="lg:w-1/4 hidden pt-18   bg-gray-800 lg:flex lg:flex-col">
-          <div className="h-1/10 text-gray-300  flex pl-3 items-center font-bold text-2xl">
+        <div className="lg:w-1/4 hidden pt-18    bg-gray-800 lg:flex lg:flex-col">
+          <div className=" text-gray-300 py-2 flex pl-3 items-center font-bold text-2xl">
             <span className="mr-2">Welcome</span>
             <span className="text-yellow-500">{userInfo.name}</span>
           </div>
-          <div className="h-1/10 text-gray-300 border-gray-500 border-t-2 flex pl-3 items-center font-bold text-xl">
-            <span className="mr-3">Category :</span>{" "}
-            <span className=" text-blue-600">{category}</span>
+          <div className=" text-gray-300 py-2 border-gray-500 border-t-2 flex pl-3 items-center font-bold text-xl">
+            <span className="mr-3">Subject :</span>{" "}
+            <span className=" text-blue-600">{subject}</span>
           </div>
-          <div className="h-1/10  flex pl-3 border-gray-500 border-t-2 items-center font-bold text-xl text-gray-300  p-2 text-left ">
+          <div className="  flex pl-3 py-2 border-gray-500 border-t-2 items-center font-bold text-xl text-gray-300  p-2 text-left ">
             <span className="mr-2">Time Left :</span>{" "}
             <span className="text-red-500">{showTimer(timeLeft)}</span>
           </div>
-          <div className="h-4/5 border-y-2 border-gray-500">
-            <h2 className="m-2 text-gray-300 text-xl pl-2 font-semibold">
+          <div className=" border-y-2 border-gray-500 pb-6">
+            <h2 className="m-2 text-gray-300 py-2 text-xl pl-2 font-semibold">
               Go to Question
             </h2>
-            <div className="grid gap-y-3 gap-x-3 mx-3 grid-cols-4">
+            <div className="grid gap-y-3 gap-x-3  mx-3 grid-cols-4">
               {questions.map((q, i) => (
-                <div className="flex justify-center mt-3 items-center">
+                <div className="flex justify-center mt-1 items-center">
                   <button
                     className={` ${
                       currentQuestion === i ? "bg-blue-600" : "bg-gray-600"

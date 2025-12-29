@@ -3,16 +3,16 @@ import Attempt from "../models/attempt.model.js";
 import Question from "../models/question.model.js";
 
 const saveProgress = async (req, res) => {
-  let { category, timeSpents, selectedOptions } = req.body;
+  let { subject, timeSpents, selectedOptions } = req.body;
   // console.log(req.body);
   try {
-    const categoryQues = await Question.find({ category: category })
+    const subjectQues = await Question.find({ subject: subject })
       .select("_id answer")
       .lean();
 
     let ansObj = {};
 
-    categoryQues.forEach((item) => {
+    subjectQues.forEach((item) => {
       ansObj[item._id.toString()] = item.answer;
     });
 
@@ -35,11 +35,11 @@ const saveProgress = async (req, res) => {
 
     const found = await Attempt.findOne({
       userId: req.userId,
-      category: category,
+      subject: subject,
     });
     if (found) {
       await Attempt.findOneAndUpdate(
-        { userId: req.userId, category: category },
+        { userId: req.userId, subject: subject },
         {
           $set: {
             timeSpents,
@@ -57,7 +57,7 @@ const saveProgress = async (req, res) => {
     }
 
     await Attempt.create({
-      category,
+      subject,
       timeSpents,
       selectedOptions,
       userId: req.userId,

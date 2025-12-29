@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { MdDeleteSweep } from "react-icons/md";
+import { toast } from "react-toastify";
 const AddExam = () => {
   axios.defaults.withCredentials = true;
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ const AddExam = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("");
   const [difficultyLevel, setDifficultylevel] = useState("");
-  const [questionCount, setQuestionCount] = useState(0);
+  const [questionCount, setQuestionCount] = useState(null);
   const subjectsArr = [
     "DSA",
     "Operating Systems",
@@ -24,7 +25,7 @@ const AddExam = () => {
   ];
   const difficultyLevelArr = ["Hard", "Moderate", "Easy"];
 
- //------------generate Question--------------------------------
+  //------------generate Question--------------------------------
   const generateQuestions = async (e) => {
     e.preventDefault();
     try {
@@ -51,8 +52,35 @@ const AddExam = () => {
       console.log(err);
     }
   };
-//--------------------------------------------------------------
-  
+  //--------------------------------------------------------------
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await axios.post("http://localhost:5000/api/add-question", {
+        genQuestions,
+      });
+      setLoading(false);
+      setGenQuestions([]);
+      setDifficultylevel("");
+      setQuestionCount(0);
+      setSelectedSubject("");
+      setSelectedTopic("");
+      toast.success(`${genQuestions.length} Questions Added Successfully`);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const rejectQuestion = (index) => {
+    setGenQuestions((prev) => {
+      const newArr = [...prev];
+      newArr.splice(index, 1);
+      return newArr;
+    });
+  };
 
   return (
     <div className="p-4 pt-2 flex flex-col">
@@ -77,6 +105,7 @@ const AddExam = () => {
                 required
                 name=""
                 id=""
+                value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
                 className="border p-1 rounded-xl "
               >
@@ -91,15 +120,16 @@ const AddExam = () => {
             <div className="flex flex-col w-45 gap-2 ">
               <label htmlFor="">Topic:</label>
               <input
-                required
+                value={selectedTopic}
                 type="text"
-                onChange={(e) => setSelectedTopic(e.target.value)}
+                onChange={(e) => setSelectedTopic(e.target.value.trim())}
                 className="border p-1 rounded-xl"
               />
             </div>
             <div className="flex flex-col w-45 gap-2 ">
               <label htmlFor="">Difficulty Level:</label>
               <select
+                value={difficultyLevel}
                 required
                 name=""
                 id=""
@@ -118,6 +148,7 @@ const AddExam = () => {
             <div className="flex flex-col  gap-2 w-45 ">
               <label htmlFor="">No. of Questions:</label>
               <input
+                value={questionCount}
                 required
                 onChange={(e) => setQuestionCount(e.target.value)}
                 type="number"
@@ -128,16 +159,26 @@ const AddExam = () => {
           <div className="h-30 flex justify-center items-center ">
             <button
               type="submit"
+              disabled={
+                difficultyLevel && selectedSubject && questionCount
+                  ? loading
+                  : true
+              }
               className={` font-semibold text-white py-3  cursor-pointer px-10 rounded-xl ${
-                loading ? "bg-green-500" : "bg-blue-500"
-              }`}
+                loading
+                  ? "bg-green-500 hover:cursor-not-allowed"
+                  : difficultyLevel && selectedSubject && questionCount
+                  ? "bg-blue-700"
+                  : "bg-gray-500 hover:cursor-not-allowed"
+              }
+              }  `}
             >
               {loading ? "Loading..." : "Generate Questions"}
             </button>
           </div>
         </form>
       </div>
-      {genQuestions ? (
+      {genQuestions.length ? (
         <div className="bg-gray-200 p-6 px-10 pb-0 mt-5 rounded-xl text-black">
           <div className="font-semibold text-3xl border-b-gray-400 border-b-2 pb-2">
             Generated Questions
@@ -151,7 +192,10 @@ const AddExam = () => {
                     <span>{question.question}</span>
                   </div>
 
-                  <button className="flex items-center gap-2 bg-red-600 px-3 h-8 rounded-lg text-white hover:bg-red-900 transition cursor-pointer">
+                  <button
+                    onClick={() => rejectQuestion(i)}
+                    className="flex items-center gap-2 bg-red-600 px-3 h-8 rounded-lg text-white hover:bg-red-900 transition cursor-pointer"
+                  >
                     <MdDeleteSweep className="text-xl" />
                     <span className="font-semibold text-md ">Reject</span>
                   </button>
@@ -174,6 +218,7 @@ const AddExam = () => {
           })}
           <div className="h-25 flex justify-between items-center ">
             <button
+              onClick={(e) => handleSubmit(e)}
               type="submit"
               className={` font-semibold text-white py-3 w-50 cursor-pointer px-8 rounded-xl ${
                 loading ? "bg-green-500" : "bg-blue-500"
@@ -182,6 +227,7 @@ const AddExam = () => {
               {loading ? "Loading..." : "Approve & Publish"}
             </button>
             <button
+              onClick={(e) => generateQuestions(e)}
               type="submit"
               className={` font-semibold text-white py-3 w-50 cursor-pointer px-8 rounded-xl ${
                 loading ? "bg-cyan-500" : "bg-emerald-700"

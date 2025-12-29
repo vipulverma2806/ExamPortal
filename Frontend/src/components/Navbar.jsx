@@ -3,10 +3,9 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 const Navbar = () => {
-  
   const location = useLocation();
   const allPaths = [
-    { path: "/dashboard", label: "Choose a Category" },
+    { path: "/dashboard", label: "Choose a subject" },
     { path: "/studentDashboard", label: "Dashboard" },
   ];
 
@@ -32,21 +31,20 @@ const Navbar = () => {
             Welcome to ExamPortal
           </h1>
           <div className="flex justify-between items-center">
-          <Link to={`${otherPaths[0].path}`}>
-            <button className="text-xl bg-green-600 rounded-md w-50 mr-3 text-gray-100 font-semibold pb-1 hover:bg-green-800 hover:cursor-pointer">
-              {`${otherPaths[0].label}`}
-            </button>
-          </Link>
-          <li className="">
-            <button
-              onClick={handleLogout}
-              className="text-xl bg-red-600 rounded-md w-25 text-gray-100 font-semibold pb-1 hover:bg-red-800 hover:cursor-pointer"
-            >
-              Logout
-            </button>
-            {}
-           
-          </li>
+            <Link to={`${otherPaths[0].path}`}>
+              <button className="text-xl bg-green-600 rounded-md w-50 mr-3 text-gray-100 font-semibold pb-1 hover:bg-green-800 hover:cursor-pointer">
+                {`${otherPaths[0].label}`}
+              </button>
+            </Link>
+            <li className="">
+              <button
+                onClick={handleLogout}
+                className="text-xl bg-red-600 rounded-md w-25 text-gray-100 font-semibold pb-1 hover:bg-red-800 hover:cursor-pointer"
+              >
+                Logout
+              </button>
+              {}
+            </li>
           </div>
         </ul>
       </nav>

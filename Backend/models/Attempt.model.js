@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 
 const attemptSchema = new mongoose.Schema(
@@ -13,7 +12,7 @@ const attemptSchema = new mongoose.Schema(
       required: true,
     },
 
-    category: {
+    subject: {
       type: String,
       required: true,
       trim: true,
@@ -33,17 +32,17 @@ const attemptSchema = new mongoose.Schema(
     rightAnswers: {
       type: Number,
       default: 0,
-      required:true
+      required: true,
     },
     wrongAnswers: {
       type: Number,
       default: 0,
-      required:true
+      required: true,
     },
-    totalMarks:{
-      type:Number,
-      default:0,
-      required:true,
+    totalMarks: {
+      type: Number,
+      default: 0,
+      required: true,
     },
   },
   { timestamps: true }

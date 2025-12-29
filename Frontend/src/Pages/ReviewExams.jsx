@@ -7,10 +7,10 @@ const URL = import.meta.env.VITE_URL;
 axios.defaults.withCredentials = true;
 const ReviewExams = () => {
   const [allQues, setAllQues] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [Subjects, setSubjects] = useState([]);
   const [filteredQues, setFilteredQues] = useState([]);
   const [attemptCat, setAttemptCat] = useState("");
-  const {attemptArr}= useOutletContext();
+  const { attemptArr } = useOutletContext();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -18,8 +18,8 @@ const ReviewExams = () => {
         console.log("res", res);
         console.log("res data", res.data);
         setAllQues(res.data);
-        const categoriesArr = attemptArr.map((attempt, i) => attempt.category);
-        setCategories(categoriesArr);
+        const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
+        setSubjects(SubjectsArr);
       } catch (err) {
         console.log(err);
       }
@@ -27,13 +27,13 @@ const ReviewExams = () => {
     fetchData();
   }, []);
 
-  const showCategory = (cat) => {
-    const array = allQues.filter((que, i) => que.category == cat);
+  const showsubject = (cat) => {
+    const array = allQues.filter((que, i) => que.subject == cat);
     setFilteredQues(array);
-    const array2 = attemptArr.filter((que, i) => que.category == cat);
+    const array2 = attemptArr.filter((que, i) => que.subject == cat);
     setAttemptCat(array2);
   };
-  // console.log("categories", categories);
+  // console.log("Subjects", Subjects);
   // console.log("attemptArr", attemptArr);
   // console.log("allQues",allQues)
   return (
@@ -45,12 +45,12 @@ const ReviewExams = () => {
           id=""
           className="w-[200px] ml-13  rounded-xl  px-3 py-1 bg-gray-500 text-white font-semibold text-xl"
           onChange={(e) => {
-            showCategory(e.target.value);
+            showsubject(e.target.value);
             console.log("working", e.target.value);
           }}
         >
           <option>Select subject </option>
-          {categories.map((cat, i) => {
+          {Subjects.map((cat, i) => {
             return (
               <option className="hover:bg-red-600" value={cat}>
                 {cat}

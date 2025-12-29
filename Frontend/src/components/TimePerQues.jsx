@@ -28,16 +28,16 @@ const TimePerQues = ({ attemptArr }) => {
   axios.defaults.withCredentials = true;
   const [chartData, setChartData] = useState(null);
   const [categories, setCategories] = useState([]);
- 
+
   const [allAttempts, setAllAttempts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if(!attemptArr || attemptArr.length == 0) return;
+      if (!attemptArr || attemptArr.length == 0) return;
       try {
-        const categoriesArr = attemptArr.map((attempt, i) => attempt.category);
+        const categoriesArr = attemptArr.map((attempt, i) => attempt.subject);
         setCategories(categoriesArr);
-        if(attemptArr.length == 0) return;
+        if (attemptArr.length == 0) return;
         const attempt = attemptArr[0];
         // console.log(attemptArr);
         const timeSpents = Object.values(attempt.timeSpents);
@@ -66,9 +66,9 @@ const TimePerQues = ({ attemptArr }) => {
     fetchData();
   }, [attemptArr]);
 
-  const showCategory = (cat) => {
-    const attempt = attemptArr.find((attempt) => attempt.category === cat);
-    if(!attempt) return;
+  const showsubject = (cat) => {
+    const attempt = attemptArr.find((attempt) => attempt.subject === cat);
+    if (!attempt) return;
     console.log(attempt);
     const timeSpents = Object.values(attempt.timeSpents);
     const QuesNo = Object.keys(attempt.timeSpents);
@@ -99,7 +99,7 @@ const TimePerQues = ({ attemptArr }) => {
         id=""
         className="w-[200px] ml-10 mt-5 rounded-xl relative top-1 left-8 z-40 px-3 py-1 bg-gray-500 text-white font-semibold text-xl"
         onChange={(e) => {
-          showCategory(e.target.value);
+          showsubject(e.target.value);
           console.log("working", e.target.value);
         }}
       >

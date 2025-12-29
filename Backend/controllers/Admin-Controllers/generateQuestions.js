@@ -37,13 +37,15 @@ Rules:
 -Do NOT use code blocks.
 -Do NOT include \`\`\` or the word "json".
 -Do NOT add explanations.
+-Answers should not be same options for each question 
 
 JSON format:
 [
   {
     "question": "string",
     "options": ["A", "B", "C", "D"],
-    "answer": "one of the options"
+    "answer": "one of the options",
+    "subject": "given subject"
   }
 ]
 `;
@@ -52,6 +54,7 @@ JSON format:
     console.log(result.response.text());
     let text = result.response.text();
     // let text = testQuestion;
+    // text = JSON.stringify(text)
     let Questions;
 
     try {
@@ -71,7 +74,7 @@ JSON format:
       );
 
     if (!isValidData) return res.status(400).json("AI returned invalid format");
-
+      console.log("success response to frontend")
     return res.status(200).json(Questions);
   } catch (err) {
     console.log("AI code generation failed", err);

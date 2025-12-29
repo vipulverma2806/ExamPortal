@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 
 const Quiz = () => {
   axios.defaults.withCredentials = true;
-  const { category } = useParams();
+  const { subject } = useParams();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -24,7 +24,7 @@ const Quiz = () => {
     const fetchQuestions = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/questions/${category}`
+          `http://localhost:5000/api/questions/${subject}`
         );
         setQuestions(res.data);
       } catch (err) {
@@ -43,7 +43,7 @@ const Quiz = () => {
 
     fetchName();
     fetchQuestions();
-  }, [category]);
+  }, [subject]);
 
   // ⏱️ Start timer when questions load OR when current question changes
   useEffect(() => {
@@ -99,7 +99,7 @@ const Quiz = () => {
     recordTime(); // save final question time
 
     await axios.post("http://localhost:5000/api/save-progress", {
-      category,
+      subject,
       correctAnswers: correctAns,
       wrongAnswers,
       timeSpent, // ⏱️ send timing data
@@ -206,7 +206,7 @@ const Quiz = () => {
           </div>
 
           <div className="h-1/10 text-gray-300 border-t-2 pl-3 text-xl font-bold">
-            Category: {category}
+            subject: {subject}
           </div>
 
           <div className="h-4/5 border-y-2 border-white">
