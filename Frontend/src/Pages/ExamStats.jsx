@@ -48,7 +48,7 @@ const ExamStats = () => {
     (state) => state.adminData?.allQuestions
   );
   const bestWorstFromStore = useSelector(
-    (state) => state.adminData.bestWorstSub
+    (state) => state.adminData?.bestWorstSub
   );
   const bestWorstArray = [...bestWorstFromStore];
   // console.log(attemptsFromStore);

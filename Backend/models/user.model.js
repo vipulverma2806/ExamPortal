@@ -8,6 +8,20 @@ const userSchema = new mongoose.Schema(
       // minlength: 2,
       maxlength: 50,
     },
+    courseName: {
+      type: String,
+      required: true,
+      trim: true,
+      // minlength: 2,
+      maxlength: 10,
+    },
+    rollNo: {
+      type: Number,
+      required: true,
+      trim: true,
+      // minlength: 2,
+      maxlength: 50,
+    },
     email: {
       type: String,
       required: true,
