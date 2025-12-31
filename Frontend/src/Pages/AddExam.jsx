@@ -109,8 +109,8 @@ const AddExam = () => {
                 onChange={(e) => setSelectedSubject(e.target.value)}
                 className="border p-1 rounded-xl "
               >
-                <option value="null" className="text-gray-400">
-                  Select
+                <option value="" disabled selected hidden className="text-gray-400">
+                  Select Subject
                 </option>
                 {subjectsArr.map((subject, i) => {
                   return <option value={subject}>{subject}</option>;
@@ -136,8 +136,8 @@ const AddExam = () => {
                 onChange={(e) => setDifficultylevel(e.target.value)}
                 className="border p-1 rounded-xl"
               >
-                <option className="text-gray-400" value="null">
-                  Select
+                <option className="text-gray-400" disabled selected hidden value="">
+                  Select level
                 </option>
                 {difficultyLevelArr.map((level, i) => {
                   return <option value={level}>{level}</option>;

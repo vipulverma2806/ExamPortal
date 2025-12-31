@@ -12,27 +12,27 @@ axios.defaults.withCredentials = true;
 const StudentDashboard = () => {
   const [attemptArr, setAttemptArr] = useState([]);
   const [details, setDetails] = useState({});
-  useEffect(() => {
+  const [isDataFetched,setIsDataFetched] = useState(false)
+   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${URL}/api/getStudentSummary`);
         setAttemptArr(res.data);
+        setIsDataFetched(true);
+        console.log("res-data", res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
   }, []);
-  // console.log(attemptArr);
+  console.log("attemptArr UPDATED:", attemptArr);
 
   //   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const loading = useSelector((state) => state.auth.loading);
   // const logoutSuccess = useSelector((state) => state.listing.navigate);
   const [loading, setLoading] = useState();
-  // useEffect(() => {
-  //   if (logoutSuccess) return navigate("/");
-  // }, [logoutSuccess]);
 
   const logout = async () => {
     try {
@@ -149,7 +149,9 @@ const StudentDashboard = () => {
         </div>
 
         <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto h-auto rounded-2xl  p-3 ">
-          <Outlet context={{ details, attemptArr,getDetails }} />
+          {isDataFetched && (
+            <Outlet context={{ details, attemptArr, getDetails }} />
+          )}
         </div>
       </div>
     </div>

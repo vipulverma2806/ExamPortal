@@ -19,12 +19,15 @@ ChartJS.register(
   Title
 );
 
-const TopicWiseBar = ({ attemptArr }) => {
+const TopicWiseBar = ({ allAttempts }) => {
   const [Subjects, setSubjects] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
+  console.log("allAttempts",allAttempts)
+  const attemptArr = allAttempts;
+  console.log("attemptarr", attemptArr);
+  const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
+  const totalMarksArr = attemptArr.map((attempt, i) => attempt.totalMarks);
   useEffect(() => {
-    const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
-    const totalMarksArr = attemptArr.map((attempt, i) => attempt.totalMarks);
     setTotalMarks(totalMarksArr);
     setSubjects(SubjectsArr);
   }, []);

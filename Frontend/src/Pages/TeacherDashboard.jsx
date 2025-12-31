@@ -12,6 +12,7 @@ const TeacherDashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState();
+  const isAdmin = true;
  
 
   //---------logout-------------------
@@ -148,7 +149,7 @@ const TeacherDashboard = () => {
         </div>
 
         <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto h-auto rounded-2xl  p-3 ">
-          <Outlet context={{ details, attemptArr, getDetails }} />
+          <Outlet context={{ details, attemptArr, getDetails ,isAdmin }} />
         </div>
       </div>
     </div>

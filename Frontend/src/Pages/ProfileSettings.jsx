@@ -12,7 +12,7 @@ const ProfileSettings = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const navigate = useNavigate();
   const { details ,getDetails } = useOutletContext();
-
+  const {isAdmin} = useOutletContext();
   const handleUpdate = async (e) => {
     e.preventDefault();
 
@@ -32,6 +32,7 @@ const ProfileSettings = () => {
       setPassword("");
       setEmail("");
       getDetails();
+      if(isAdmin) return navigate("/teacherDashboard") 
       navigate("/studentDashboard")
     } catch (error) {
       console.error("Registration failed:", error);
@@ -105,21 +106,5 @@ const ProfileSettings = () => {
 
 export default ProfileSettings;
 
-{
-  /* 
-<div>
-      <div>Update Your crediantials</div>
-      <form action="">
-        <div>
-          <h4>Name:</h4>
-          <input type="text" />
-        </div>
-        <div>
-          <h4>Email Id:</h4>
-          <input type="email" />
-        </div>
-        <div>Password:</div>
-        <input type="password" />
-      </form>
-    </div> */
-}
+
+

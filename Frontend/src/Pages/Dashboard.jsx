@@ -35,7 +35,7 @@ const Dashboard = () => {
             {Subjects.map((subject) => (
               <div
                 key={subject}
-                className="px-5 py-2 text-xl hover:bg-blue-800 font-semibold rounded-2xl flex justify-center items-center bg-gray-800 text-white cursor-pointer "
+                className="px-5 h-20 py-2 text-xl hover:bg-blue-800 font-semibold rounded-2xl flex justify-center items-center bg-gray-800 text-white cursor-pointer "
                 onClick={() => handlesubjectClick(subject)}
               >
                 <h2 className="">{subject}</h2>

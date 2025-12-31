@@ -6,9 +6,10 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend,Title } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend , Title);
 
-const RightWrongPie = ({attemptArr}) => {
+const RightWrongPie = ({allAttempts}) => {
   const [rightAns, setRightAns] = useState(0);
   const [wrongAns, setWrongAns] = useState(0);
+  const attemptArr = allAttempts;
   useEffect(() => {
     const fetchData = async () => {
       try {

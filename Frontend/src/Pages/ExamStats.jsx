@@ -76,9 +76,11 @@ const ExamStats = () => {
         console.log("no data available for selected subject");
         return;
       }
+
       let sub = attemptsFromStore.map((sub, i) => {
         return sub.subject;
       });
+
       sub = [...new Set(sub)];
       setSubjects(sub);
     };
@@ -184,7 +186,7 @@ const ExamStats = () => {
       // const QuesIdsArr = filteredQuestion.map((q) => q._id)
       // console.log("filtr",filteredAttempt)
       // const QuesCount = Object.keys(filteredAttempt[0].timeSpents).length;
-      const QuesNo = Object.keys(filteredAttempt[0].timeSpents);
+      const QuesNo = Object.keys(filteredAttempt[0]?.timeSpents);
       let rightCounts = [];
       let wrongCounts = [];
       let skippedCounts = [];
@@ -531,7 +533,7 @@ const ExamStats = () => {
           >
             <h3 className="text-md text-white ">{card.title}</h3>
 
-            <p className="mt-3 text-4xl font-bold text-black dark:text-white">
+            <p className="mt-3 text-3xl font-bold text-black dark:text-white">
               {card.value}
             </p>
 
@@ -550,11 +552,14 @@ const ExamStats = () => {
             }}
             className="bg-gray-800 rounded-xl mr-5 mt-5  py-2 border border-gray-400 my-3 px-4 w-60 shadow-2xs shadow-white"
           >
-            <option>Select Subject</option>
+            <option value="" disabled selected hidden>
+              Select Subject
+            </option>
+            {/* {console.log("subjects examstats", subjects)} */}
             {subjects.map((subject, i) => {
               return (
                 <option key={i} value={subject}>
-                  {subject}
+                  {subject} 
                 </option>
               );
             })}
@@ -566,8 +571,6 @@ const ExamStats = () => {
             </span>
           ) : null}
         </div>
-
-        {/* Avg time per question area chart */}
         <div className="w-full h-full  p-3 gap-5 flex-col  flex justify-center items-center   ">
           {stackedChartData && (
             <div className="bg-white w-full h-[400px] p-3 rounded-2xl ">

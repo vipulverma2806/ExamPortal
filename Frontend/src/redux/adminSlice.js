@@ -28,7 +28,7 @@ export const getAllAttempts = createAsyncThunk(
     try {
       console.log("pending attempts");
       const res = await axios.get(`${URL}/adminRoutes/getAllAttempts`);
-     
+      console.log("all Attempts", res.data)
       return res.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -77,45 +77,45 @@ const AdminSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllStudents.fulfilled, (state, action) => {
-        console.log("all students fulfill");
+        // console.log("all students fulfill");
         state.allStudents = action.payload.data;
       })
       .addCase(getAllStudents.pending, (state, action) => {
-        console.log("pending");
+        // console.log("pending");
       })
       .addCase(getAllStudents.rejected, (state, action) => {
-        console.log("unsuccessfull");
+        // console.log("unsuccessfull");
       })
       .addCase(getAllAttempts.fulfilled, (state, action) => {
-        console.log("attempts fulfill");
+        // console.log("attempts fulfill");
         state.allAttempts = action.payload.data;
       })
       .addCase(getAllAttempts.pending, (state, action) => {
-        console.log("pending");
+        // console.log("pending");
       })
       .addCase(getAllAttempts.rejected, (state, action) => {
-        console.log("unsuccessfull");
+        // console.log("unsuccessfull");
       })
       .addCase(getBestWorstSub.fulfilled, (state, action) => {
-        console.log("bestworst fulfill");
+        // console.log("bestworst fulfill");
         state.bestWorstSub = action.payload.data;
       })
       .addCase(getBestWorstSub.pending, (state, action) => {
-        console.log("pending");
+        // console.log("pending");
       })
       .addCase(getBestWorstSub.rejected, (state, action) => {
-        console.log("unsuccessfull");
+        // console.log("unsuccessfull");
       })
       .addCase(getAllQuestions.fulfilled, (state, action) => {
-        console.log("getquestion fulfill");
+        // console.log("getquestion fulfill");
         state.allQuestions = action.payload;
         
       })
       .addCase(getAllQuestions.pending, (state, action) => {
-        console.log(" getAllQuestions pending");
+        // console.log(" getAllQuestions pending");
       })
       .addCase(getAllQuestions.rejected, (state, action) => {
-        console.log("getAllQuestions unsuccessfull");
+        // console.log("getAllQuestions unsuccessfull");
       });
   },
 });

@@ -5,7 +5,7 @@ const getAllAttempts = async (req, res) => {
     if (allAttempts.length == 0)
       return res.status(200).json({ message: "No one Attempts", data: [] });
     
-    res.status(200).json({ count: allAttempts.length, data: allAttempts });
+    res.status(200).json({ count: allAttempts.length, data: allAttempts,message:"new data coming" });
   } catch (err) {
     res.status(500).json({ message: "some error occured" });
     console.log(err);

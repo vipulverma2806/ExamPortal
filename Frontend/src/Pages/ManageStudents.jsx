@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import StudentSummary from "./StudentSummary";
 const ManageStudents = () => {
   const studentsFromStore = useSelector(
     (state) => state.adminData?.allStudents
@@ -7,20 +8,27 @@ const ManageStudents = () => {
   const attemptsFromStore = useSelector(
     (state) => state.adminData?.allAttempts
   );
+  const [currentStudentAttempts, setCurrentStudentAttempts] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
+  const [seeReportClicked, setSeeReportClicked] = useState(false);
+  const [currentStudentInfo,setCurrentStudentInfo] = useState({})
   useEffect(() => {
     setAllStudents(studentsFromStore);
   }, []);
 
-  const seeReport = (id) => {
-    const currentStudentAttempts = attemptsFromStore.filter(
-      (attempt) => attempt.userId == id
+  const seeReport = (id,studentName,studentRollNo,studentCourse) => {
+    setCurrentStudentAttempts(
+      attemptsFromStore.filter((attempt) => attempt.userId == id)
     );
-    console.log(currentStudentAttempts)
+    setCurrentStudentInfo({studentName,studentRollNo,studentCourse})
+    setSeeReportClicked(true);
   };
+  console.log("currentstudents", currentStudentAttempts);
   return (
-    <div className="p-5">
-      <div className="max-w-4xl mx-auto">
+    <div className="p-1">
+      <div
+        className={`max-w-4xl mx-auto ${seeReportClicked ? "hidden" : "block"}`}
+      >
         {/* Table Header */}
         <div className="grid grid-cols-28 bg-gradient-to-r from-teal-600 to-cyan-700 text-white rounded-xl shadow-lg py-4 px-8 mb-4">
           <div className="col-span-2  text-center">
@@ -113,7 +121,14 @@ const ManageStudents = () => {
 
                   <div className="col-span-4 md:col-span-4 text-center ">
                     <button
-                      onClick={() => seeReport(student._id)}
+                      onClick={() =>
+                        seeReport(
+                          student._id,
+                          student.name,
+                          student.rollNo,
+                          student.courseName
+                        )
+                      }
                       className="text-md py-1 bg-teal-700 px-4 rounded-xl hover:cursor-pointer  "
                     >
                       See Report
@@ -129,6 +144,26 @@ const ManageStudents = () => {
           </div>
         )}
       </div>
+      {seeReportClicked && (
+        <div>
+          <div className="w-full flex gap-x-3">
+            <button
+              className="p-1 px-6 ml-1 rounded-md bg-blue-500 mb-3 "
+              onClick={() => setSeeReportClicked(false)}
+            >
+              Back
+            </button>
+            <div className=" p-1 px-5 mr-5 flex-1 flex justify-evenly rounded-md bg-teal-600 mb-3 text-xl font-semibold">
+              <span className="">Name : {currentStudentInfo.studentName}</span>
+              <span>Roll No. : {currentStudentInfo.studentRollNo}</span>
+              <span>Course : {currentStudentInfo.studentCourse}</span>
+            </div>
+          </div>
+          <StudentSummary
+            currentStudentAttempts={currentStudentAttempts}
+          ></StudentSummary>
+        </div>
+      )}
     </div>
   );
 };

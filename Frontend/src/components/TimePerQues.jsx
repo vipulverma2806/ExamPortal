@@ -24,19 +24,20 @@ ChartJS.register(
   Legend,
   Filler
 );
-const TimePerQues = ({ attemptArr }) => {
+const TimePerQues = ({ allAttempts }) => {
   axios.defaults.withCredentials = true;
+  const attemptArr = allAttempts;
   const [chartData, setChartData] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [Subjects, setSubjects] = useState([]);
 
-  const [allAttempts, setAllAttempts] = useState([]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
       if (!attemptArr || attemptArr.length == 0) return;
       try {
-        const categoriesArr = attemptArr.map((attempt, i) => attempt.subject);
-        setCategories(categoriesArr);
+        const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
+        setSubjects(SubjectsArr);
         if (attemptArr.length == 0) return;
         const attempt = attemptArr[0];
         // console.log(attemptArr);
@@ -97,13 +98,13 @@ const TimePerQues = ({ attemptArr }) => {
       <select
         name=""
         id=""
-        className="w-[200px] ml-10 mt-5 rounded-xl relative top-1 left-8 z-40 px-3 py-1 bg-gray-500 text-white font-semibold text-xl"
+        className="w-[200px] ml-10 mt-5 rounded-xl relative top-1 left-8 z-40 px-3 py-1 bg-gray-500 text-white font-semibold text-lg"
         onChange={(e) => {
           showsubject(e.target.value);
-          console.log("working", e.target.value);
+         
         }}
-      >
-        {categories.map((cat, i) => {
+      ><option value="" disabled selected hidden>Select Subject</option>
+        {Subjects.map((cat, i) => {
           return (
             <option className="hover:bg-red-600" value={cat}>
               {cat}
@@ -111,7 +112,7 @@ const TimePerQues = ({ attemptArr }) => {
           );
         })}
       </select>
-      <div className="w-full h-full relative z-10 bottom-15 px-5 pt-10 flex justify-center items-center   ">
+      <div className="w-full h-[450px] relative z-10 bottom-15 px-5 pt-10 flex justify-center items-center   ">
         {chartData ? (
           <Line
             className="bg-white p-3  "

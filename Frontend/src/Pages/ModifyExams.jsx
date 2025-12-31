@@ -57,20 +57,22 @@ const ModifyExams = () => {
           onChange={(e) => setSelectedSubject(e.target.value)}
           className="border p-1 bg-slate-800 px-3 py-2 rounded-xl w-60"
         >
-          <option value="null" className="text-gray-800">
-            Select
+          <option value=""  className="text-gray-800" selected hidden disabled>
+            Select Subject
           </option>
           {subjectsArr.map((subject, i) => {
             return <option value={subject}>{subject}</option>;
           })}
         </select>
-        <button
-          onClick={() => deleteQuestion(selectedSubject)}
-          className="flex items-center gap-2 bg-red-600 px-3 py-2  h-8 rounded-lg text-white hover:bg-red-900 transition cursor-pointer"
-        >
-          <MdDeleteSweep className="text-xl" />
-          <span className="font-semibold text-md ">Delete All</span>
-        </button>
+        {selectedSubject ? (
+          <button
+            onClick={() => deleteQuestion(selectedSubject)}
+            className="flex items-center gap-2 bg-red-600 px-3 py-2  h-8 rounded-lg text-white hover:bg-red-900 transition cursor-pointer"
+          >
+            <MdDeleteSweep className="text-xl" />
+            <span className="font-semibold text-md ">Delete All</span>
+          </button>
+        ) : null}
       </div>
       <div className="px-10">
         {questions.length ? (
