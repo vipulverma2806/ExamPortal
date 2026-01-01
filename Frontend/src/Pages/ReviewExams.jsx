@@ -17,7 +17,7 @@ const ReviewExams = () => {
         const res = await axios.get(`${URL}/api/reviewExam`);
         console.log("res", res);
         console.log("res data", res.data);
-        setAllQues(res.data);
+        setAllQues(res.data.data);
         const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
         setSubjects(SubjectsArr);
       } catch (err) {

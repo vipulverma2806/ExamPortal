@@ -9,8 +9,9 @@ const deleteQuestion = async (req, res) => {
       await Question.deleteMany({ subject: subject });
       return res.status(200).json("All Question Deleted");
     }
-    const deleteQuestion = await Question.findByIdAndDelete(id);
-    console.log("deleted", deleteQuestion);
+    const deletedQuestion = await Question.findByIdAndDelete(id);
+    if(!deletedQuestion) return res.status(404).json("Question not found")
+    console.log("deleted", deletedQuestion);
     return res.status(200).json("Question deleted");
   } catch (err) {
     console.log(err);

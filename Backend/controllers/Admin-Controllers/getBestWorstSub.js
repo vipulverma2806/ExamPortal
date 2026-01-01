@@ -1,4 +1,4 @@
-import User from "../../models/user.model.js";
+
 import Attempt from "../../models/attempt.model.js";
 import Question from "../../models/question.model.js";
 const getBestWorstSub = async (req, res) => {
@@ -9,7 +9,7 @@ const getBestWorstSub = async (req, res) => {
     ]);
     // console.log("subject with question count", totalQuesPerSub);
 
-    //-----pass marks-----
+    
     const passingMarksPerSub = totalQuesPerSub.map((sub, i) => {
       return { [sub.subject]: sub.Qcount * 4 * (33 / 100) };
     });
@@ -18,7 +18,6 @@ const getBestWorstSub = async (req, res) => {
     const passingMarksPerSubObj = Object.assign({}, ...passingMarksPerSub);
     // console.log(passingMarksPerSubObj);
 
-    //---passed Student Count-------
     const orConditions = Object.entries(passingMarksPerSubObj).map(
       ([subject, passingMarks]) => ({
         subject: subject,

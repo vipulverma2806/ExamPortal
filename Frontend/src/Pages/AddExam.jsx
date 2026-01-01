@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { MdDeleteSweep } from "react-icons/md";
 import { toast } from "react-toastify";
+import AddQuestion from "../components/AddQuestion";
 const AddExam = () => {
   axios.defaults.withCredentials = true;
   const [loading, setLoading] = useState(false);
@@ -58,7 +59,7 @@ const AddExam = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/add-question", {
+      const res = await axios.post("http://localhost:5000/adminRoutes/add-question", {
         genQuestions,
       });
       setLoading(false);
@@ -122,7 +123,7 @@ const AddExam = () => {
               <input
                 value={selectedTopic}
                 type="text"
-                onChange={(e) => setSelectedTopic(e.target.value.trim())}
+                onChange={(e) => setSelectedTopic(e.target.value)}
                 className="border p-1 rounded-xl"
               />
             </div>
@@ -238,6 +239,7 @@ const AddExam = () => {
           </div>
         </div>
       ) : null}
+      <AddQuestion/>
     </div>
   );
 };

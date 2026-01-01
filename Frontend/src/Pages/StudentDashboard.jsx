@@ -17,7 +17,7 @@ const StudentDashboard = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${URL}/api/getStudentSummary`);
-        setAttemptArr(res.data);
+        setAttemptArr(res.data?.data);
         setIsDataFetched(true);
         console.log("res-data", res.data);
       } catch (err) {
@@ -51,7 +51,7 @@ const StudentDashboard = () => {
     try {
       const success = await axios.get(`${URL}/auth/getDetails`);
 
-      return setDetails(success.data);
+      return setDetails(success.data.data);
     } catch (err) {
       return console.log(err);
     }

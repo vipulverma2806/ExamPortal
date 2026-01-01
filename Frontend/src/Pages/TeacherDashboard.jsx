@@ -33,7 +33,7 @@ const TeacherDashboard = () => {
     try {
       const success = await axios.get(`${URL}/auth/getDetails`);
 
-      return setDetails(success.data);
+      return setDetails(success.data.data);
     } catch (err) {
       return console.log(err);
     }

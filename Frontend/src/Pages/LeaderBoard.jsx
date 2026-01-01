@@ -9,9 +9,10 @@ const LeaderBoard = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${URL}/api/getLeaderBoard`);
-        setLeaderArray(res.data.slice(3));
-        setTopperArray(res.data.slice(0, 3));
-        console.log(res.data.slice(0, 3));
+        
+        setLeaderArray(res.data.data.slice(3));
+        setTopperArray(res.data.data.slice(0, 3));
+       
       } catch (err) {
         console.log(err);
       }
