@@ -1,6 +1,6 @@
 const checkAuth = async (req, res) => {
-  if (req.userId) return res.status(202).json("Accepted");
-  res.status(401).json("unAuthorised");
-}
+  if (!req.userId) return res.status(401).json({ message: "unAthorised" });
+  return res.status(200).json({ message: "Access accepted" });
+};
 
 export default checkAuth;

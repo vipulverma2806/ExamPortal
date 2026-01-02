@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 
-const Dashboard = () => {
+const QuizHome = () => {
   const [Subjects, setSubjects] = useState([]);
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
@@ -48,4 +48,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default QuizHome;

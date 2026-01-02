@@ -3,9 +3,10 @@ const logout = async (req, res) => {
   try {
     // console.log("inside try")
     res.clearCookie("token");
-    res.status(200).json("Logout success");
+    res.status(200).json({ message: "Logout success" });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ message: "Internal Server error" })
   }
 };
 

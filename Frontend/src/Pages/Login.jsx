@@ -27,7 +27,7 @@ const Login = () => {
         "Login failed:",
         error.response ? error.response.data : error.message
       );
-      toast.success(error.response ? error.response.data : error.message);
+      toast.success(error.response ? error.response.data.message : error.message);
       setError("Invalid credentials");
     }
   };

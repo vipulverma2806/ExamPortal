@@ -4,8 +4,11 @@ import Question from "../models/question.model.js";
 
 const saveProgress = async (req, res) => {
   let { subject, timeSpents, selectedOptions } = req.body;
+
   // console.log(req.body);
   try {
+    if (!subject || !selectedOptions)
+      return res.status(400).json({ message: "fields missing" });
     const subjectQues = await Question.find({ subject: subject })
       .select("_id answer")
       .lean();
@@ -53,7 +56,7 @@ const saveProgress = async (req, res) => {
         { new: true }
       );
 
-      return res.status(200).send("Progress saved!");
+      return res.status(200).send({ message: "Progress saved!" });
     }
 
     await Attempt.create({
@@ -66,9 +69,10 @@ const saveProgress = async (req, res) => {
       rightAnswers,
       wrongAnswers,
     });
-    return res.status(200).send("Progress saved!");
+    return res.status(200).send({ message: "Progress saved!" });
   } catch (err) {
-    res.status(500).send(err);
+    
+    return res.status(500).send({ message: "Internal server error" })
   }
 };
 

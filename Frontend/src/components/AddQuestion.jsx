@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddQuestion = () => {
   const [question, setQuestion] = useState("");
-  const [options, setOptions] = useState({ A: "", B: "", C: "", D: "" });
+  const [optionsObj, setOptionsObj] = useState({ A: "", B: "", C: "", D: "" });
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(false);
-  const optionsLabel = Object.keys(options);
+  const optionsLabel = Object.keys(optionsObj);
   const subjectsArr = [
     "DSA",
     "Operating Systems",
@@ -22,19 +23,26 @@ const AddQuestion = () => {
 
   const labelCss = "font-semibold text-xl block mb-2";
   const handleOptionInput = (option, value) => {
-    setOptions((prev) => ({ ...prev, [option]: value }));
+    setOptionsObj((prev) => ({ ...prev, [option]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      console.log(question, options, selectedAnswer, selectedSubject);
+      setLoading(true);
+      console.log(question, optionsObj, selectedAnswer, selectedSubject);
       await axios.post("http://localhost:5000/adminRoutes/add-question", {
         question,
-        options:options,
+        optionsObj:optionsObj,
         selectedAnswer,
         selectedSubject,
       });
+      setQuestion("")
+      setOptionsObj({ A: "", B: "", C: "", D: "" })
+      setLoading(false)
+      setSelectedAnswer("")
+      setSelectedSubject("")
       toast.success("add question successfull")
     } catch (err) {
       console.log(err);
@@ -58,7 +66,7 @@ const AddQuestion = () => {
             <input
               required
               type="text"
-              placeholder="Question"
+             
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               className="border p-3 rounded-xl  w-full "
@@ -72,7 +80,7 @@ const AddQuestion = () => {
               <input
                 required
                 type="text"
-                value={options[option]}
+                value={optionsObj[option]}
                 onChange={(e) => handleOptionInput(option,e.target.value)}
                 className="border p-3 rounded-xl w-full"
               />

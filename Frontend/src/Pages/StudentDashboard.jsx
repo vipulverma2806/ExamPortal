@@ -124,7 +124,7 @@ const StudentDashboard = () => {
           </nav>
           <div className="flex flex-col gap-y-4">
             <NavLink
-              to="/dashboard"
+              to="/quizHome"
               className={`
                 p-2 text-center rounded-md
                      text-white   ${

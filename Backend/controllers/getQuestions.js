@@ -5,13 +5,14 @@ const getQuestions = async (req, res) => {
     if (subject === "all") {
       const questions = await Question.find();
       // console.log(questions)
-      return res.json(questions);
+      return res.status(200).json(questions);
     } else {
       const questions = await Question.find({ subject });
-      return res.json(questions);
+      return res.status(200).json(questions);
     }
   } catch (err) {
     console.log(err);
+    return res.status(500).json({message:"internal server error"});
   }
 };
 

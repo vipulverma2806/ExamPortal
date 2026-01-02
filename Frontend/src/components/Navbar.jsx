@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const Navbar = () => {
   const location = useLocation();
   const allPaths = [
-    { path: "/dashboard", label: "Choose a subject" },
+    { path: "/quizHome", label: "Choose a subject" },
     { path: "/studentDashboard", label: "Dashboard" },
   ];
 

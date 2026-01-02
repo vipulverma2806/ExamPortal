@@ -18,7 +18,7 @@ router.get("/Subjects", getSubjects);
 router.get("/questions/:subject", getQuestions);
 router.get("/reviewExam", authMiddleware, getReviewExam);
 router.post("/save-progress", authMiddleware, saveProgress);
-router.get("/progress", authMiddleware, getProgress);
+// router.get("/progress", authMiddleware, getProgress);
 router.get("/getName", authMiddleware, getName);
 router.get("/getStudentSummary", authMiddleware, getStudentSummary);
 router.get("/getLeaderBoard", authMiddleware, getLeaderBoard);

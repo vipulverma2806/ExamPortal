@@ -30,6 +30,7 @@ const Register = () => {
       navigate("/");
     } catch (error) {
       console.error("Registration failed:", error);
+      toast.error(error.response.data.message)
     }
   };
 

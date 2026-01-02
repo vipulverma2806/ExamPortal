@@ -1,9 +1,18 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 const register = async (req, res) => {
-  const { name, email, password, courseName, rollNo } = req.body;
+  let { name, email, password, courseName, rollNo } = req.body;
   // console.log(req.body);
+  name = name.trim();
+  email = email.trim().toLowerCase();
+  rollNo = rollNo.trim();
+
   try {
+    if (!name || !email || !password)
+      return res.status(400).json({ message: "All Fields required" });
+    const duplicateMail = await User.findOne({ email: email });
+    if (duplicateMail)
+      return res.status(409).json({ message: "Email Already exist" });
     const hashed = await bcrypt.hash(password, 12);
     const newUser = new User({
       name,
@@ -13,10 +22,10 @@ const register = async (req, res) => {
       rollNo,
     });
     await newUser.save();
-    res.send("User registered!");
+    res.status(201).json({ message: "User registered!" });
   } catch (error) {
     console.error("Registration error:", error);
-    res.status(500).send("Error registering user");
+    res.status(500).send({ message: "Error registering user" });
   }
 };
 

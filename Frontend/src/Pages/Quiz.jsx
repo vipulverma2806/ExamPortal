@@ -46,7 +46,7 @@ const Quiz = () => {
         const res = await axios.get("http://localhost:5000/api/getName");
         // console.log("response data", res.data);
 
-        setUserInfo(res.data);
+        setUserInfo(res.data.data);
       } catch (error) {
         console.error("Error fetching name:", error);
       }
@@ -133,7 +133,7 @@ const Quiz = () => {
         selectedOptions,
       });
       toast.success("Exam Completed");
-      navigate("/dashboard");
+      navigate("/quizHome");
       setSaveButton(false);
       // console.log(timeSpents)
     } catch (err) {

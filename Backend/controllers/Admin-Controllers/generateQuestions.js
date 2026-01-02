@@ -51,7 +51,7 @@ JSON format:
 `;
 
     const result = await model.generateContent(prompt);
-    console.log(result.response.text());
+    // console.log(result.response.text());
     let text = result.response.text();
     // let text = testQuestion;
     // text = JSON.stringify(text)

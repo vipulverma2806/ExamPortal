@@ -1,43 +1,47 @@
 import Question from "../../models/question.model.js";
 const addQuestion = async (req, res) => {
   try {
-    const { question, options, selectedAnswer, selectedSubject } = req.body;
+    let {
+      question,
+      optionsObj,
+      selectedAnswer,
+      selectedSubject,
+      genQuestions,
+    } = req.body;
+    // console.log(question, optionsObj, selectedAnswer, selectedSubject);
+
     question = question.trim();
     selectedAnswer = selectedAnswer.trim();
-    selectedSubject = selectedSubject.trim();
-    if (!question || !selectedAnswer || !selectedSubject)
+    let subject = selectedSubject.trim();
+    if (!question || !selectedAnswer || !subject)
       return res.status(200).send({ message: "Empty field detected" });
     if (
-      !options.A.trim() ||
-      !options.B.trim() ||
-      !options.C.trim() ||
-      !options.D.trim()
+      !optionsObj.A.trim() ||
+      !optionsObj.B.trim() ||
+      !optionsObj.C.trim() ||
+      !optionsObj.D.trim()
     )
       return res.status(200).send({ message: "Provide all four Options" });
-    const optionsArr = Object.values(options);
-    const finalOptionsArr = [];
+    const optionsArr = Object.values(optionsObj);
+    let options = [];
     optionsArr.forEach((option, i) => {
-      finalOptionsArr[i] = option.trim();
+      options[i] = option.trim();
     });
-    const completeAnswer = options[selectedAnswer];
-    console.log();
-    if (manualQuestion) {
-      const { question, options, answer, subject } = manualQuestion;
-      const newQuestion = new Question({
-        question,
-        options,
-        answer,
-        subject,
-      });
-      await newQuestion.save();
-      return res.status(200).send("Question added!");
-    }
-    await Question.insertMany(genQuestions);
-    console.log("q array added");
-    return res.status(200).send("Questions added!");
+    let answer = optionsObj[selectedAnswer];
+    answer = answer.trim();
+    console.log(question, options, answer, subject);
+
+    const newQuestion = new Question({
+      question,
+      options,
+      answer,
+      subject,
+    });
+    await newQuestion.save();
+    return res.status(200).send({ message: "Question added successfully" });
   } catch (err) {
     console.log(err);
-    return res.status(500).send("internal SERVER error");
+    return res.status(500).send({ message: "Internal Server Error" });
   }
 };
 export default addQuestion;
