@@ -1,7 +1,8 @@
+import { configDotenv } from "dotenv";
+configDotenv();
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import testQuestion from "./testQuestion.js";
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const generateQuestions = async (req, res) => {
   try {

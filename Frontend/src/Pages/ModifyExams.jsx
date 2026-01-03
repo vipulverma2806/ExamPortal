@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MdDeleteSweep } from "react-icons/md";
 import { toast } from "react-toastify";
+const URL = import.meta.env.VITE_URL;
 const ModifyExams = () => {
   const [subjectsArr, setSubjectsArr] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
@@ -10,7 +11,7 @@ const ModifyExams = () => {
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/Subjects");
+        const res = await axios.get(`${URL}/userRoutes/Subjects`);
         setSubjectsArr(res.data);
         console.log(res.data);
       } catch (err) {
@@ -23,8 +24,7 @@ const ModifyExams = () => {
 
   const fetchQuestions = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/questions/${selectedSubject}`
+      const res = await axios.get(`${URL}/userRoutes/questions/${selectedSubject}`
       );
       setQuestions(res.data);
     } catch (err) {
@@ -37,8 +37,7 @@ const ModifyExams = () => {
 
   const deleteQuestion = async (id) => {
     try {
-      const deleted = await axios.delete(
-        `http://localhost:5000/adminRoutes/deleteQuestion/${id}`
+      const deleted = await axios.delete(`${URL}/adminRoutes/deleteQuestion/${id}`
       );
       fetchQuestions();
       toast.success("deleted successfully");

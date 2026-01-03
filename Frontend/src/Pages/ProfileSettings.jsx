@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+const URL = import.meta.env.VITE_URL;
 const ProfileSettings = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ const ProfileSettings = () => {
     console.log(passwordMatch);
 
     try {
-      await axios.put("http://localhost:5000/auth/updateProfile", {
+      await axios.put(`${URL}/auth/updateProfile`, {
         name: name.trim(),
         email : email.trim(),
         password : password.trim(),

@@ -13,8 +13,7 @@ const RightWrongPie = ({allAttempts}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const res = await axios.get(`${URL}/api/getStudentSummary`);
-        // const attemptsArr = res.data;
+      
         let right = 0;
         let wrong = 0;
         for (const attempt of attemptArr) {

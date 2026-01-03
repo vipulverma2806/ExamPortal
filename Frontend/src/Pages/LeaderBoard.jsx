@@ -8,7 +8,7 @@ const LeaderBoard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${URL}/api/getLeaderBoard`);
+        const res = await axios.get(`${URL}/userRoutes/getLeaderBoard`);
         
         setLeaderArray(res.data.data.slice(3));
         setTopperArray(res.data.data.slice(0, 3));

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-
+const URL = import.meta.env.VITE_URL;
 const QuizHome = () => {
   const [Subjects, setSubjects] = useState([]);
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const QuizHome = () => {
 
   useEffect(() => {
     const fetchSubjects = async () => {
-      const res = await axios.get("http://localhost:5000/api/Subjects");
+      const res = await axios.get(`${URL}/userRoutes/Subjects`);
       setSubjects(res.data);
     };
 

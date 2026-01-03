@@ -14,7 +14,7 @@ const ReviewExams = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${URL}/api/reviewExam`);
+        const res = await axios.get(`${URL}/userRoutes/reviewExam`);
         console.log("res", res);
         console.log("res data", res.data);
         setAllQues(res.data.data);

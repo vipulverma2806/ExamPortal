@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+const URL = import.meta.env.VITE_URL;
 
 const AddQuestion = () => {
   const [question, setQuestion] = useState("");
@@ -32,7 +33,7 @@ const AddQuestion = () => {
     try {
       setLoading(true);
       console.log(question, optionsObj, selectedAnswer, selectedSubject);
-      await axios.post("http://localhost:5000/adminRoutes/add-question", {
+      await axios.post(`${URL}/adminRoutes/add-question`, {
         question,
         optionsObj:optionsObj,
         selectedAnswer,

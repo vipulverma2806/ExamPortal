@@ -1,19 +1,10 @@
-// import React from 'react';
-// import { Navigate } from 'react-router-dom';
-
-//   const token = localStorage.getItem('token');
-//   return token ? <Component /> : <Navigate to="/login" />;
-
-
-
-
-
 
 import React from "react";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+const URL = import.meta.env.VITE_URL;
 const PrivateRoute = ({ element: Component }) => {
   const BASE = import.meta.env.VITE_URL;
   axios.defaults.withCredentials = true;
@@ -28,7 +19,7 @@ const PrivateRoute = ({ element: Component }) => {
   //----------checkauth--------
   const checkAuth = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/auth/checkAuth`);
+      const res = await axios.get(`${URL}/auth/checkAuth`);
       // console.log(res);
       setAuth(true);
       setLoading(false)

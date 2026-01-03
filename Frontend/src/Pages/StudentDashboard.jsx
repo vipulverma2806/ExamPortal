@@ -14,7 +14,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${URL}/api/getStudentSummary`);
+        const res = await axios.get(`${URL}/userRoutes/getStudentSummary`);
         setAttemptArr(res.data?.data);
         setIsDataFetched(true);
         console.log("res-data", res.data);

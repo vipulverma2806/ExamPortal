@@ -5,6 +5,7 @@ import { useState } from "react";
 import { MdDeleteSweep } from "react-icons/md";
 import { toast } from "react-toastify";
 import AddQuestion from "../components/AddQuestion";
+const URL = import.meta.env.VITE_URL;
 const AddExam = () => {
   axios.defaults.withCredentials = true;
   const [loading, setLoading] = useState(false);
@@ -37,8 +38,7 @@ const AddExam = () => {
         difficultyLevel,
         questionCount
       );
-      const res = await axios.post(
-        `http://localhost:5000/adminRoutes/generateQuestions`,
+      const res = await axios.post(`${URL}/adminRoutes/generateQuestions`,
         {
           selectedSubject,
           selectedTopic,
@@ -59,7 +59,7 @@ const AddExam = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/adminRoutes/addAIquestions", {
+      const res = await axios.post(`${URL}/adminRoutes/addAIquestions`, {
         genQuestions,
       });
       setLoading(false);

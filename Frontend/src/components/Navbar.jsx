@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+const URL = import.meta.env.VITE_URL;
 const Navbar = () => {
   const location = useLocation();
   const allPaths = [
@@ -15,7 +16,7 @@ const Navbar = () => {
   //---------------logout--------------------
   const handleLogout = async () => {
     try {
-      const res = await axios.post(`http://localhost:5000/auth/logout`);
+      const res = await axios.post(`${URL}/auth/logout`);
       console.log(res);
       navigate("/");
       toast.info("Logout successful.");

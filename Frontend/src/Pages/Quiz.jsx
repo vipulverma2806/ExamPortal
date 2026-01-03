@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { toast } from "react-toastify";
-
+const URL = import.meta.env.VITE_URL;
 const Quiz = () => {
   axios.defaults.withCredentials = true;
   const { subject } = useParams();
@@ -25,8 +25,7 @@ const Quiz = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/questions/${subject}`
+        const res = await axios.get(`${URL}/userRoutes/questions/${subject}`
         );
         setQuestions(res.data);
         for (let i = 1; i <= res.data.length; i++) {
@@ -43,7 +42,7 @@ const Quiz = () => {
 
     const fetchName = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/getName");
+        const res = await axios.get(`${URL}/userRoutes/getName`);
         // console.log("response data", res.data);
 
         setUserInfo(res.data.data);
@@ -126,7 +125,7 @@ const Quiz = () => {
     console.log(selectedOptions);
     try {
       setSaveButton(true);
-      await axios.post("http://localhost:5000/api/save-progress", {
+      await axios.post(`${URL}/userRoutes/save-progress`, {
         userId: userInfo,
         subject,
         timeSpents,
