@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-// import NavBar from "../Component/NavBar";
-// import { getAdminData, cleanAdminData } from "../Redux/AdminSlice";
+
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
-// import { logout } from "../Redux/AuthSlice";
-// import { useDispatch, useSelector } from "react-redux";
+
 import axios from "axios";
 const URL = import.meta.env.VITE_URL;
 axios.defaults.withCredentials = true;
 const StudentDashboard = () => {
   const [attemptArr, setAttemptArr] = useState([]);
   const [details, setDetails] = useState({});
-  const [isDataFetched,setIsDataFetched] = useState(false)
-   useEffect(() => {
+  const [isDataFetched, setIsDataFetched] = useState(false);
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${URL}/api/getStudentSummary`);
@@ -28,17 +26,16 @@ const StudentDashboard = () => {
   }, []);
   console.log("attemptArr UPDATED:", attemptArr);
 
-  //   const dispatch = useDispatch();
+
   const navigate = useNavigate();
-  // const loading = useSelector((state) => state.auth.loading);
-  // const logoutSuccess = useSelector((state) => state.listing.navigate);
+  
   const [loading, setLoading] = useState();
 
   const logout = async () => {
     try {
       setLoading(true);
       const success = await axios.post(`${URL}/auth/logout`);
-      //   dispatch(cleanAdminData());
+   
       toast.success("Logout Succesfully");
       navigate("/");
       return setLoading(false);
@@ -71,9 +68,10 @@ const StudentDashboard = () => {
                 Student Dashboard
               </h2>
               <h3 className=" text-2xl rounded-xl bg-gray-900 p-3">
-                Welcome,{" "}
+                <div>Welcome, </div>{" "}
                 <span className="font-bold text-teal-600">{details.name}</span>
               </h3>
+             
             </div>
             <div className="flex flex-col gap-3 ">
               <NavLink

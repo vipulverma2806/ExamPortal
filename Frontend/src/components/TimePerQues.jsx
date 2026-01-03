@@ -30,8 +30,6 @@ const TimePerQues = ({ allAttempts }) => {
   const [chartData, setChartData] = useState(null);
   const [Subjects, setSubjects] = useState([]);
 
-  
-
   useEffect(() => {
     const fetchData = async () => {
       if (!attemptArr || attemptArr.length == 0) return;
@@ -81,7 +79,6 @@ const TimePerQues = ({ allAttempts }) => {
         {
           label: "Time Taken per Question",
           data: timeSpents,
-
           borderColor: "rgba(75,192,192,1)",
           backgroundColor: "rgba(75,192,192,0.3)",
           fill: true,
@@ -101,9 +98,11 @@ const TimePerQues = ({ allAttempts }) => {
         className="w-[200px] ml-10 mt-5 rounded-xl relative top-1 left-8 z-40 px-3 py-1 bg-gray-500 text-white font-semibold text-lg"
         onChange={(e) => {
           showsubject(e.target.value);
-         
         }}
-      ><option value="" disabled selected hidden>Select Subject</option>
+      >
+        <option value="" disabled selected hidden>
+          Select Subject
+        </option>
         {Subjects.map((cat, i) => {
           return (
             <option className="hover:bg-red-600" value={cat}>
@@ -145,7 +144,7 @@ const TimePerQues = ({ allAttempts }) => {
                   },
                   title: {
                     display: true,
-                    text: "time in seconds",
+                    text: "time in minutes",
                     color: "black",
                     font: {
                       size: 18,

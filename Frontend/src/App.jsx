@@ -31,14 +31,14 @@ import ProfileSettings from "./Pages/ProfileSettings";
 function App() {
   const router = createBrowserRouter([
     {
+      path: "*",
+      element: <Login />,
+    },
+    {
       path: "/quiz/:subject",
       element: <PrivateRoute element={Quiz} />,
     },
 
-    {
-      path: "/add-question",
-      element: <AddQuestion />,
-    },
     {
       path: "/quizHome",
       element: <PrivateRoute element={QuizHome} />,

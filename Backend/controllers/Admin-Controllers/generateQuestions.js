@@ -2,6 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import testQuestion from "./testQuestion.js";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+
 const generateQuestions = async (req, res) => {
   try {
     const {
@@ -16,7 +17,7 @@ const generateQuestions = async (req, res) => {
       return res.status(400).json({ message: "Missing required field" });
     }
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite",
+      model: "gemini-2.5-flash",
     });
     const prompt = `
 You are an expert exam question generator.
@@ -38,6 +39,7 @@ Rules:
 -Do NOT include \`\`\` or the word "json".
 -Do NOT add explanations.
 -Answers should not be same options for each question 
+-inside options array only options string should be there. do not include A. B. C. D. in options
 
 JSON format:
 [
@@ -74,7 +76,7 @@ JSON format:
       );
 
     if (!isValidData) return res.status(400).json("AI returned invalid format");
-      console.log("success response to frontend")
+    console.log("success response to frontend");
     return res.status(200).json(Questions);
   } catch (err) {
     console.log("AI code generation failed", err);

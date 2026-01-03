@@ -22,33 +22,33 @@ ChartJS.register(
 const TopicWiseBar = ({ allAttempts }) => {
   const [Subjects, setSubjects] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
-  console.log("allAttempts",allAttempts)
+  console.log("allAttempts", allAttempts);
   const attemptArr = allAttempts;
   console.log("attemptarr", attemptArr);
-  const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
-  const totalMarksArr = attemptArr.map((attempt, i) => attempt.totalMarks);
+  const SubjectsArr = attemptArr?.map((attempt, i) => attempt.subject);
+  const totalMarksArr = attemptArr?.map((attempt, i) => attempt.totalMarks);
   useEffect(() => {
     setTotalMarks(totalMarksArr);
     setSubjects(SubjectsArr);
   }, []);
 
   const barData = {
-    labels: Subjects, // X-axis labels
+    labels: Subjects,
     datasets: [
       {
-        label: "Final marks Subject wise",
-        data: totalMarks, // Replace with your values
+        data: totalMarks,
+        
         backgroundColor: [
-          "rgba(255, 99, 132, 0.6)", // Red
-          "rgba(54, 162, 235, 0.6)", // Blue
-          "rgba(255, 206, 86, 0.6)", // Yellow
-          "rgba(75, 192, 192, 0.6)", // Teal (your current color)
-          "rgba(153, 102, 255, 0.6)", // Purple
-          "rgba(255, 159, 64, 0.6)", // Orange
-          "rgba(0, 128, 128, 0.6)", // Dark teal
-          "rgba(0, 204, 102, 0.6)", // Green
-          "rgba(102, 0, 204, 0.6)", // Deep violet
-          "rgba(255, 51, 153, 0.6)", // Pink
+          "rgba(255, 99, 132, 0.6)", 
+          "rgba(54, 162, 235, 0.6)", 
+          "rgba(255, 206, 86, 0.6)", 
+          "rgba(75, 192, 192, 0.6)", 
+          "rgba(153, 102, 255, 0.6)", 
+          "rgba(255, 159, 64, 0.6)", 
+          "rgba(0, 128, 128, 0.6)", 
+          "rgba(0, 204, 102, 0.6)", 
+          "rgba(102, 0, 204, 0.6)", 
+          "rgba(255, 51, 153, 0.6)", 
         ],
 
         borderColor: [
@@ -64,20 +64,17 @@ const TopicWiseBar = ({ allAttempts }) => {
           "rgba(255, 51, 153, 1)",
         ],
         borderWidth: 2,
-        borderRadius: 6, // rounded bars
+        borderRadius: 6, 
       },
     ],
   };
   const barOptions = {
     responsive: true,
+      indexAxis: "y",
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "top",
-        labels: {
-          font: { size: 14 },
-          color: "#000",
-        },
+        display: false,
       },
       title: {
         display: true,

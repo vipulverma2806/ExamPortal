@@ -112,7 +112,7 @@ const ExamStats = () => {
   useEffect(() => {
     const showChart = (sub) => {
       if (!allAttempts.length || !sub) return;
-      // setAvg([]);
+     
       let allAvg = [];
 
       const filteredAttempt = allAttempts.filter(
@@ -135,7 +135,7 @@ const ExamStats = () => {
         // console.log("ye rha Q",Q)
         let avg = [];
         avg = Q.reduce((acc, curr) => acc + curr, 0) / Q.length;
-        // setAvg((prev) => [...prev, avg]);
+     
         allAvg.push(avg);
       }
 
@@ -147,7 +147,7 @@ const ExamStats = () => {
           {
             label: "Avg Time Taken per Question",
             data: allAvg,
-            // data: [1, 2, 3, 4, 5, 6],
+            
 
             borderColor: "rgba(75,192,192,1)",
             backgroundColor: "rgba(75,192,192,0.3)",
@@ -168,7 +168,7 @@ const ExamStats = () => {
   useEffect(() => {
     const showChart = (sub) => {
       if (!allAttempts.length || !sub) return;
-      // setAvg([]);
+      
       let allAvg = [];
 
       const filteredAttempt = allAttempts.filter(
@@ -222,7 +222,14 @@ const ExamStats = () => {
       // setRightCountArr(rightCounts);
       // setWrongCountArr(wrongCounts);
       // setSkippedCountArr(skippedCounts);
-
+      console.log(
+        "right",
+        rightCounts,
+        "wrong",
+        wrongCounts,
+        "skippedCounts",
+        skippedCounts
+      );
       const formatted = {
         labels: QuesNo,
         datasets: [
@@ -276,10 +283,12 @@ const ExamStats = () => {
       });
       const pieData = {
         labels: ["Pass", "Fail"],
+        
         datasets: [
           {
             label: "Result Breakdown",
-            data: [pass, fail],
+            data: [pass, fail,],
+            
             backgroundColor: ["#22c55e", "#ef4444", "#facc15"],
             borderColor: "#ffffff",
             borderWidth: 2,
@@ -308,9 +317,11 @@ const ExamStats = () => {
       const topperMarks = top5students.map((attempt) => attempt.totalMarks);
       const barData = {
         labels: toppersFirstNames,
+        labels:["Vipul","Virat","Rohit","Shikhar","M.S.Dhoni"],
         datasets: [
           {
             data: topperMarks,
+            data:[67,53,47,45,40],
             backgroundColor: [
               "#3b82f6",
               "#FF4F4F",
@@ -357,7 +368,7 @@ const ExamStats = () => {
         },
         title: {
           display: true,
-          text: "time in seconds",
+          text: "Time in Minutes",
           color: "black",
           font: {
             size: 18,
@@ -559,7 +570,7 @@ const ExamStats = () => {
             {subjects.map((subject, i) => {
               return (
                 <option key={i} value={subject}>
-                  {subject} 
+                  {subject}
                 </option>
               );
             })}
