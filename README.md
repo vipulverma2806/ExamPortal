@@ -37,8 +37,8 @@
 
 ---
 
-## Screenshots
-
+# Screenshots
+---
 ### Student Registration
 
 ![Register](./Frontend/public/screenshots/Register.png)
@@ -55,10 +55,46 @@
 
 ![Quiz](./Frontend/public/screenshots/Quiz.png)
 
-### Dashboard
+---
+# Student Dashboard Pages
+## Exam Summary charts
+![Dashboard](./Frontend/public/screenshots/Studentdash/SummaryCharts.png)
+![Dashboard](./Frontend/public/screenshots/Studentdash/SummaryCharts2.png)
 
-![Dashboard](./Frontend/public/screenshots/Dashboard.png)
+## Leaderboard page
+![Leaderboard](./Frontend/public/screenshots/Studentdash/Leaderboard.png)
+![Leaderboard](./Frontend/public/screenshots/Studentdash/Leaderboard2.png)
 
-### Add Questions
+## Review Every Subjects Exam
+![ReviewExam](./Frontend/public/screenshots/Studentdash/ReviewExam.png)
 
-![Add Questions](./Frontend/public/screenshots/AddQues.png)
+## Profile Setting
+![Profile](./Frontend/public/screenshots/Studentdash/Profile.png)
+
+---
+# Admin Dashboard Pages
+## Exam Wise Data
+![ExamWiseData](./Frontend/public/screenshots/AdmindDash/ExamWiseData.png)
+
+## Leaderboard page
+![Leaderboard](./Frontend/public/screenshots/Studentdash/Leaderboard.png)
+![Leaderboard](./Frontend/public/screenshots/Studentdash/Leaderboard2.png)
+
+## Add Exams / Questions
+### Add Questions manually
+![AddManual](./Frontend/public/screenshots/Studentdash/AddQuestion.png)
+
+### Add Questions/Exams Using AI LLM Model- "gemini-2.5-flash"
+![AddUsingAI](./Frontend/public/screenshots/Studentdash/AddAIQuestion.png)
+
+## Delete Exams / Questions 
+![Delete Exam](./Frontend/public/screenshots/Studentdash/Modify.png)
+
+## Student Wise Data 
+![Student Wise Data](./Frontend/public/screenshots/Studentdash/StudentWiseData.png)
+![Student Wise Data](./Frontend/public/screenshots/Studentdash/StudentWiseData2.png)
+
+## Admin Profile Setting
+![Profile](./Frontend/public/screenshots/Studentdash/AdminProfile.png)
+
+
