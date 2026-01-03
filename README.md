@@ -58,24 +58,24 @@
 ---
 # Student Dashboard Pages
 ## Exam Summary charts
-![Dashboard](./Frontend/public/screenshots/Studentdash/SummaryCharts.png)
-![Dashboard](./Frontend/public/screenshots/Studentdash/SummaryCharts2.png)
+![Dashboard](./Frontend/public/screenshots/StudentDash/SummaryCharts.png)
+![Dashboard](./Frontend/public/screenshots/StudentDash/SummaryCharts2.png)
 
 ## Leaderboard page
-![Leaderboard](./Frontend/public/screenshots/Studentdash/Leaderboard.png)
-![Leaderboard](./Frontend/public/screenshots/Studentdash/Leaderboard2.png)
+![Leaderboard](./Frontend/public/screenshots/StudentDash/Leaderboard.png)
+![Leaderboard](./Frontend/public/screenshots/StudentDash/Leaderboard2.png)
 
 ## Review Every Subjects Exam
-![ReviewExam](./Frontend/public/screenshots/Studentdash/ReviewExam.png)
+![ReviewExam](./Frontend/public/screenshots/StudentDash/ReviewExam.png)
 
 ## Profile Setting
-![Profile](./Frontend/public/screenshots/Studentdash/Profile.png)
+![Profile](./Frontend/public/screenshots/StudentDash/Profile.png)
 
 ---
 # Admin Dashboard Pages
 ## Exam Wise Data
 
-![ExamWiseData](./Frontend/public/screenshots/AdmindDash/ExamWiseData.png)
+![ExamWiseData](./Frontend/public/screenshots/AdminDash/ExamWiseData.png)
 
 ## Leaderboard page
 ![Leaderboard](./Frontend/public/screenshots/AdminDash/Leaderboard.png)
