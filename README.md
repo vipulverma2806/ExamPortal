@@ -74,6 +74,7 @@
 ---
 # Admin Dashboard Pages
 ## Exam Wise Data
+
 ![ExamWiseData](./Frontend/public/screenshots/AdmindDash/ExamWiseData.png)
 
 ## Leaderboard page
