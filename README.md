@@ -77,24 +77,24 @@
 ![ExamWiseData](./Frontend/public/screenshots/AdmindDash/ExamWiseData.png)
 
 ## Leaderboard page
-![Leaderboard](./Frontend/public/screenshots/Studentdash/Leaderboard.png)
-![Leaderboard](./Frontend/public/screenshots/Studentdash/Leaderboard2.png)
+![Leaderboard](./Frontend/public/screenshots/AdminDash/Leaderboard.png)
+![Leaderboard](./Frontend/public/screenshots/AdminDash/Leaderboard2.png)
 
 ## Add Exams / Questions
 ### Add Questions manually
-![AddManual](./Frontend/public/screenshots/Studentdash/AddQuestion.png)
+![AddManual](./Frontend/public/screenshots/AdminDash/AddQuestion.png)
 
 ### Add Questions/Exams Using AI LLM Model- "gemini-2.5-flash"
-![AddUsingAI](./Frontend/public/screenshots/Studentdash/AddAIQuestion.png)
+![AddUsingAI](./Frontend/public/screenshots/AdminDash/AddAIQuestion.png)
 
 ## Delete Exams / Questions 
-![Delete Exam](./Frontend/public/screenshots/Studentdash/Modify.png)
+![Delete Exam](./Frontend/public/screenshots/AdminDash/Modify.png)
 
 ## Student Wise Data 
-![Student Wise Data](./Frontend/public/screenshots/Studentdash/StudentWiseData.png)
-![Student Wise Data](./Frontend/public/screenshots/Studentdash/StudentWiseData2.png)
+![Student Wise Data](./Frontend/public/screenshots/AdminDash/StudentWiseData.png)
+![Student Wise Data](./Frontend/public/screenshots/AdminDash/StudentWiseData2.png)
 
 ## Admin Profile Setting
-![Profile](./Frontend/public/screenshots/Studentdash/AdminProfile.png)
+![Profile](./Frontend/public/screenshots/AdminDash/AdminProfile.png)
 
 
