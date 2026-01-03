@@ -63,7 +63,7 @@
 
 ## Leaderboard page
 ![Leaderboard](./Frontend/public/screenshots/StudentDash/Leaderboard.png)
-![Leaderboard](./Frontend/public/screenshots/StudentDash/Leaderboard2.png)
+![Leaderboard](./Frontend/public/screenshots/StudentDash/LeaderBoard2.png)
 
 ## Review Every Subjects Exam
 ![ReviewExam](./Frontend/public/screenshots/StudentDash/ReviewExam.png)
