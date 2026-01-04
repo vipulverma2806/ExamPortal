@@ -1,12 +1,10 @@
 # ExamPortal
 
-**ExamPortal** is a full-stack MERN (MongoDB, Express.js, React, Node.js) quiz application that allows students to register, log in, and attempt quizzes based on selected topics. The app provides real-time quiz navigation, scoring, and a detailed dashboard for performance tracking.
+**ExamPortal** is a full-stack MERN online examination platform where students can attempt time-bound MCQ exams with per-question time tracking and detailed performance analytics. It features interactive student dashboards, leaderboards, exam review, and a powerful admin panel with advanced exam analytics and AI-based question paper generation.
 
 ---
 
 ## Features
-
- Features
 ----------
 
 ###  Student Panel
@@ -99,7 +97,7 @@
 -   **Add Exams / Question Papers**\
     Admins can create exams using **two methods**:
 
-    -   **AI-Powered Question Generator**
+    -   **AI-Powered Question Paper Generator**
 
         -   Uses **Google Gemini 2.5 Flash LLM API**.
 
@@ -155,13 +153,16 @@
 ---
 
 ## Tech Stack
-
+## Frameworks / Packages /Dependencies used
 ### Frontend
 
-- **React**
-- **React Router DOM**
+- **React(Vite)**
+- **Redux Toolkit**
 - **Tailwind CSS**
 - **Axios**
+- **react-icons**
+- **React Router Dom**
+- **react-chartjs-2**
 - **react-toastify**
 
 ### Backend
@@ -171,7 +172,10 @@
 - **MongoDB** + **Mongoose**
 - **bcryptjs**
 - **jsonwebtoken**
-
+- **cookie-parser**
+- **cors**
+- **dotenv**
+- **nodemon**
 ---
 
 # Screenshots
