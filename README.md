@@ -63,7 +63,7 @@
 * * * * *
 
 ###  Admin / Teacher Panel
-
+-   **Admin gets notification in real time when a student submitted exam using socket.io**
 -   **Dashboard Summary Cards**
 
     -   Total number of registered students.
@@ -164,6 +164,7 @@
 - **React Router Dom**
 - **react-chartjs-2**
 - **react-toastify**
+- **Socket-io client**
 
 ### Backend
 
@@ -171,6 +172,7 @@
 - **Express.js**
 - **MongoDB** + **Mongoose**
 - **Gemini Generative AI (LLM Model- gemini-2.5-flash)**
+- **Socket-io**
 - **bcryptjs**
 - **jsonwebtoken**
 - **cookie-parser**
@@ -215,6 +217,8 @@
 
 ---
 # Admin Dashboard Pages
+## Real Time Notification Using Socket.io
+![notification](./Frontend/public/screenshots/AdminDash/notification.png)
 ## Exam Wise Data
 
 ![ExamWiseData](./Frontend/public/screenshots/AdminDash/ExamWiseData.png)
