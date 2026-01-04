@@ -170,6 +170,7 @@
 - **Node.js**
 - **Express.js**
 - **MongoDB** + **Mongoose**
+- **Gemini Generative AI (LLM Model- gemini-2.5-flash)**
 - **bcryptjs**
 - **jsonwebtoken**
 - **cookie-parser**
