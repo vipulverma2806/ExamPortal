@@ -151,11 +151,7 @@ const LeaderBoard = () => {
                       <p className="text-lg text-white font-medium truncate">
                         {student.name}
                       </p>
-                      {isTop10 && (
-                        <span className="ml-2 px-2 py-1 bg-gradient-to-r from-cyan-500 to-teal-500 text-xs font-bold rounded-full">
-                          TOP 10
-                        </span>
-                      )}
+                      
                     </div>
                   </div>
 

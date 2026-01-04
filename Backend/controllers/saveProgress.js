@@ -4,8 +4,8 @@ import Question from "../models/question.model.js";
 
 const saveProgress = async (req, res) => {
   let { subject, timeSpents, selectedOptions } = req.body;
-
-  // console.log(req.body);
+  const io = req.app.get("io");
+  console.log("io",io.emit)
   try {
     if (!subject || !selectedOptions)
       return res.status(400).json({ message: "fields missing" });
@@ -18,6 +18,7 @@ const saveProgress = async (req, res) => {
     subjectQues.forEach((item) => {
       ansObj[item._id.toString()] = item.answer;
     });
+
 
     let totalMarks = 0;
     let rightAnswers = 0;
@@ -35,12 +36,14 @@ const saveProgress = async (req, res) => {
         wrongAnswers += 1;
       }
     }
-
+  
     const found = await Attempt.findOne({
       userId: req.userId,
       subject: subject,
     });
+    
     if (found) {
+      
       await Attempt.findOneAndUpdate(
         { userId: req.userId, subject: subject },
         {
@@ -55,7 +58,13 @@ const saveProgress = async (req, res) => {
 
         { new: true }
       );
-
+      
+      io.emit("exam_submitted", {
+        name: req.userName,
+        subject: subject,
+        time: new Date().toLocaleTimeString(),
+      });
+      console.log("yha tak aa rha");
       return res.status(200).send({ message: "Progress saved!" });
     }
 
@@ -69,10 +78,14 @@ const saveProgress = async (req, res) => {
       rightAnswers,
       wrongAnswers,
     });
+    io.emit("exam_submitted", {
+      Name: req.userName,
+      subject: subject,
+      time: getTime(),
+    });
     return res.status(200).send({ message: "Progress saved!" });
   } catch (err) {
-    
-    return res.status(500).send({ message: "Internal server error" })
+    return res.status(500).send({ message: "Internal server error" });
   }
 };
 

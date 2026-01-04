@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
+import socket from "../components/socket.js";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllStudents,getAllAttempts,getBestWorstSub, getAllQuestions } from "../redux/adminSlice";
+import {
+  getAllStudents,
+  getAllAttempts,
+  getBestWorstSub,
+  getAllQuestions,
+} from "../redux/adminSlice";
 const URL = import.meta.env.VITE_URL;
 axios.defaults.withCredentials = true;
 const TeacherDashboard = () => {
@@ -13,7 +19,25 @@ const TeacherDashboard = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState();
   const isAdmin = true;
- 
+
+  useEffect(() => {
+    console.log("inside socket useeffect");
+    socket.on("exam_submitted", (data) => {
+      console.log("socket data", data);
+      
+      toast.info(
+        <div className="text-md">
+          <span className="font-semibold">{"Virat Kohli"}</span>{" "}submitted{" "}
+          <span className="font-semibold">{data.subject}</span>{" "}exam at{" "}
+          <span className="font-semibold">{data.time}</span>
+        </div>
+      );
+    });
+
+    return () => {
+      socket.off("exam_submitted");
+    };
+  }, []);
 
   //---------logout-------------------
   const logout = async () => {
@@ -47,10 +71,9 @@ const TeacherDashboard = () => {
   useEffect(() => {
     dispatch(getAllStudents());
     dispatch(getAllAttempts());
-    dispatch(getBestWorstSub())
+    dispatch(getBestWorstSub());
     dispatch(getAllQuestions());
   }, []);
-
 
   return (
     <div className="p-4  flex text-white h-screen bg-gray-700 ">
@@ -149,7 +172,7 @@ const TeacherDashboard = () => {
         </div>
 
         <div className="flex-1 shadow-md shadow-black bg-gray-800 overflow-auto h-auto rounded-2xl  p-3 ">
-          <Outlet context={{ details, attemptArr, getDetails ,isAdmin }} />
+          <Outlet context={{ details, attemptArr, getDetails, isAdmin }} />
         </div>
       </div>
     </div>

@@ -557,13 +557,14 @@ const ExamStats = () => {
           <select
             name=""
             id=""
+            defaultValue=""
             onChange={(e) => {
               setChosenSubject(e.target.value);
               // console.log("working", e.target.value);
             }}
             className="bg-gray-800 rounded-xl mr-5 mt-5  py-2 border border-gray-400 my-3 px-4 w-60 shadow-2xs shadow-white"
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled hidden>
               Select Subject
             </option>
             {/* {console.log("subjects examstats", subjects)} */}

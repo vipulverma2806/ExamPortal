@@ -94,6 +94,7 @@ const AddQuestion = () => {
               </label>
               <select
                 required
+                
                 name=""
                 id=""
                 value={selectedAnswer}
