@@ -207,7 +207,7 @@
 
 ## Leaderboard page
 ![Leaderboard](./Frontend/public/screenshots/StudentDash/Leaderboard.png)
-![Leaderboard](./Frontend/public/screenshots/StudentDash/LeaderBoard2.png)
+![Leaderboard](./Frontend/public/screenshots/AdminDash/LeaderboardUser.png)
 
 ## Review Every Subjects Exam
 ![ReviewExam](./Frontend/public/screenshots/StudentDash/ReviewExam.png)
@@ -225,7 +225,7 @@
 
 ## Leaderboard page
 ![Leaderboard](./Frontend/public/screenshots/AdminDash/Leaderboard.png)
-![Leaderboard](./Frontend/public/screenshots/AdminDash/Leaderboard2.png)
+![Leaderboard](./Frontend/public/screenshots/AdminDash/LeaderboardAdmin.png)
 
 ## Add Exams / Questions
 ### Add Questions/Exams Using AI LLM Model- "gemini-2.5-flash"
