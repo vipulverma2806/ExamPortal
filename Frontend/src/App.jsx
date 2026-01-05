@@ -2,14 +2,11 @@ import React from "react";
 import {
   createBrowserRouter,
   RouterProvider,
-  Navigate,
+  Navigate, useNavigate,
 } from "react-router-dom";
-
-import Navbar from "./components/Navbar";
-
 import Quiz from "../src/Pages/Quiz";
 import StudentDashboard from "./Pages/StudentDashboard";
-import AddQuestion from "./components/AddQuestion";
+
 import QuizHome from "./Pages/QuizHome";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
@@ -18,30 +15,23 @@ import ExamStats from "./Pages/ExamStats";
 import ManageStudents from "./Pages/ManageStudents";
 import ModifyExams from "./Pages/ModifyExams";
 import TeacherDashboard from "./Pages/TeacherDashboard";
-import TeacherSummary from "./Pages/TeacherSummary";
+
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 
 import Leaderboard from "./Pages/LeaderBoard";
-import profileSettings from "./Pages/ProfileSettings";
+
 import ReviewExams from "./Pages/ReviewExams";
 import StudentSummary from "./Pages/StudentSummary";
 import ProfileSettings from "./Pages/ProfileSettings";
+import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
 
 function App() {
+  
   const router = createBrowserRouter([
     {
       path: "*",
       element: <Login />,
-    },
-    {
-      path: "/quiz/:subject",
-      element: <PrivateRoute element={Quiz} />,
-    },
-
-    {
-      path: "/quizHome",
-      element: <PrivateRoute element={QuizHome} />,
     },
     {
       path: "/studentDashboard",
@@ -49,53 +39,62 @@ function App() {
       children: [
         {
           index: true,
-          element: <PrivateRoute element={StudentSummary} />,
+          element: <StudentSummary />,
         },
 
         {
           path: "leaderboard",
-          element: <PrivateRoute element={Leaderboard} />,
+          element: <Leaderboard />,
         },
         {
           path: "profileSettings",
-          element: <PrivateRoute element={profileSettings} />,
+          element: <profileSettings />,
         },
         {
           path: "reviewExams",
-          element: <PrivateRoute element={ReviewExams} />,
+          element: <ReviewExams />,
+        },
+        {
+          path: "quiz/:subject",
+          element: <Quiz/>,
+        },
+
+        {
+          path: "quizHome",
+          element: <QuizHome/>,
         },
       ],
     },
 
     {
       path: "/teacherDashboard",
-      element: <PrivateRoute element={TeacherDashboard} />,
+      element: <PrivateRouteAdmin element={TeacherDashboard} />,
       children: [
         {
           index: true,
-          element: <PrivateRoute element={ExamStats} />,
+          element: <ExamStats />,
         },
         {
           path: "add-exam",
-          element: <PrivateRoute element={AddExam} />,
+          element: <AddExam />,
         },
 
         {
           path: "modify-exam",
-          element: <PrivateRoute element={ModifyExams} />,
+          element: <ModifyExams />,
         },
         {
           path: "leaderboard",
-          element: <PrivateRoute element={Leaderboard} />,
+          element: <Leaderboard />,
         },
 
         {
           path: "manage-students",
-          element: <PrivateRoute element={ManageStudents} />,
+          element: <ManageStudents />,
         },
         {
           path: "profile-settings",
-          element: <PrivateRoute element={ProfileSettings} />,
+          element: <ProfileSettings />,
         },
       ],
     },

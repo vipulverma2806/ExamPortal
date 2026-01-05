@@ -4,9 +4,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 const URL = import.meta.env.VITE_URL;
-const PrivateRoute = ({ element: Component }) => {
-  // console.log("AdminComponent",AdminElement)
-  // console.log("UserComponent",userElement)
+const PrivateRouteAdmin = ({ element: Component }) => {
+ 
   axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [role, setRole] = useState("");
@@ -34,8 +33,14 @@ const PrivateRoute = ({ element: Component }) => {
     return (
       <div className="flex justify-center items-center text-4xl">loading</div>
     );
-  console.log("workinggggg");
-  return <Component />;
+  
+  return (
+    <>
+      {role === "teacher" && <Component />}
+      {role === "student" && <Navigate to="/studentDashboard" />}
+      {/* <AdminElement/> */}
+    </>
+  );
 };
 
-export default PrivateRoute;
+export default PrivateRouteAdmin;

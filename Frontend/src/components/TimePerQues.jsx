@@ -29,6 +29,7 @@ const TimePerQues = ({ allAttempts }) => {
   const attemptArr = allAttempts;
   const [chartData, setChartData] = useState(null);
   const [Subjects, setSubjects] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +39,7 @@ const TimePerQues = ({ allAttempts }) => {
         setSubjects(SubjectsArr);
         if (attemptArr.length == 0) return;
         const attempt = attemptArr[0];
+        setSelectedSubject(attempt.subject)
         // console.log(attemptArr);
         const timeSpents = Object.values(attempt.timeSpents);
         const QuesNo = Object.keys(attempt.timeSpents);
@@ -49,6 +51,7 @@ const TimePerQues = ({ allAttempts }) => {
             {
               label: "Time Taken per Question",
               data: timeSpents,
+
               borderColor: "rgba(75,192,192,1)",
               backgroundColor: "rgba(75,192,192,0.3)",
               fill: true,
@@ -79,6 +82,7 @@ const TimePerQues = ({ allAttempts }) => {
         {
           label: "Time Taken per Question",
           data: timeSpents,
+
           borderColor: "rgba(75,192,192,1)",
           backgroundColor: "rgba(75,192,192,0.3)",
           fill: true,
@@ -87,6 +91,7 @@ const TimePerQues = ({ allAttempts }) => {
       ],
     };
     setChartData(formatted);
+    setSelectedSubject(cat)
     console.log("chardata", cat, chartData);
   };
 
@@ -95,6 +100,7 @@ const TimePerQues = ({ allAttempts }) => {
       <select
         name=""
         id=""
+        value={selectedSubject}
         className="w-[200px] ml-10 mt-5 rounded-xl relative top-1 left-8 z-40 px-3 py-1 bg-gray-500 text-white font-semibold text-lg"
         onChange={(e) => {
           showsubject(e.target.value);
