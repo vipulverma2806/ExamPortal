@@ -228,7 +228,8 @@
 ![Leaderboard](./Frontend/public/screenshots/AdminDash/LeaderboardAdmin.png)
 
 ## Add Exams / Questions
-### Add Questions/Exams Using AI LLM Model- "gemini-2.5-flash"
+### Generate Questions/Exams Using AI LLM Model- "gemini-2.5-flash"
+
 ![AddUsingAI](./Frontend/public/screenshots/AdminDash/AddAIQuestion.png)
 
 ### Add Questions manually
