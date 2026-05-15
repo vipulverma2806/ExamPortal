@@ -170,7 +170,8 @@
 
 - **Node.js**
 - **Express.js**
-- **MongoDB** + **Mongoose**
+- **MongoDB** + **Mongoose** (Previously Used)
+- **PostgreSQL** (Migrated Later)
 - **Gemini Generative AI (LLM Model- gemini-2.5-flash)**
 - **Socket-io**
 - **bcryptjs**
