@@ -1,7 +1,10 @@
-import Question from "../../models/question.model.js";
+// import Question from "../../models/question.model.js";
+import pool from "../../config/postgresDB.js";
 const getReviewExam = async (req, res) => {
   try {
-    const questions = await Question.find();
+    const response = await pool.query('SELECT * FROM questions')
+    // const questions = await Question.find();
+    const questions = response.rows;
 
     // console.log(questions);
     return res.status(200).json({message:"success",data:questions});

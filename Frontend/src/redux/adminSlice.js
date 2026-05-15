@@ -11,10 +11,10 @@ export const getAllStudents = createAsyncThunk(
   "adminRoute/getAllStudents",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("pending getAllStudents");
+      // console.log("pending getAllStudents");
       const res = await axios.get(`${URL}/adminRoutes/getAllStudents`);
       // console.log("fullfilled");
-      console.log("ye raha admindata", res.data);
+      // console.log("ye raha admindata", res.data);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -28,7 +28,7 @@ export const getAllAttempts = createAsyncThunk(
     try {
       console.log("pending attempts");
       const res = await axios.get(`${URL}/adminRoutes/getAllAttempts`);
-      console.log("all Attempts", res.data)
+      // console.log("all Attempts", res.data.data)
       return res.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -40,9 +40,9 @@ export const getAllQuestions = createAsyncThunk(
   "adminRoute/getAllQuestions",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("pending question");
+      // console.log("pending question");
       const res = await axios.get(`${URL}/adminRoutes/getAllQuestions`);
-      console.log(res.data.length)
+      // console.log(res.data.length)
       return res.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -54,7 +54,7 @@ export const getBestWorstSub = createAsyncThunk(
   "adminRoute/getBestWorstSub",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("pending bestworst");
+      // console.log("pending bestworst");
       const res = await axios.get(`${URL}/adminRoutes/getBestWorstSub`);
       return res.data;
     } catch (err) {
@@ -89,6 +89,7 @@ const AdminSlice = createSlice({
       .addCase(getAllAttempts.fulfilled, (state, action) => {
         // console.log("attempts fulfill");
         state.allAttempts = action.payload.data;
+        console.log("admin slice 92",action.payload.data)
       })
       .addCase(getAllAttempts.pending, (state, action) => {
         // console.log("pending");

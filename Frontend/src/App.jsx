@@ -2,7 +2,8 @@ import React from "react";
 import {
   createBrowserRouter,
   RouterProvider,
-  Navigate, useNavigate,
+  Navigate,
+  useNavigate,
 } from "react-router-dom";
 import Quiz from "../src/Pages/Quiz";
 import StudentDashboard from "./Pages/StudentDashboard";
@@ -13,6 +14,7 @@ import Login from "./Pages/Login";
 import AddExam from "./Pages/AddExam";
 import ExamStats from "./Pages/ExamStats";
 import ManageStudents from "./Pages/ManageStudents";
+
 import ModifyExams from "./Pages/ModifyExams";
 import TeacherDashboard from "./Pages/TeacherDashboard";
 
@@ -27,7 +29,6 @@ import ProfileSettings from "./Pages/ProfileSettings";
 import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
 
 function App() {
-  
   const router = createBrowserRouter([
     {
       path: "*",
@@ -48,24 +49,31 @@ function App() {
         },
         {
           path: "profileSettings",
-          element: <profileSettings />,
+          element: <ProfileSettings />,
         },
         {
           path: "reviewExams",
           element: <ReviewExams />,
         },
-        {
-          path: "quiz/:subject",
-          element: <Quiz/>,
-        },
+        // {
+        //   path: "quiz/:subject",
+        //   element: <Quiz />,
+        // },
 
-        {
-          path: "quizHome",
-          element: <QuizHome/>,
-        },
+        // {
+        //   path: "quizHome",
+        //   element: <QuizHome/>,
+        // },
       ],
     },
-
+    {
+      path: "/quizHome",
+      element: <QuizHome />,
+    },
+    {
+      path: "quiz/:subject",
+      element: <Quiz />,
+    },
     {
       path: "/teacherDashboard",
       element: <PrivateRouteAdmin element={TeacherDashboard} />,
@@ -92,6 +100,7 @@ function App() {
           path: "manage-students",
           element: <ManageStudents />,
         },
+
         {
           path: "profile-settings",
           element: <ProfileSettings />,

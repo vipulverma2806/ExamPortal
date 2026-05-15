@@ -1,18 +1,24 @@
-import User from "../../models/user.model.js";
+// import User from "../../models/user.model.js";
+import pool from "../../config/postgresDB.js";
 import bcrypt from "bcryptjs";
 
 const updateProfile = async (req, res) => {
   try {
     const userId = req.userId;
     const { name, email, password } = req.body;
-    
-    // console.log(req.body);
+
+    console.log(name, email, password);
     let updateData = {};
 
     if (name && name.trim() !== "") updateData.name = name;
     if (email && email.trim() !== "") {
-      const found = await User.findOne({ email, _id: { $ne: userId } });
-      if (found)
+      // const found = await User.findOne({ email, _id: { $ne: userId } });
+      const found = await pool.query(
+        "SELECT email FROM users WHERE email = $1",
+        [email],
+      );
+
+      if (found.rowCount)
         return res.status(409).json({ message: "Email already in Use" });
       updateData.email = email;
     }
@@ -22,14 +28,20 @@ const updateProfile = async (req, res) => {
     if (Object.keys(updateData).length == 0)
       return res.status(400).json({ message: "Nothing to update" });
 
-    // console.log(userId)
-    const updated = await User.findByIdAndUpdate(
-      userId,
-      { $set: updateData },
-      { runValidators: true, new: true }
+    console.log(updateData.name, updateData.email, updateData.password);
+    const updated = await pool.query(
+      "UPDATE users SET name = COALESCE($1,name), email = COALESCE($2,email) , password = COALESCE($3,password) WHERE userid = $4 RETURNING * ",
+      [updateData.name, updateData.email, updateData.password, userId],
     );
-    // console.log("update",updated);
-    if(!updated) return res.status(404).json({ message: "User not found" })
+
+    // const updated = await User.findByIdAndUpdate(
+    //   userId,
+    //   { $set: updateData },
+    //   { runValidators: true, new: true },
+    // );
+    // // console.log("update",updated);
+    if (!updated.rowCount)
+      return res.status(404).json({ message: "User not found" });
     return res.status(200).json({ message: "Update successfull" });
   } catch (err) {
     console.log(err);

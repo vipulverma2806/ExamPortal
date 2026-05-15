@@ -17,8 +17,8 @@ const RightWrongPie = ({allAttempts}) => {
         let right = 0;
         let wrong = 0;
         for (const attempt of attemptArr) {
-          right = right + attempt.rightAnswers;
-          wrong = wrong + attempt.wrongAnswers;
+          right = right + attempt.right_answers;
+          wrong = wrong + attempt.wrong_answers;
         }
         setRightAns(right);
         setWrongAns(wrong);
@@ -67,7 +67,7 @@ const RightWrongPie = ({allAttempts}) => {
   };
 
   return (
-    <div className="w-1/3  bg-white p-1 my-4 rounded-2xl">
+    <div className="w-1/3 h-full  bg-white p-1 my-4 rounded-2xl">
       <Pie data={pieData} options={pieOptions}  />
     </div>
   );

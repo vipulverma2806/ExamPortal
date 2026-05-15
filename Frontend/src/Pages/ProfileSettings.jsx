@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 const URL = import.meta.env.VITE_URL;
 const ProfileSettings = () => {
   const [name, setName] = useState("");
@@ -12,31 +13,34 @@ const ProfileSettings = () => {
   const [rePassword, setRePassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
   const navigate = useNavigate();
-  const { details ,getDetails } = useOutletContext();
-  const {isAdmin} = useOutletContext();
+  const { details, getDetails } = useOutletContext();
+  const { isAdmin } = useOutletContext();
+
+
   const handleUpdate = async (e) => {
     e.preventDefault();
-
     if (password.trim() !== rePassword.trim()) return setPasswordMatch(false);
-    if (!(name || email)) return toast.error("Please fill something");
+    if (!(name || email || passwordMatch)) return toast.error("Please fill something");
     setPasswordMatch(true);
     console.log(passwordMatch);
 
     try {
+      console.log("profile setting 26 ", [name, email, password]);
       await axios.put(`${URL}/auth/updateProfile`, {
         name: name.trim(),
-        email : email.trim(),
-        password : password.trim(),
+        email: email.trim(),
+        password: password.trim(),
       });
       toast.success("updated Successfully");
       setName("");
       setPassword("");
       setEmail("");
       getDetails();
-      if(isAdmin) return navigate("/teacherDashboard") 
-      navigate("/studentDashboard")
+      if (isAdmin) return navigate("/teacherDashboard");
+      navigate("/studentDashboard");
     } catch (error) {
       console.error("Registration failed:", error);
+      toast.error(error.response.data.message)
     }
   };
   const inputCSS =
@@ -54,8 +58,8 @@ const ProfileSettings = () => {
           type="text"
           placeholder={details.name}
           className={inputCSS}
-          onChange={(e) => {setName(e.target.value)
-         
+          onChange={(e) => {
+            setName(e.target.value);
           }}
           value={name}
         />
@@ -106,6 +110,3 @@ const ProfileSettings = () => {
 };
 
 export default ProfileSettings;
-
-
-

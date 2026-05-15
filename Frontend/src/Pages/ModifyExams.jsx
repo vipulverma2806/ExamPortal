@@ -89,7 +89,7 @@ const ModifyExams = () => {
                     </div>
 
                     <button
-                      onClick={() => deleteQuestion(question._id)}
+                      onClick={() => deleteQuestion(question.question_id)}
                       className="flex items-center gap-2 bg-red-600 px-3 h-8 rounded-lg text-white hover:bg-red-900 transition cursor-pointer"
                     >
                       <MdDeleteSweep className="text-xl" />

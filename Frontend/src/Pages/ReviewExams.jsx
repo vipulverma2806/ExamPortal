@@ -13,10 +13,11 @@ const ReviewExams = () => {
   const { attemptArr } = useOutletContext();
   useEffect(() => {
     const fetchData = async () => {
+      
       try {
         const res = await axios.get(`${URL}/userRoutes/reviewExam`);
-        console.log("res", res);
-        console.log("res data", res.data);
+        // console.log("reviewExams 19", res);
+        console.log("reviewExams 20", res.data.data);
         setAllQues(res.data.data);
         const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
         setSubjects(SubjectsArr);
@@ -62,7 +63,7 @@ const ReviewExams = () => {
 
       <div className="mt-6 px-20">
         {filteredQues.map((que, i) => {
-          let Qid = que._id;
+          let Qid = que.question_id;
           return (
             <div className="w-full mb-6 rounded-3xl py-10 h-full bg-gray-600 bg-gradient-to-br from-gray-700 to-teal-800 px-10 ">
               <h1 className="text-3xl text-gray-200 font-semibold mb-3">
@@ -72,9 +73,9 @@ const ReviewExams = () => {
                 Marks :{" "}
                 <span>
                   {" "}
-                  {que.answer === attemptCat[0].selectedOptions[Qid]
+                  {que.answer === attemptCat[0].selected_options[Qid]
                     ? "+4"
-                    : attemptCat[0].selectedOptions?.[Qid]
+                    : attemptCat[0].selected_options?.[Qid]
                     ? "-1"
                     : "0"}
                 </span>
@@ -86,13 +87,13 @@ const ReviewExams = () => {
                     className={` text-left text-xl m-1 w-full rounded-xl px-6 py-2 ${
                       option === que.answer
                         ? "bg-green-400 text-black"
-                        : option === attemptCat[0].selectedOptions[Qid]
+                        : option === attemptCat[0].selected_options[Qid]
                         ? "bg-red-400 text-black"
                         : "bg-gray-400 text-gray-800"
                     }`}
                   >
                     {console.log(
-                      `${option} ${attemptCat[0].selectedOptions[Qid]}`
+                      `${option} ${attemptCat[0].selected_options[Qid]}`
                     )}
                     {option}
                   </div>

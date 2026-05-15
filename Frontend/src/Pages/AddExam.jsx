@@ -46,7 +46,9 @@ const AddExam = () => {
           questionCount,
         }
       );
-      console.log(res);
+      // console.log(res);
+    // console.log("AddExam 33")
+
       setGenQuestions(res.data);
       setLoading(false);
     } catch (err) {
@@ -87,7 +89,7 @@ const AddExam = () => {
     <div className="p-4 pt-2 flex flex-col">
       <div className="border-b-4 items-center px-3 flex justify-between  h-20 py-2 ">
         <div className="text-4xl font-semibold flex items-center  ">
-          AI Question Generator
+          AI Question Paper Generator
         </div>
         <div className="bg-gray-300 h-full flex items-center justify-center w-50 rounded-4xl my-5 mb-8">
           <img

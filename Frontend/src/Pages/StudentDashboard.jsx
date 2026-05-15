@@ -15,27 +15,28 @@ const StudentDashboard = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${URL}/userRoutes/getStudentSummary`);
+        // console.log("studentDashboard 18",res.data.data)
+
         setAttemptArr(res.data?.data);
         setIsDataFetched(true);
-        console.log("res-data", res.data);
+        // console.log("res-data", res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
   }, []);
-  console.log("attemptArr UPDATED:", attemptArr);
-
+  // console.log("attemptArr UPDATED:", attemptArr);
 
   const navigate = useNavigate();
-  
+
   const [loading, setLoading] = useState();
 
   const logout = async () => {
     try {
       setLoading(true);
       const success = await axios.post(`${URL}/auth/logout`);
-   
+
       toast.success("Logout Succesfully");
       navigate("/");
       return setLoading(false);
@@ -47,7 +48,7 @@ const StudentDashboard = () => {
   const getDetails = async () => {
     try {
       const success = await axios.get(`${URL}/auth/getDetails`);
-
+      // console.log("studentDashboard 52", success);
       return setDetails(success.data.data);
     } catch (err) {
       return console.log(err);
@@ -71,7 +72,6 @@ const StudentDashboard = () => {
                 <div>Welcome, </div>{" "}
                 <span className="font-bold text-teal-600">{details.name}</span>
               </h3>
-             
             </div>
             <div className="flex flex-col gap-3 ">
               <NavLink
@@ -125,11 +125,8 @@ const StudentDashboard = () => {
               to="/quizHome"
               className={`
                 p-2 text-center rounded-md
-                     text-white   ${
-                       loading
-                         ? "bg-red-600"
-                         : "bg-green-600 hover:bg-green-800"
-                     }`}
+                     text-white bg-green-600 hover:bg-green-800
+                     `}
             >
               Give Exam
             </NavLink>

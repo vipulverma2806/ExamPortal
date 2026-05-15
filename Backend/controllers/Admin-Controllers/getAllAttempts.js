@@ -1,7 +1,10 @@
 import Attempt from "../../models/attempt.model.js";
+import pool from "../../config/postgresDB.js";
 const getAllAttempts = async (req, res) => {
   try {
-    const allAttempts = await Attempt.find();
+    const response = await pool.query('SELECT * FROM attempt') 
+    // const allAttempts = await Attempt.find();
+    const allAttempts = response.rows
     if (allAttempts.length == 0)
       return res.status(200).json({ message: "No one Attempts", data: [] });
     

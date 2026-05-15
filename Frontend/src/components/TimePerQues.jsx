@@ -22,7 +22,7 @@ ChartJS.register(
   PointElement,
   Tooltip,
   Legend,
-  Filler
+  Filler,
 );
 const TimePerQues = ({ allAttempts }) => {
   axios.defaults.withCredentials = true;
@@ -32,14 +32,17 @@ const TimePerQues = ({ allAttempts }) => {
   const [selectedSubject, setSelectedSubject] = useState("");
 
   useEffect(() => {
+    let SubjectsArr;
     const fetchData = async () => {
+      // console.log("timeperQues 36",allAttempts)
       if (!attemptArr || attemptArr.length == 0) return;
       try {
-        const SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
+        SubjectsArr = attemptArr.map((attempt, i) => attempt.subject);
+        // console.log("timeperque 41",SubjectsArr)
         setSubjects(SubjectsArr);
         if (attemptArr.length == 0) return;
         const attempt = attemptArr[0];
-        setSelectedSubject(attempt.subject)
+        setSelectedSubject(attempt.subject);
         // console.log(attemptArr);
         const timeSpents = Object.values(attempt.timeSpents);
         const QuesNo = Object.keys(attempt.timeSpents);
@@ -66,14 +69,16 @@ const TimePerQues = ({ allAttempts }) => {
     };
 
     fetchData();
+    // console.log(SubjectsArr)
+    if (SubjectsArr?.length) showsubject(SubjectsArr[0]);
   }, [attemptArr]);
 
   const showsubject = (cat) => {
     const attempt = attemptArr.find((attempt) => attempt.subject === cat);
     if (!attempt) return;
-    console.log(attempt);
-    const timeSpents = Object.values(attempt.timeSpents);
-    const QuesNo = Object.keys(attempt.timeSpents);
+    // console.log("timeperque 81", attempt);
+    const timeSpents = Object.values(attempt.time_spents);
+    const QuesNo = Object.keys(attempt.time_spents);
 
     const formatted = {
       labels: QuesNo,
@@ -91,17 +96,17 @@ const TimePerQues = ({ allAttempts }) => {
       ],
     };
     setChartData(formatted);
-    setSelectedSubject(cat)
-    console.log("chardata", cat, chartData);
+    setSelectedSubject(cat);
+    // console.log("chardata", cat, chartData);
   };
 
   return (
-    <div className="h-9/10  mr-5 shadow-xl border rounded-2xl bg-white ">
+    <div className="h-[500px] mr-5 shadow-xl border rounded-2xl bg-white ">
       <select
         name=""
         id=""
         value={selectedSubject}
-        className="w-[200px] ml-10 mt-5 rounded-xl relative top-1 left-8 z-40 px-3 py-1 bg-gray-500 text-white font-semibold text-lg"
+        className="w-auto ml-10 mt-5 rounded-xl relative top-1 left-8 z-40 px-3 py-1 bg-gray-500 text-white font-semibold text-lg"
         onChange={(e) => {
           showsubject(e.target.value);
         }}
@@ -111,13 +116,13 @@ const TimePerQues = ({ allAttempts }) => {
         </option>
         {Subjects.map((cat, i) => {
           return (
-            <option className="hover:bg-red-600" value={cat}>
+            <option className="hover:bg-red-600" value={cat} key={i}>
               {cat}
             </option>
           );
         })}
       </select>
-      <div className="w-full h-[450px] relative z-10 bottom-15 px-5 pt-10 flex justify-center items-center   ">
+      <div className="w-full h-full relative z-10 bottom-15 px-5 pt-10 flex justify-center items-center   ">
         {chartData ? (
           <Line
             className="bg-white p-3  "

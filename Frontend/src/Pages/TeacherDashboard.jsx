@@ -91,7 +91,17 @@ const TeacherDashboard = () => {
                 </span>
               </h3>
             </div>
-            <div className="flex flex-col gap-2 py-3 ">
+            <div className="flex flex-col gap-1 py-3 ">
+               {/* <NavLink
+                to="live-exam"
+                className={({ isActive }) =>
+                  `p-2 rounded-md ${
+                    isActive ? "bg-blue-600 text-white" : "hover:bg-blue-600"
+                  }`
+                }
+              >
+                Live Exams Stats
+              </NavLink> */}
               <NavLink
                 to=""
                 end
@@ -145,6 +155,7 @@ const TeacherDashboard = () => {
               >
                 Manage Students
               </NavLink>
+             
               <NavLink
                 to="profile-settings"
                 className={({ isActive }) =>

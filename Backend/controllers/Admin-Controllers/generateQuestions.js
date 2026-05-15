@@ -5,6 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const generateQuestions = async (req, res) => {
+  console.log("adminC/generateQuestions Line-8")
   try {
     const {
       selectedSubject: subject,
@@ -41,9 +42,15 @@ Rules:
 -Do NOT add explanations.
 -Answers should not be same options for each question 
 -inside options array only options string should be there. do not include A. B. C. D. in options
-
-JSON format:
+- Return the response as a single Array containing data as RAW JSON formats. 
+Example : -
 [
+  {
+    "question": "string",
+    "options": ["A", "B", "C", "D"],
+    "answer": "one of the options",
+    "subject": "given subject"
+  },
   {
     "question": "string",
     "options": ["A", "B", "C", "D"],
@@ -59,13 +66,15 @@ JSON format:
     // let text = testQuestion;
     // text = JSON.stringify(text)
     let Questions;
-
+    
     try {
       Questions = JSON.parse(text);
       // console.log(Questions)
     } catch (err) {
       return res.status(400).json("AI returned invalid format : not parsed");
     }
+    console.log("text",text)
+    console.log("Question",Questions)
     const isValidData =
       Array.isArray(Questions) &&
       Questions.every(
@@ -75,7 +84,7 @@ JSON format:
           Q.options.length === 4 &&
           Q.options.includes(Q.answer)
       );
-
+      // console.log("generateQuestions79",Questions)
     if (!isValidData) return res.status(400).json("AI returned invalid format");
     console.log("success response to frontend");
     return res.status(200).json(Questions);

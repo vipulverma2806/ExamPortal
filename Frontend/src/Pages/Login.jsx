@@ -20,15 +20,18 @@ const Login = () => {
       });
       console.log("Login response:", res);
       toast.success("Login Success");
+      console.log(res.data.role)
       if (res.data.role == "teacher") return navigate("/teacherDashboard");
       navigate("/studentDashboard");
     } catch (error) {
       console.error(error);
       console.error(
         "Login failed:",
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data : error.message,
       );
-      toast.success(error.response ? error.response.data.message : error.message);
+      toast.success(
+        error.response ? error.response.data.message : error.message,
+      );
       setError("Invalid credentials");
     }
   };
@@ -52,6 +55,7 @@ const Login = () => {
             value={email}
             required
           />
+          {/* <p className="text-4xl">a@a.a   a  </p> */}
           <input
             type="password"
             placeholder="Password"

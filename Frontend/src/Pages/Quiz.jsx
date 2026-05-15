@@ -32,7 +32,7 @@ const Quiz = () => {
           setTimeSpents((prev) => ({ ...prev, [i]: 0 }));
         }
         res.data.forEach((que) => {
-          setSelectedOptions((prev) => ({ ...prev, [que._id]: null }));
+          setSelectedOptions((prev) => ({ ...prev, [que.question_id]: null }));
         });
         console.log(timeSpents);
       } catch (err) {
@@ -80,11 +80,11 @@ const Quiz = () => {
       // [questions[currentQuestion]._id]:
       //   (prev[questions[currentQuestion]._id] || 0) + timePeriod,
       [currentQuestion + 1]:
-        (prev[questions[currentQuestion]._id] || 0) + timePeriod,
+        (prev[questions[currentQuestion].question_id] || 0) + timePeriod,
     }));
     setSelectedOptions((prev) => ({
       ...prev,
-      [questions[currentQuestion]._id]: option || null,
+      [questions[currentQuestion].question_id]: option || null,
     }));
   };
   // console.log(selectedOptions);
@@ -169,7 +169,7 @@ const Quiz = () => {
     <>
       <Navbar />
 
-      <div className="flex  w-full bg-gray-900 h-full  border-t-2 border-white">
+      <div className="flex  w-full bg-gray-900 min-h-screen  border-t-2 border-white">
         <div className="lg:w-3/4 w-full border-r-2 p-15 mt-10 border-gray-700 flex justify-center items-center h-full ">
           <div className=" w-full bg-gray-800  flex justify-center flex-col items-center py-10  border rounded-3xl">
             <div className="w-full h-full  px-20 ">
@@ -205,10 +205,10 @@ const Quiz = () => {
                 </button>
                 <button
                   disabled={saveButton}
-                  className="text-gray-100 hover:bg-teal-900  cursor-pointer bg-teal-700 px-3 rounded-xl w-30 text-left font-semibold"
+                  className="text-gray-100 hover:bg-teal-900  cursor-pointer bg-teal-700 px-3 rounded-xl w-30 text-center font-semibold"
                   onClick={saveProgress}
                 >
-                  {`${saveButton ? "Wait" : "Submit Exam"}`}
+                  {`${saveButton ? "Wait" : "Submit"}`}
                 </button>
                 <button
                   disabled={currentQuestion === questions.length - 1}

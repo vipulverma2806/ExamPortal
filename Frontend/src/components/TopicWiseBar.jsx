@@ -22,11 +22,11 @@ ChartJS.register(
 const TopicWiseBar = ({ allAttempts }) => {
   const [Subjects, setSubjects] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
-  console.log("allAttempts", allAttempts);
+  // console.log("allAttempts", allAttempts);
   const attemptArr = allAttempts;
-  console.log("attemptarr", attemptArr);
+  // console.log("attemptarr", attemptArr);
   const SubjectsArr = attemptArr?.map((attempt, i) => attempt.subject);
-  const totalMarksArr = attemptArr?.map((attempt, i) => attempt.totalMarks);
+  const totalMarksArr = attemptArr?.map((attempt, i) => attempt.total_marks);
   useEffect(() => {
     setTotalMarks(totalMarksArr);
     setSubjects(SubjectsArr);
@@ -109,7 +109,7 @@ const TopicWiseBar = ({ allAttempts }) => {
   };
 
   return (
-    <div className="w-2/3 bg-white m-5 p-3 rounded-2xl  h-[350px]">
+    <div className="w-2/3 bg-white m-5 p-3 rounded-2xl  h-full">
       <Bar data={barData} options={barOptions} />
     </div>
   );

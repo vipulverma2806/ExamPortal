@@ -137,7 +137,7 @@ const AddQuestion = () => {
               disabled={loading}
               className={` font-semibold text-white py-3  cursor-pointer px-10 rounded-xl ${
                 loading
-                  ? "bg-green-500 hover:cursor-not-allowed"
+                  ? "bg-green-500"
                   : "bg-blue-700"
               }
               }  `}

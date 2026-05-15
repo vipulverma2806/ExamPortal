@@ -1,13 +1,9 @@
-import Question from "../../models/question.model.js";
+// import Question from "../../models/question.model.js";
+import pool from "../../config/postgresDB.js";
 const addQuestion = async (req, res) => {
   try {
-    let {
-      question,
-      optionsObj,
-      selectedAnswer,
-      selectedSubject,
-      genQuestions,
-    } = req.body;
+    let { question, optionsObj, selectedAnswer, selectedSubject } = req.body;
+
     // console.log(question, optionsObj, selectedAnswer, selectedSubject);
 
     question = question.trim();
@@ -29,15 +25,36 @@ const addQuestion = async (req, res) => {
     });
     let answer = optionsObj[selectedAnswer];
     answer = answer.trim();
-    console.log(question, options, answer, subject);
+    // console.log(question, options, answer, subject);
 
-    const newQuestion = new Question({
+    // const newQuestion = new Question({
+    //   question,
+    //   options,
+    //   answer,
+    //   subject,
+    // });
+    // await newQuestion.save();
+
+    console.log(
+      "question ",
       question,
-      options,
-      answer,
-      subject,
-    });
-    await newQuestion.save();
+      "question ",
+      Object.values(optionsObj),
+      "question ",
+      optionsObj[selectedAnswer],
+      "question ",
+      selectedSubject,
+    );
+    await pool.query(
+      `INSERT INTO questions (question ,options,answer,subject) VALUES ($1,$2,$3,$4)`,
+      [
+        question,
+        Object.values(optionsObj),
+        optionsObj[selectedAnswer],
+        selectedSubject,
+      ],
+    );
+
     return res.status(200).send({ message: "Question added successfully" });
   } catch (err) {
     console.log(err);

@@ -6,5 +6,4 @@ const dbConnect = () => {
     .catch((err) => console.log(err));
 };
 
-
 export default dbConnect;

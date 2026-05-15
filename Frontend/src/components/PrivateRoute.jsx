@@ -19,12 +19,13 @@ const PrivateRoute = ({ element: Component }) => {
   //----------checkauth--------
   const checkAuth = async () => {
     try {
+      // console.log("PrivateRoute 22 access");
       const res = await axios.get(`${URL}/auth/checkAuth`);
-      // console.log(res.data.role);
+      // console.log("PrivateRoute 24",res.data.role);
       setRole(res.data.role);
       setLoading(false);
     } catch (err) {
-      // console.log(err.response.data);
+      console.log(err.response.data);
       setRole("");
       setLoading(false);
       return navigate("/");
@@ -34,7 +35,7 @@ const PrivateRoute = ({ element: Component }) => {
     return (
       <div className="flex justify-center items-center text-4xl">loading</div>
     );
-  console.log("workinggggg");
+  // console.log("workinggggg");
   return <Component />;
 };
 

@@ -23,10 +23,10 @@ ChartJS.register(
   Legend,
   LineElement,
   PointElement,
-  Filler
+  Filler,
 );
 const ExamStats = () => {
-  const [allStudents, setAllStudents] = useState([]);
+  const [allStudents, setAllStudents] = useState([4, 4, 4, 4, 4]);
   const [allAttempts, setAllAttempts] = useState([]);
   const [allQuestions, setAllQuestions] = useState([]);
   const [bestWorstSub, setBestWorstSub] = useState([]);
@@ -39,26 +39,33 @@ const ExamStats = () => {
   const [chosenSubject, setChosenSubject] = useState([]);
 
   const studentsFromStore = useSelector(
-    (state) => state.adminData?.allStudents
+    (state) => state.adminData?.allStudents,
   );
   const attemptsFromStore = useSelector(
-    (state) => state.adminData?.allAttempts
+    (state) => state.adminData?.allAttempts,
   );
   const questionsFromStore = useSelector(
-    (state) => state.adminData?.allQuestions
+    (state) => state.adminData?.allQuestions,
   );
   const bestWorstFromStore = useSelector(
-    (state) => state.adminData?.bestWorstSub
+    (state) => state.adminData?.bestWorstSub,
   );
   const bestWorstArray = [...bestWorstFromStore];
-  // console.log(attemptsFromStore);
+
+  // console.log(studentsFromStore);
+
   // console.log(studentsFromStore)
   useEffect(() => {
     if (
-      studentsFromStore.length === 0 ||
-      attemptsFromStore.length === 0 ||
-      attemptsFromStore.length === 0
+      !studentsFromStore.length ||
+      !attemptsFromStore.length ||
+      !questionsFromStore.length
     ) {
+      console.log(
+        studentsFromStore.length,
+        attemptsFromStore.length,
+        questionsFromStore.length,
+      );
       console.log("Complete Data not available ");
       return;
     }
@@ -68,6 +75,7 @@ const ExamStats = () => {
     bestWorstArray.sort((a, b) => b.count - a.count);
     setBestWorstSub(bestWorstArray);
   }, [studentsFromStore]);
+  // console.log("Examstats 73", allStudents);
 
   useEffect(() => {
     const getSubjects = () => {
@@ -86,7 +94,7 @@ const ExamStats = () => {
     };
     getSubjects();
   }, [attemptsFromStore]);
-  // console.log(subjects);
+
   const cards = [
     {
       title: "Total Students",
@@ -111,12 +119,13 @@ const ExamStats = () => {
   //---function  avg time per question-------------------
   useEffect(() => {
     const showChart = (sub) => {
+      console.log("examstats 114", allAttempts);
       if (!allAttempts.length || !sub) return;
-     
+
       let allAvg = [];
 
       const filteredAttempt = allAttempts.filter(
-        (att, i) => att.subject == sub
+        (att, i) => att.subject == sub,
       );
       if (filteredAttempt.length === 0) {
         console.log("no data available for selected subject");
@@ -124,18 +133,18 @@ const ExamStats = () => {
       }
       setStudentCount(filteredAttempt.length);
       // console.log("filtr",filteredAttempt)
-      const QuesCount = Object.keys(filteredAttempt[0].timeSpents).length;
-      const QuesNo = Object.keys(filteredAttempt[0].timeSpents);
+      const QuesCount = Object.keys(filteredAttempt[0].time_spents).length;
+      const QuesNo = Object.keys(filteredAttempt[0].time_spents);
       // console.log("QuesNo", QuesNo);
 
       for (let i = 0; i < QuesCount; i++) {
         const Q = filteredAttempt.map((att) => {
-          return Object.values(att.timeSpents)[i];
+          return Object.values(att.time_spents)[i];
         });
         // console.log("ye rha Q",Q)
         let avg = [];
         avg = Q.reduce((acc, curr) => acc + curr, 0) / Q.length;
-     
+
         allAvg.push(avg);
       }
 
@@ -147,7 +156,6 @@ const ExamStats = () => {
           {
             label: "Avg Time Taken per Question",
             data: allAvg,
-            
 
             borderColor: "rgba(75,192,192,1)",
             backgroundColor: "rgba(75,192,192,0.3)",
@@ -168,15 +176,15 @@ const ExamStats = () => {
   useEffect(() => {
     const showChart = (sub) => {
       if (!allAttempts.length || !sub) return;
-      
+
       let allAvg = [];
 
       const filteredAttempt = allAttempts.filter(
-        (att, i) => att.subject == sub
+        (att, i) => att.subject == sub,
       );
 
       const filteredQuestion = allQuestions.filter(
-        (que, i) => que.subject == sub
+        (que, i) => que.subject == sub,
       );
 
       let QuesIdsAns = {};
@@ -185,15 +193,15 @@ const ExamStats = () => {
       });
       // const QuesIdsArr = filteredQuestion.map((q) => q._id)
       // console.log("filtr",filteredAttempt)
-      // const QuesCount = Object.keys(filteredAttempt[0].timeSpents).length;
-      const QuesNo = Object.keys(filteredAttempt[0]?.timeSpents);
+      // const QuesCount = Object.keys(filteredAttempt[0].time_spents).length;
+      const QuesNo = Object.keys(filteredAttempt[0]?.time_spents);
       let rightCounts = [];
       let wrongCounts = [];
       let skippedCounts = [];
 
       for (const key in QuesIdsAns) {
         const selectedAnsArr = filteredAttempt.map(
-          (att) => att.selectedOptions?.[key]
+          (att) => att.selected_options?.[key],
         );
         let rightCount = 0;
         let wrongCount = 0;
@@ -228,7 +236,7 @@ const ExamStats = () => {
         "wrong",
         wrongCounts,
         "skippedCounts",
-        skippedCounts
+        skippedCounts,
       );
       const formatted = {
         labels: QuesNo,
@@ -268,14 +276,14 @@ const ExamStats = () => {
       let pass = 0;
       let fail = 0;
       const filteredAttempt = allAttempts.filter(
-        (attempt) => attempt.subject === sub
+        (attempt) => attempt.subject === sub,
       );
 
-      const QuesCount = Object.keys(filteredAttempt[0].selectedOptions).length;
+      const QuesCount = Object.keys(filteredAttempt[0].selected_options).length;
       const totalmarks = QuesCount * 4;
       const passingMarks = (totalmarks * 33) / 100;
       filteredAttempt.forEach((attempt) => {
-        if (passingMarks <= attempt.totalMarks) {
+        if (passingMarks <= attempt.total_marks) {
           pass++;
         } else {
           fail++;
@@ -283,12 +291,12 @@ const ExamStats = () => {
       });
       const pieData = {
         labels: ["Pass", "Fail"],
-        
+
         datasets: [
           {
             label: "Result Breakdown",
-            data: [pass, fail,],
-            
+            data: [pass, fail],
+
             backgroundColor: ["#22c55e", "#ef4444", "#facc15"],
             borderColor: "#ffffff",
             borderWidth: 2,
@@ -305,23 +313,24 @@ const ExamStats = () => {
       if (allAttempts.length === 0 || !sub) return;
 
       const filteredAttempt = allAttempts.filter(
-        (attempt) => attempt.subject === sub
+        (attempt) => attempt.subject === sub,
       );
-      filteredAttempt.sort((a, b) => b.totalMarks - a.totalMarks);
+      filteredAttempt.sort((a, b) => b.total_marks - a.total_marks);
 
       const top5students = filteredAttempt.slice(0, 5);
       const topperfullNames = top5students.map((attempt) => attempt.name);
       const toppersFirstNames = topperfullNames.map(
-        (name) => name.split(" ")[0]
+        (name) => name.split(" ")[0],
       );
-      const topperMarks = top5students.map((attempt) => attempt.totalMarks);
+      const topperMarks = top5students.map((attempt) => attempt.total_marks);
+      console.log(topperMarks)
       const barData = {
         labels: toppersFirstNames,
-        labels:["Vipul","Virat","Rohit","Shikhar","M.S.Dhoni"],
+        // labels: ["Vipul", "Virat", "Rohit", "Shikhar", "M.S.Dhoni"],
         datasets: [
           {
             data: topperMarks,
-            data:[67,53,47,45,40],
+            // data: [67, 53, 47, 45, 40],
             backgroundColor: [
               "#3b82f6",
               "#FF4F4F",
